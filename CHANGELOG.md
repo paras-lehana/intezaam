@@ -4,6 +4,24 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [0.1.1] — 2026-10-21
+
+Fixes found in the full browser test of the live site.
+
+### Fixed
+
+- **Quote comparison:** a per-plate quote is billed for at least the minimum plates it states ("minimum guarantee 250
+  plates"), and is compared with the food line's share for that many plates instead of the whole line; the reply's
+  positional ids ("quote-1") read as the page's labels ("Quote 1").
+- **Ask Intezaam:** an answer may state the numbers from the user's own question and from the change that passed the
+  guard ("guests 250 kar do" → "250 guests"), so a correct answer is no longer swapped for the generic help text; if a
+  model answer still invents a number next to a valid change, the reply says to press Apply instead.
+- **Ask box:** Enter sends the question and Shift+Enter keeps a new line (an IME composition is left alone).
+- **Provenance badge:** an answer served from the server's cache says "saved answer" instead of "0 s".
+- **Narration:** the model may return up to eight palette words; code keeps the first three, so a longer palette no
+  longer fails the schema and falls back offline.
+- **Pre-publish checks:** reject control characters in sources (a mangled `\b` escape), and check casts on code lines only.
+
 ## [0.1.0] — 2026-10-20
 
 First public release: a GenAI planning assistant for Indian weddings, birthdays and community events, built around the
@@ -50,7 +68,7 @@ todayIso)` returns a validated plan with a two-axis verdict (money × time, plus
 
 ### Verified
 
-- `npm run test:coverage` (2026-10-21): 2,075 tests pass — core 1,391 (172 files), server 172 (18 files), web 512 (98
+- `npm run test:coverage` (2026-10-21): 2,078 tests pass — core 1,392 (172 files), server 172 (18 files), web 514 (98
   files). Coverage: core 99.92% lines / 95.77% branches; server 99.7% lines / 94.02% branches; web 98.45% lines /
   87.74% branches.
 - `npx playwright test`: 46 of 46 pass (11 journeys, 4 persona checks and 8 axe scans on each of desktop and a 390×844

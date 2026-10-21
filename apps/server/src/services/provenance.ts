@@ -6,13 +6,13 @@
  * core `reason` field), so every AI response can show exactly how it was produced.
  * Boundary: timing and engine names only — no request content is recorded.
  */
-import type { EngineMode, OfflineReason, Provenance } from '@intezaam/core';
+import { CACHE_ENGINE, type EngineMode, type OfflineReason, type Provenance } from '@intezaam/core';
 
 /** Engine label for deterministic, rule-based steps. */
 export const RULES_ENGINE = 'rules';
 
-/** Engine label for a result served from the LRU cache. */
-export const CACHE_ENGINE = 'cache';
+/** Engine label for a result served from the LRU cache (shared with the web badge). */
+export { CACHE_ENGINE };
 
 export interface ProvenanceTracker {
   /** Records a step handled by a named model (its name is also listed under `models`). */

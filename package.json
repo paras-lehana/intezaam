@@ -1,6 +1,6 @@
 {
   "name": "intezaam",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Intezaam (इंतज़ाम) — a GenAI planning assistant for Indian weddings, birthdays and community events. Deterministic engines compute budgets, timelines, vendor checklists and permissions from your context; Gemini parses briefs and personalises ideas.",
   "license": "MIT",

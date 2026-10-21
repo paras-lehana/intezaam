@@ -4,12 +4,14 @@
  *
  * Responsibility: a question code refuses is refused whatever the model said; a faithful
  * answer survives with deduplicated sources; an invented number swaps in the rule-based
- * answer; an invalid patch op is removed and reported. Boundary: plans from the real engine.
+ * answer, or the Apply prompt when a change survives; the question's and the change's own
+ * numbers are allowed; an invalid patch op is removed and reported. Boundary: plans from the
+ * real engine.
  */
 import { describe, expect, it } from 'vitest';
 import { checkAskReply } from '../genai/ask-check.js';
 import { factNumbers } from '../genai/faithfulness.js';
-import { askOffline, REFUSAL_ANSWERS } from '../offline/ask.js';
+import { askOffline, PATCH_ANSWER, REFUSAL_ANSWERS } from '../offline/ask.js';
 import { formatInr } from '../format.js';
 import { MAX_GUESTS } from '../schemas/limits.js';
 import { planned, TODAY } from './fixtures/genai-plans.js';
@@ -65,6 +67,32 @@ describe('checkAskReply', () => {
     );
     expect(result.reply.answer).toBe(askOffline(question, plan, context, TODAY).answer);
     expect(result.corrected).toEqual(['answer']);
+  });
+
+  it('lets the answer state the numbers of the question and of the surviving change', () => {
+    const allowed = factNumbers(facts);
+    const target =
+      Array.from({ length: 100 }, (_, step) => context.guests + step + 1).find(
+        (guests) => !allowed.has(guests),
+      ) ?? context.guests + 1;
+    const reply = {
+      answer: `I can set the guests to ${String(target)}; press Apply to see the new plan.`,
+      sources: ['headcount' as const],
+      patch: { ops: [{ op: 'setGuests' as const, value: target }] },
+    };
+    for (const question of [`guests ${String(target)} kar do`, 'thode aur guests bulao']) {
+      const result = checkAskReply(reply, input(question));
+      expect(result.reply.answer).toBe(reply.answer);
+      expect(result.corrected).toEqual([]);
+    }
+    const invented = Math.max(...allowed, target) + 1;
+    const padded = checkAskReply(
+      { ...reply, answer: `That adds ₹${String(invented)} to the budget.` },
+      input('thode aur guests bulao'),
+    );
+    expect(padded.reply.answer).toBe(PATCH_ANSWER);
+    expect(padded.reply.patch).toEqual(reply.patch);
+    expect(padded.corrected).toEqual(['answer']);
   });
 
   it("removes an invalid patch op and keeps the model's refusal field when no rule fires", () => {

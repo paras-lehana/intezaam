@@ -1,7 +1,7 @@
 /**
  * Responsibility: Ask Intezaam's example chips — the Hindi starter question (and only it)
  * carries lang="hi", and pressing a chip asks that question straight away, showing a proposed
- * change without applying it. Boundary: the reply is core's offline twin (`askOffline`) for the
+ * change without applying it; Enter sends a typed question and Shift+Enter keeps a new line. Boundary: the reply is core's offline twin (`askOffline`) for the
  * same sample plan; only the network is stubbed.
  */
 import { render, screen, within } from '@testing-library/react';
@@ -44,5 +44,20 @@ describe('AskDrawer examples', () => {
       describePatch(reply.patch).join('; '),
     );
     expect(setup.onApplyPatch).not.toHaveBeenCalled();
+  });
+
+  it('sends a typed question with Enter, and keeps a new line with Shift+Enter', async () => {
+    const setup = samplePanel('jaipur-wedding');
+    const question = '50 log kam karo';
+    const fetchMock = stubFetch(jsonResponse(askReply(question, setup)));
+    render(<AskDrawer {...setup.props} />);
+    const user = userEvent.setup();
+    const box = screen.getByLabelText(/your question/i);
+    await user.type(box, '50 log{Shift>}{Enter}{/Shift}');
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(box).toHaveValue('50 log\n');
+    await user.clear(box);
+    await user.type(box, `${question}{Enter}`);
+    expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).toMatchObject({ question });
   });
 });

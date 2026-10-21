@@ -26,7 +26,8 @@ export const REFUSAL_ANSWERS: Readonly<Record<RefusalReason, string>> = {
     'I can only help with planning this celebration: budget, dates, vendors, guests, food, permissions and safety.',
 };
 
-const PATCH_ANSWER =
+/** What a valid change request says: the user decides with Apply. */
+export const PATCH_ANSWER =
   'I can make this change for you. Press Apply to see the new plan and what changed before you keep it.';
 
 const FALLBACK_ANSWER =

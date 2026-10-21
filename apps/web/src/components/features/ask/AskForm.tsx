@@ -2,11 +2,12 @@
  * The question box for Ask Intezaam, with starter questions.
  *
  * Responsibility: a labelled text area (English, Hindi or Hinglish; capped at the request
- * schema's length), a submit button that is never disabled (aria-disabled while busy), an
- * inline error, and example chips that ask straight away (the Hindi one tagged `lang="hi"`).
+ * schema's length) where Enter sends and Shift+Enter starts a new line, a submit button that is
+ * never disabled (aria-disabled while busy), an inline error, and example chips that ask straight
+ * away (the Hindi one tagged `lang="hi"`).
  * Boundary: controlled by the tool; it only reports what the reader asked.
  */
-import { type FormEvent, type ReactElement, useState } from 'react';
+import { type FormEvent, type KeyboardEvent, type ReactElement, useState } from 'react';
 import { MAX_QUESTION_CHARS } from '@intezaam/core/schemas';
 import { ASK_EXAMPLES } from './ask-copy';
 
@@ -29,6 +30,13 @@ export function AskForm({ busy, error, onAsk }: AskFormProps): ReactElement {
     void submit(question);
   }
 
+  /** Enter sends, as in a chat; Shift+Enter keeps a new line, and an IME composition is left alone. */
+  function handleKeyDown(event: KeyboardEvent<HTMLTextAreaElement>): void {
+    if (event.key !== 'Enter' || event.shiftKey || event.nativeEvent.isComposing) return;
+    event.preventDefault();
+    event.currentTarget.form?.requestSubmit();
+  }
+
   return (
     <form className="ask-form" noValidate onSubmit={handleSubmit}>
       <div className="field">
@@ -42,6 +50,7 @@ export function AskForm({ busy, error, onAsk }: AskFormProps): ReactElement {
           aria-invalid={error !== ''}
           aria-describedby={error === '' ? undefined : 'ask-error'}
           onChange={(event) => setQuestion(event.target.value)}
+          onKeyDown={handleKeyDown}
         />
       </div>
       <button type="submit" className="button button--cta" aria-disabled={busy} aria-busy={busy}>
