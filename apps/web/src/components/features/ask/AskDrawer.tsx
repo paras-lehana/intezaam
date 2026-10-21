@@ -6,7 +6,9 @@
  * booking, payment or legal advice, provenance on every answer, and proposed changes shown
  * as a diff with Apply; Escape closes the tool and returns focus to its button. Boundary:
  * rules answer common questions on the server first and the model handles the rest;
- * nothing in the plan changes until the reader presses Apply.
+ * nothing in the plan changes until the reader presses Apply. The conversation list is a
+ * polite live region rendered from the start, so every answer — the first included — is
+ * announced as it arrives.
  */
 import type { ReactElement } from 'react';
 import type { PanelProps } from '../panel-props';
@@ -16,6 +18,8 @@ import { useCloseOnEscape } from '../what-if/use-close-on-escape';
 import { useAsk } from './use-ask';
 import '../what-if/what-if.css';
 import './ask.css';
+
+export const CONVERSATION_LABEL = 'Conversation';
 
 export function AskDrawer({ plan, context, todayIso, onApplyPatch }: PanelProps): ReactElement {
   const rootRef = useCloseOnEscape<HTMLDivElement>();
@@ -30,20 +34,26 @@ export function AskDrawer({ plan, context, todayIso, onApplyPatch }: PanelProps)
         </p>
       </div>
       <div className="tool-body">
-        {chat.turns.length === 0 ? null : (
-          <ol className="plain-list ask-thread" role="list" aria-live="polite">
-            {chat.turns.map((turn) => (
-              <AskTurnView
-                key={turn.id}
-                turn={turn}
-                plan={plan}
-                context={context}
-                todayIso={todayIso}
-                onApplyPatch={onApplyPatch}
-              />
-            ))}
-          </ol>
-        )}
+        {/* The live list exists before the first answer: a region inserted together with its
+            text is not announced, so the first reply would otherwise be silent. */}
+        <ol
+          className="plain-list ask-thread"
+          role="list"
+          aria-label={CONVERSATION_LABEL}
+          aria-live="polite"
+          aria-relevant="additions"
+        >
+          {chat.turns.map((turn) => (
+            <AskTurnView
+              key={turn.id}
+              turn={turn}
+              plan={plan}
+              context={context}
+              todayIso={todayIso}
+              onApplyPatch={onApplyPatch}
+            />
+          ))}
+        </ol>
         <AskForm busy={chat.busy} error={chat.error} onAsk={chat.ask} />
       </div>
     </div>

@@ -1,11 +1,12 @@
 /**
  * Offline barrel (server-only, re-exported from the package root): the twin of every GenAI
- * job, returning the same model-output shapes with no network (synthesis §5).
+ * job, returning the same model-output shapes with no network (GENAI_ARCHITECTURE.md).
  *
  * Responsibility: export the twins (`readBriefOffline`, `narrateOffline`,
- * `compareQuotesOffline`, `draftOffline`, `askOffline`, plus `askByRules` for rule-first
- * answers) and the few helpers the server needs; vocabulary tables and template internals
- * stay private. Boundary: pure code; the web never bundles this module.
+ * `compareQuotesOffline`, `draftOffline`, `askOffline`, plus `askByRules` for the refusals
+ * and change requests no model may override, and `answerByIntent` for a code-computed hint)
+ * and the few helpers the server needs; vocabulary tables and template internals stay
+ * private. Boundary: pure code; the web never bundles this module.
  */
 export { askByRules, askOffline, REFUSAL_ANSWERS } from './ask.js';
 export { parseAskCommand } from './ask-commands.js';

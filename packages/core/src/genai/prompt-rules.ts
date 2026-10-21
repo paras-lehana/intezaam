@@ -1,5 +1,5 @@
 /**
- * Rules and blocks shared by every GenAI prompt (synthesis §5).
+ * Rules and blocks shared by every GenAI prompt (GENAI_ARCHITECTURE.md).
  *
  * Responsibility: the system rules each job starts from — Indian context, "GenAI reads and
  * writes; code decides", no invented money, dates, counts, names, phones or links, no
@@ -32,7 +32,7 @@ export const BASE_RULES: readonly string[] = [
 const KEEP_KEYS_RULE = 'Keep ids, enum values and JSON keys in English.';
 
 /**
- * Hindi typed in Roman letters, the way the family wrote their brief (research note 09 §5.2.7).
+ * Hindi typed in Roman letters, the way the family wrote their brief.
  * Devanagari is ruled out because the draft check expects the Latin script for language 'en'.
  */
 export const HINGLISH_RULE =

@@ -93,7 +93,7 @@ describe('buildPlan on every sample persona', () => {
     const sixtieth = sample('chennai-60th');
     const plan = planOf(sixtieth);
     expect(plan.functions.map((fn) => fn.functionKind)).toEqual(sixtieth.functions);
-    // 04 §5.2: "2–3 months (D); fix the date with a priest".
+    // The 60th lead time: "2–3 months (D); fix the date with a priest".
     const priest = plan.vendors.find((vendor) => vendor.vendorType === 'pandit');
     const lead = daysBetweenIso(priest?.bookByIso ?? TODAY, sixtieth.dateIso ?? TODAY) ?? 0;
     expect(lead).toBeGreaterThanOrEqual(monthsToDays(2));

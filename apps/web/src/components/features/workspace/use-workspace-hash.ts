@@ -14,7 +14,7 @@ import {
   planAnchorFromHash,
 } from '../panel-props';
 
-/** The two tools reachable from every tab (synthesis §7.3). */
+/** The two tools reachable from every tab. */
 export const WORKSPACE_TOOLS = ['what-if', 'ask'] as const;
 
 export type WorkspaceTool = (typeof WORKSPACE_TOOLS)[number];

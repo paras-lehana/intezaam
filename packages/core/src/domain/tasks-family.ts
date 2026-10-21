@@ -2,7 +2,7 @@
  * Family-function task templates (engagement, anniversary, griha pravesh, puja, naming,
  * baby shower, retirement).
  *
- * Responsibility: the owner's planner checklists for smaller family functions (01 §3.3),
+ * Responsibility: the owner's planner checklists for smaller family functions,
  * with kind-specific tasks for priests, samagri and rings. Every lead time here is the
  * owner's default (grade D). Boundary: templates only.
  */

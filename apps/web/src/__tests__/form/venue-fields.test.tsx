@@ -42,8 +42,8 @@ describe('VenueFields', () => {
     expect(screen.getByRole('group', { name: 'Venue setting' })).toHaveAccessibleDescription(
       FIELD_MESSAGES.venue,
     );
-    expect(screen.getByRole('group', { name: 'Guests from out of town' })).toHaveAccessibleDescription(
-      FIELD_MESSAGES.travel,
-    );
+    expect(
+      screen.getByRole('group', { name: 'Guests from out of town' }),
+    ).toHaveAccessibleDescription(FIELD_MESSAGES.travel);
   });
 });

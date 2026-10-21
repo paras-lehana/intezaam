@@ -2,10 +2,11 @@
  * Responsibility: Ask Intezaam — an answer cites the plan sections it used (each linking to
  * its tab), a proposed change is shown as a diff and applied ONLY when Apply is pressed, a
  * refusal is explained in plain words, an empty question or a server error is announced,
- * and the example chips ask straight away. Boundary: replies are core's offline twin
- * (`askOffline`) for the same sample plan; only the network is stubbed.
+ * and the first answer lands in a live list that was already there (the example chips are in
+ * ask-examples.test.tsx). Boundary: replies are core's
+ * offline twin (`askOffline`) for the same sample plan; only the network is stubbed.
  */
-import { render, screen } from '@testing-library/react';
+import { render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 import {
@@ -13,7 +14,7 @@ import {
   SECTION_LABELS,
   SECTION_TABS,
 } from '../../../components/features/ask/ask-copy';
-import { AskDrawer } from '../../../components/features/ask/AskDrawer';
+import { AskDrawer, CONVERSATION_LABEL } from '../../../components/features/ask/AskDrawer';
 import { EMPTY_QUESTION } from '../../../components/features/ask/use-ask';
 import { provenanceText } from '../../../components/features/common/ProvenanceBadge';
 import { describePatch } from '../../../components/features/what-if/describe-patch';
@@ -23,9 +24,14 @@ import { OFFLINE_PROVENANCE, askReply, samplePanel } from '../panel-fixtures';
 /** HTTP status the server sends when the AI rate limit is hit. */
 const TOO_MANY_REQUESTS = 429;
 
+/** The question box, by role: the conversation list's own label also starts "Your question". */
+function questionBox(): HTMLElement {
+  return screen.getByRole('textbox', { name: /^Your question/ });
+}
+
 async function ask(question: string): Promise<void> {
   const user = userEvent.setup();
-  await user.type(screen.getByLabelText(/Your question/), question);
+  await user.type(questionBox(), question);
   await user.click(screen.getByRole('button', { name: 'Ask' }));
 }
 
@@ -66,7 +72,7 @@ describe('AskDrawer', () => {
       );
     }
     expect(screen.getByText(provenanceText('ready', OFFLINE_PROVENANCE))).toBeInTheDocument();
-    expect(screen.getByLabelText(/Your question/)).toHaveValue('');
+    expect(questionBox()).toHaveValue('');
   });
 
   it('explains a refusal in plain words', async () => {
@@ -96,20 +102,19 @@ describe('AskDrawer', () => {
     render(<AskDrawer {...samplePanel('bengaluru-birthday').props} />);
     await ask('What should I do first?');
     expect(await screen.findByRole('alert')).toHaveTextContent(message);
-    expect(screen.getByLabelText(/Your question/)).toHaveValue('What should I do first?');
+    expect(questionBox()).toHaveValue('What should I do first?');
   });
 
-  it('asks an example question straight away', async () => {
+  it('announces the first answer: the live list is there before any question', async () => {
     const setup = samplePanel('jaipur-wedding');
-    const example = '50 log kam karo';
-    const reply = askReply(example, setup);
-    const fetchMock = stubFetch(jsonResponse(reply));
+    const reply = askReply('What should I do first?', setup);
+    stubFetch(jsonResponse(reply));
     render(<AskDrawer {...setup.props} />);
-    await userEvent.setup().click(screen.getByRole('button', { name: example }));
-    expect(await screen.findByText(reply.answer)).toBeInTheDocument();
-    expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).toMatchObject({
-      question: example,
-    });
-    expect(reply.patch).toBeDefined();
+    const thread = screen.getByRole('list', { name: CONVERSATION_LABEL });
+    expect(thread).toHaveAttribute('aria-live', 'polite');
+    expect(thread).toBeEmptyDOMElement();
+    await ask('What should I do first?');
+    expect(await within(thread).findByText(reply.answer)).toBeInTheDocument();
+    expect(screen.getByRole('list', { name: CONVERSATION_LABEL })).toBe(thread);
   });
 });

@@ -49,7 +49,7 @@ export interface ClassifiedContext {
   readonly tier: CityTier;
   readonly tierSource: TierSource;
   readonly anchor: AnchorCity | null;
-  /** The tier caterers price at; two anchor cities cater as metros (09 Gap 2 §2.4). */
+  /** The tier caterers price at; two anchor cities cater as metros. */
   readonly cateringTier: CityTier;
   readonly scale: ScaleBand;
   readonly dateMode: TimelineMode;

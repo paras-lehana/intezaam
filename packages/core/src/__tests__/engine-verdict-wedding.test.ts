@@ -1,5 +1,5 @@
 /**
- * Tests for engine/verdict-wedding.ts — the wedding-rows money verdict (VER-M, 09 Gap 2 §2.4).
+ * Tests for engine/verdict-wedding.ts — the wedding-rows money verdict (VER-M).
  *
  * Responsibility: prove event spend excludes jewellery, outfits and rooms; the band and the
  * caterer class follow classifyWeddingSpend (the same comparison the engine traces); the

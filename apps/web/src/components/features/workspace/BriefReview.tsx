@@ -4,13 +4,17 @@
  * Responsibility: show the one-line understanding, each filled field as a chip, the
  * essentials still to answer, who read it (Gemini or the offline reader), and two choices
  * — add these to the form, or set them aside. Focus moves to the heading when a review
- * arrives, so keyboard and screen-reader users land on it. Boundary: the page decides what
- * confirming does; this component only asks.
+ * arrives, so keyboard and screen-reader users land on it; both buttons remove the review,
+ * so each hands focus on — confirming to the first question still open, setting aside back
+ * to the brief text — instead of letting it fall to the page. Boundary: the page decides
+ * what confirming does; this component only asks and places focus after it.
  */
 import { type ReactElement, useEffect, useRef } from 'react';
+import { flushSync } from 'react-dom';
 import type { BriefResponse } from '@intezaam/core/schemas';
+import { focusBriefInput, focusPlannerField } from '../../form';
 import { ProvenanceBadge } from '../common/ProvenanceBadge';
-import { briefChips, missingPrompts } from './brief-fill';
+import { briefChips, missingPrompts, nextFieldAfterBrief } from './brief-fill';
 
 export interface BriefReviewProps {
   readonly review: BriefResponse;
@@ -32,6 +36,19 @@ export function BriefReview({ review, onConfirm, onDismiss }: BriefReviewProps):
   useEffect(() => {
     headingRef.current?.focus();
   }, [review]);
+
+  // flushSync: the page removes this review and fills the form in the same update, so the
+  // field to focus exists (and the pressed button is gone) by the time focus moves.
+  function handleConfirm(): void {
+    const next = nextFieldAfterBrief(review.missing);
+    flushSync(onConfirm);
+    focusPlannerField(next);
+  }
+
+  function handleDismiss(): void {
+    flushSync(onDismiss);
+    focusBriefInput();
+  }
 
   return (
     <section className="brief-review card" aria-labelledby={HEADING_ID}>
@@ -63,11 +80,11 @@ export function BriefReview({ review, onConfirm, onDismiss }: BriefReviewProps):
       )}
       <div className="brief-review__actions">
         {chips.length === 0 ? null : (
-          <button type="button" className="button button--cta" onClick={onConfirm}>
+          <button type="button" className="button button--cta" onClick={handleConfirm}>
             {CONFIRM_BRIEF}
           </button>
         )}
-        <button type="button" className="button button--ghost" onClick={onDismiss}>
+        <button type="button" className="button button--ghost" onClick={handleDismiss}>
           {DISMISS_BRIEF}
         </button>
       </div>

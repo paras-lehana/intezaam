@@ -4,14 +4,13 @@
  * Responsibility: prove the vendor list follows functions, rites, officiants, tasks and
  * choices (alcohol, open air, public premises, crowd size, planner), drops the venue at home
  * and switched-off lines, is ordered by group; each vendor's budget slice adds up to its
- * line; book-by dates come from the vendor's task or its capped lead; questions add context;
- * and the Maps link never names a business. Boundary: expectations derive from the tables.
+ * line, except the hotel, which is paid for the priced rooms; book-by dates come from the
+ * vendor's task or its capped lead; questions add context; and the Maps link never names a
+ * business. Boundary: expectations derive from the tables.
  */
 import { describe, expect, it } from 'vitest';
 import { VENDOR_PLAYBOOK } from '../domain/vendor-playbook.js';
 import { VENDOR_GROUPS, VENDOR_PROFILES, type VendorType } from '../domain/vendors.js';
-import { buildBudget } from '../engine/budget.js';
-import { computeShares } from '../engine/budget-shares.js';
 import { buildTimeline } from '../engine/timeline.js';
 import { createTraceLog } from '../engine/trace.js';
 import { buildVendors, neededVendors } from '../engine/vendors.js';
@@ -20,18 +19,19 @@ import type { EventContext } from '../schemas/context.js';
 import {
   birthday,
   community,
+  coreOf,
   homePuja,
   normalised,
   undated,
   wedding,
 } from './fixtures/engine-contexts.js';
 
+/** The vendor list sized from the engine's own money core (budget lines and priced rooms). */
 function vendorsFor(context: EventContext): ReturnType<typeof buildVendors> {
-  const ctx = normalised(context);
+  const core = coreOf(context);
   const trace = createTraceLog();
-  const { budget } = buildBudget(ctx, computeShares(ctx), trace);
-  const timeline = buildTimeline(ctx, [], trace);
-  return buildVendors(ctx, budget, timeline.tasks, trace);
+  const timeline = buildTimeline(core.ctx, [], trace);
+  return buildVendors(core.ctx, core, timeline.tasks, trace);
 }
 
 function typesFor(context: EventContext): VendorType[] {
@@ -80,14 +80,22 @@ describe('buildVendors', () => {
   });
 
   it('splits each budget line among its vendors so the slices add up to the line', () => {
-    const ctx = normalised(wedding());
-    const { budget } = buildBudget(ctx, computeShares(ctx), createTraceLog());
+    const { budget } = coreOf(wedding());
     const vendors = vendorsFor(wedding());
-    for (const line of budget.lines) {
+    // The guest-rooms line is the one exception: the hotel is paid for the priced rooms.
+    for (const line of budget.lines.filter((l) => l.category !== 'accommodation')) {
       const sharing = vendors.filter((v) => v.budgetCategory === line.category);
       if (sharing.length === 0) continue;
       expect(sharing.reduce((sum, v) => sum + (v.budgetInr ?? 0), 0)).toBe(line.amountInr);
     }
+  });
+
+  it('pays the hotel the priced rooms (CST-05), not its share of a short guest-rooms line', () => {
+    const { costCheck } = coreOf(wedding());
+    const hotel = vendorsFor(wedding()).find((v) => v.vendorType === 'hotel');
+    expect(costCheck.roomsInr).toBeGreaterThan(0);
+    expect(hotel?.budgetInr).toBe(costCheck.roomsInr);
+    expect(hotel?.payments.reduce((sum, p) => sum + p.amountInr, 0)).toBe(costCheck.roomsInr);
   });
 
   it('gives a vendor with no budget line no payments of its own', () => {

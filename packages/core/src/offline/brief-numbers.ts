@@ -1,6 +1,6 @@
 /**
  * Brief number fields: guests, budget, households and days, read by code from the number
- * mentions, each with the spans that prove it (research note 09 §5.2.1).
+ * mentions, each with the spans that prove it.
  *
  * Responsibility: one reader per number field with its limits — guests summed over people
  * nouns (ranges plan high), budget from the first money phrase (ranges plan low), households

@@ -1,5 +1,5 @@
 /**
- * Request schemas — the only shapes the API accepts (SPEC-API "Server routes").
+ * Request schemas — the only shapes the API accepts.
  *
  * Responsibility: validate every inbound payload identically in the web client and the
  * server. All objects are strict, every string is length-bounded (which also bounds

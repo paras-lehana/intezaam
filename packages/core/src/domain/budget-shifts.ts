@@ -50,7 +50,7 @@ export const DESTINATION_SHIFT_BP: SplitBp = {
 export const OUTSTATION_ACCOMMODATION_BP = range(800, 1_000);
 export const OUTSTATION_ACCOMMODATION_DEFAULT_BP = 900;
 
-/** BUD-05: each top-3 priority gains up to 3 points (03 §3 principle 6). */
+/** BUD-05: each top-3 priority gains up to 3 points. */
 export const PRIORITY_SHIFT_BP = 300;
 
 /** BUD-06: jewellery is 15% of national wedding spend (CAIT), so core lines scale by 0.85. */

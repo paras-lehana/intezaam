@@ -5,7 +5,7 @@
  * Responsibility: a headline and summary from the verdict's own reasons and the top risk;
  * up to five reasons, each the template sentence for its rule ("<rule title>: <effect>");
  * the three most urgent tasks as next actions; and eight ideas chosen from the library by
- * the code-computed constraints. Every number comes from the plan, so the text is faithful
+ * the code-computed constraints and the event's scope (its tradition, occasion and cut line). Every number comes from the plan, so the text is faithful
  * by construction — and the faithfulness guard uses these sentences as its fallbacks.
  * Boundary: pure; English templates (the provenance badge says "Offline planner").
  */
@@ -19,10 +19,11 @@ import type { PlanTask } from '../schemas/plan-time.js';
 import type { Plan } from '../schemas/plan.js';
 import type { TraceItem } from '../schemas/trace.js';
 import { formatShortDate } from './describe-brief.js';
-import { selectIdeas } from './ideas/select-ideas.js';
+import { ideaScopeFor, type IdeaScope } from './ideas/idea-scope.js';
+import { OFFLINE_IDEA_COUNT, selectIdeas } from './ideas/select-ideas.js';
 import { nextTasks } from './task-order.js';
 
-/** Synthesis §5 job 2: the narrative cites the top five trace items and three next actions. */
+/** GENAI_ARCHITECTURE.md, job 2: the narrative cites the top five trace items and three next actions. */
 const MAX_REASONS = 5;
 const MAX_ACTIONS = 3;
 
@@ -76,8 +77,8 @@ function summaryOf(plan: Plan): string {
   return clipText(parts.filter((part) => part !== undefined).join(' '), MAX_SUMMARY_CHARS);
 }
 
-function ideasFor(constraints: IdeaConstraints): NarrationModelOutput['ideas'] {
-  return selectIdeas(constraints).map((idea) => ({
+function ideasFor(constraints: IdeaConstraints, scope: IdeaScope): NarrationModelOutput['ideas'] {
+  return selectIdeas(constraints, OFFLINE_IDEA_COUNT, scope).map((idea) => ({
     category: idea.category,
     title: idea.title,
     description: idea.description,
@@ -103,6 +104,6 @@ export function narrateOffline(plan: Plan, context: EventContext): NarrationMode
     actions: nextTasks(plan)
       .slice(0, MAX_ACTIONS)
       .map((task) => ({ taskId: task.id, text: actionTemplate(task) })),
-    ideas: ideasFor(ideaConstraintsFor(plan, context)),
+    ideas: ideasFor(ideaConstraintsFor(plan, context), ideaScopeFor(plan, context)),
   };
 }

@@ -4,7 +4,7 @@
  *
  * Responsibility: compose the plan from its parts (context echo, verdict, money, time,
  * vendors, people, safety, community) plus the trace and the deduplicated sources every
- * trace item cites (SPEC-API `buildPlan`). Boundary: shapes only; `buildPlan` parses its
+ * trace item cites. Boundary: shapes only; `buildPlan` parses its
  * result through `planSchema` before returning it.
  */
 import { z } from 'zod';

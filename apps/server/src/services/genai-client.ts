@@ -55,7 +55,7 @@ export interface Generated<T> {
   readonly ms: number;
 }
 
-/** Why a response came from the offline twin: core's OFFLINE_REASONS, the one list (addendum 13). */
+/** Why a response came from the offline twin: core's OFFLINE_REASONS, the one list. */
 export type FallbackReason = OfflineReason;
 
 /** An AppError that also says why no model answered. */

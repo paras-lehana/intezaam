@@ -20,6 +20,9 @@ import {
 import type { NewGuest } from './use-guest-list';
 import { LabelledSelect } from './LabelledSelect';
 
+/** The name box: where focus goes when the last guest is removed or the list is cleared. */
+export const GUEST_NAME_ID = 'guest-name';
+
 export interface GuestAddFormProps {
   /** Weddings ask which side a guest is from. */
   readonly withSides: boolean;
@@ -73,9 +76,9 @@ export function GuestAddForm({ withSides, onAdd }: GuestAddFormProps): ReactElem
   return (
     <form className="guest-form" noValidate onSubmit={handleSubmit}>
       <div className="field guest-form__name">
-        <label htmlFor="guest-name">Name or family</label>
+        <label htmlFor={GUEST_NAME_ID}>Name or family</label>
         <input
-          id="guest-name"
+          id={GUEST_NAME_ID}
           type="text"
           autoComplete="off"
           value={name}

@@ -3,7 +3,7 @@
  *
  * Responsibility: tasks that only some traditions need — muhurat and pandit for Hindu
  * weddings, the gurdwara for the Anand Karaj, the qazi and paperwork for a Nikah, the
- * church and banns for a Christian wedding (04 §4.6–4.8). Boundary: templates only; the
+ * church and banns for a Christian wedding. Boundary: templates only; the
  * condition on each row decides whether it enters a plan.
  */
 import type { TaskTemplate } from './task-types.js';

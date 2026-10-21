@@ -3,12 +3,13 @@
  *
  * Responsibility: the lakh/crore units Indian sources quote budgets in, a typed range,
  * helpers that keep the tables readable (`lakh(28)` instead of `2_800_000`), the factor a
- * published percentage change multiplies by, and the range text that copy quoting a table
- * interpolates, so a number lives in one table instead of in the table and its prose.
+ * published percentage change multiplies by, the percentages a factor or a basis-point range
+ * reads as, and the range text that copy quoting a table interpolates, so a number lives
+ * in one table instead of in the table and its prose.
  * Boundary: plain arithmetic on constants; no rounding policy for computed amounts.
  */
 
-/** ₹1 lakh = ₹1,00,000; every wedding source in research note 04 quotes totals in lakh. */
+/** ₹1 lakh = ₹1,00,000; every wedding source in the register quotes totals in lakh. */
 export const LAKH_INR = 100_000;
 
 /** ₹1 crore = 100 lakh. */
@@ -64,6 +65,28 @@ const PER_HUNDRED = 100;
  */
 export function percentFactor(changePct: number): number {
   return 1 + changePct / PER_HUNDRED;
+}
+
+/**
+ * A multiplier as the whole percentage a rule quotes, so copy reads the factor the engine uses.
+ * @example
+ * factorAsPercent(0.95); // 95
+ * factorAsPercent(1.1); // 110
+ */
+export function factorAsPercent(factor: number): number {
+  return Math.round(factor * PER_HUNDRED);
+}
+
+/** Budget tables are in basis points; 100 bp is one percentage point. */
+const BASIS_POINTS_PER_PERCENT = 100;
+
+/**
+ * A basis-point range as percentage points, for copy that quotes a budget-share table.
+ * @example
+ * bpAsPercent(range(800, 1_000)); // { min: 8, max: 10 }
+ */
+export function bpAsPercent(band: NumberRange): NumberRange {
+  return { min: band.min / BASIS_POINTS_PER_PERCENT, max: band.max / BASIS_POINTS_PER_PERCENT };
 }
 
 /** `en-IN` grouping so quoted ranges read the way the sources print them (₹300–1,000). */

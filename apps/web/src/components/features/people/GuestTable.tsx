@@ -2,11 +2,15 @@
  * The guest list as a table: name, side, people, food and RSVP, with a remove button.
  *
  * Responsibility: show the parties with an RSVP picker per row (a real labelled select) and
- * a labelled remove button. Long lists show the first rows and say how many more there are.
- * Boundary: display and per-row edits; counting happens in the list hook.
+ * a labelled remove button. Removing a row hands focus to the next row's Remove button (or
+ * the name box once the list is empty), never to the page. Long lists show the first rows
+ * and say how many more there are. Boundary: display and per-row edits; counting happens in
+ * the list hook, and the list announces what was removed.
  */
 import type { ReactElement } from 'react';
+import { flushSync } from 'react-dom';
 import { TableScroll } from '../common/TableScroll';
+import { GUEST_NAME_ID } from './GuestAddForm';
 import {
   GUEST_DIET_LABELS,
   GUEST_SIDE_LABELS,
@@ -21,11 +25,25 @@ export interface GuestTableProps {
   readonly guests: readonly Guest[];
   readonly withSides: boolean;
   readonly onStatus: (id: string, status: GuestStatus) => void;
-  readonly onRemove: (id: string) => void;
+  /** Removes the party; the table then moves focus (the pressed button is gone). */
+  readonly onRemove: (guest: Guest) => void;
 }
 
 /** Efficiency: a phone keeps 200 rows smooth; the CSV export always carries every row. */
 export const VISIBLE_GUEST_ROWS = 200;
+
+function removeButtonId(guest: Guest): string {
+  return `guest-remove-${guest.id}`;
+}
+
+/**
+ * Where focus goes after a row is removed: the next row's Remove button, else the previous
+ * row's, else (the list is now empty) the name box of "Add a guest".
+ */
+function focusAfterRemoving(guests: readonly Guest[], index: number): string {
+  const neighbour = guests[index + 1] ?? guests[index - 1];
+  return neighbour === undefined ? GUEST_NAME_ID : removeButtonId(neighbour);
+}
 
 export function GuestTable({
   guests,
@@ -34,6 +52,14 @@ export function GuestTable({
   onRemove,
 }: GuestTableProps): ReactElement {
   const shown = guests.slice(0, VISIBLE_GUEST_ROWS);
+
+  function remove(guest: Guest, index: number): void {
+    const next = focusAfterRemoving(guests, index);
+    // flushSync: the row (and the button that had focus) is gone before focus moves on.
+    flushSync(() => onRemove(guest));
+    document.getElementById(next)?.focus();
+  }
+
   return (
     <TableScroll label="Your guest list">
       <table className="people-table guest-table">
@@ -51,7 +77,7 @@ export function GuestTable({
           </tr>
         </thead>
         <tbody>
-          {shown.map((guest) => (
+          {shown.map((guest, index) => (
             <tr key={guest.id}>
               <th scope="row">{guest.name}</th>
               {withSides ? <td>{GUEST_SIDE_LABELS[guest.side]}</td> : null}
@@ -77,9 +103,10 @@ export function GuestTable({
               </td>
               <td>
                 <button
+                  id={removeButtonId(guest)}
                   type="button"
                   className="button button--ghost"
-                  onClick={() => onRemove(guest.id)}
+                  onClick={() => remove(guest, index)}
                 >
                   Remove <span className="visually-hidden">{guest.name}</span>
                 </button>

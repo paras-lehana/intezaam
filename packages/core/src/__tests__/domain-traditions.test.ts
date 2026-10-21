@@ -12,7 +12,7 @@ import { TRADITION_PROFILES, TRADITIONS } from '../domain/traditions.js';
 import { OFFICIANT_VENDORS } from '../domain/vendors.js';
 import { hhmmSchema } from '../schemas/common.js';
 
-/** SPEC-MVP item 12: the product says "9 traditions" — nine named ones, plus civil/other. */
+/** The product says "9 traditions" — nine named ones, plus civil/other. */
 const NAMED_TRADITIONS = 9;
 
 describe('tradition profiles', () => {

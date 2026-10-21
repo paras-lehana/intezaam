@@ -2,12 +2,23 @@
  * Rule documentation, part 3: vendors (VEN), headcount (HC), food, space, diet and
  * accessibility (ACC).
  *
- * Responsibility: the title, summary, grade and sources of each rule in synthesis
- * §4.6–4.7. Boundary: documentation only; the logic lives in the engines.
+ * Responsibility: the title, summary, grade and sources of each VEN, HC, FOOD, SPACE,
+ * DIET and ACC rule. Summaries that quote a number read it from its domain table. Boundary:
+ * documentation only; the logic lives in the engines.
  */
+import {
+  COOK_FOR_FACTOR,
+  PARENTS_MISSING_RSVPS_PCT,
+  PLATE_GUARANTEE_FACTOR,
+  RETURN_GIFT_BUFFER_PCT,
+  WASTE_WARNING_FACTOR,
+  WEDDING_FOOD_WASTE_PCT,
+} from './headcount.js';
 import type { RuleInfo } from './rule-info.js';
 import { ruleInfo } from './rule-info.js';
 import type { VendorPeopleRuleId } from './rule-ids.js';
+import { factorAsPercent, rangeText } from './units.js';
+import { OBSERVED_ADVANCE_PCT } from './vendor-playbook.js';
 
 export const VENDOR_PEOPLE_RULES: Readonly<Record<VendorPeopleRuleId, RuleInfo>> = {
   'VEN-01': ruleInfo(
@@ -30,7 +41,7 @@ export const VENDOR_PEOPLE_RULES: Readonly<Record<VendorPeopleRuleId, RuleInfo>>
   ),
   'VEN-04': ruleInfo(
     'Payment milestones',
-    'No industry standard exists; we assume 30% on booking, 40% a month before and 30% on delivery.',
+    `No industry standard exists (listings ask ${rangeText(OBSERVED_ADVANCE_PCT)}% up front); we assume 30% on booking, 40% a month before and 30% on delivery.`,
     'D',
     ['S-VENDOR-ADVANCE-2026', 'S-LAWRATO-ND'],
   ),
@@ -48,13 +59,13 @@ export const VENDOR_PEOPLE_RULES: Readonly<Record<VendorPeopleRuleId, RuleInfo>>
   ),
   'HC-02': ruleInfo(
     'Plates',
-    'Guarantee 95% of expected plates and cook for 105%; above 110% expect waste.',
+    `Guarantee ${factorAsPercent(PLATE_GUARANTEE_FACTOR)}% of expected plates and cook for ${factorAsPercent(COOK_FOR_FACTOR)}%; above ${factorAsPercent(WASTE_WARNING_FACTOR)}% expect waste, as ${rangeText(WEDDING_FOOD_WASTE_PCT)}% of wedding food is already thrown away.`,
     'C',
     ['S-HASSANCHEF-2026', 'S-DTE-2018'],
   ),
   'HC-03': ruleInfo(
     "Kids' party counts",
-    'Order 10–15% more return gifts than confirmed children; most hosts miss some replies.',
+    `Order ${rangeText(RETURN_GIFT_BUFFER_PCT)}% more return gifts than confirmed children; in one poll ${PARENTS_MISSING_RSVPS_PCT}% of hosts did not hear back from every guest.`,
     'C',
     ['S-CHARMBOX-2026', 'S-QUIRKS-ND'],
   ),

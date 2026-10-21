@@ -1,5 +1,5 @@
 /**
- * Feature tiles, part 3: Community and Share (synthesis §3 F, H, I, K).
+ * Feature tiles, part 3: Community and Share.
  *
  * Responsibility: the user-facing title, one-line description and target of each tile in
  * these two groups. Boundary: copy only; every claim describes what the app does.

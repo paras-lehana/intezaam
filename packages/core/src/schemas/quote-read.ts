@@ -1,5 +1,5 @@
 /**
- * Contract for POST /api/quotes/read (GenAI job 3a, research note 09 Gap 4 §4.2.5).
+ * Contract for POST /api/quotes/read (GenAI job 3a).
  *
  * Responsibility: the request — one quote file whose bytes must carry the signature of the
  * declared type (`quoteFileSchema`: PDF, JPEG, PNG or WebP, at most 2 MiB) — and the response:

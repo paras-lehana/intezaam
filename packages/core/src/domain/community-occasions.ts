@@ -1,5 +1,5 @@
 /**
- * Community occasions in v1 (research note 09 §5.5): thirteen data rows on top of the five
+ * Community occasions in v1: thirteen data rows on top of the five
  * activity-shaped community kinds.
  *
  * Responsibility: for each occasion, the community kind it plans as (pandal, society
@@ -187,7 +187,7 @@ export const COMMUNITY_OCCASION_PROFILES: Readonly<Record<CommunityOccasion, Occ
     sourceIds: ['S-NOISE-RULE5-ND'],
     confidence: 'A',
   },
-  // 80G/12A tax status for donations was not researched (04 §6.4), so it is not claimed.
+  // 80G/12A tax status for donations was not researched, so it is not claimed.
   'charity-drive': {
     label: 'Charity or fundraiser',
     labelHi: 'चैरिटी या धन संग्रह',

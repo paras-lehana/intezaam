@@ -10,6 +10,16 @@
   gap: var(--space-4);
 }
 
+/* Empty before the first question: out of the layout's flow, but still in the
+   accessibility tree, so the live region is ready when the first answer lands. */
+.ask-thread:empty {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
 .ask-turn {
   display: grid;
   gap: var(--space-2);

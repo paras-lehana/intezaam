@@ -2,11 +2,11 @@
  * Catering prices (CST-01…04) — per head by event kind, city tier, service level, diet and meal.
  *
  * Responsibility: apply the catering tables in domain/catering.ts — the per-plate grid (tier
- * band × caterer class, 09 Gap 2 §2.5), the party rate for children's parties
+ * band × caterer class), the party rate for children's parties
  * (catering-basis.ts), the service charge (CST-02, service only — GST is added once, CST-06),
  * meal pricing per function (CST-04), the off-peak factor (CST-03), the bottom-up catering
- * range and the cheapest-credible catering floor the wedding money verdict starts from (Gap 2
- * §2.4). Boundary: estimates, never quotes; the tables live in the domain, this module only
+ * range and the cheapest-credible catering floor the wedding money verdict starts from.
+ * Boundary: estimates, never quotes; the tables live in the domain, this module only
  * computes; the cost check and verdict read these numbers; community food is priced in
  * community-money.ts.
  */
@@ -134,7 +134,7 @@ export function cateringRange(ctx: ClassifiedContext, level: CateringLevel): Inr
 }
 
 /**
- * Gap 2 §2.4 rule 2: food for every function at the cheapest credible plate (meal-weighted,
+ * Food for every function at the cheapest credible plate (meal-weighted,
  * non-veg × 1.35, plus GST, no service charge), in whole rupees.
  * @example
  * cateringFloorInr(jaipurCtx); // Σ expected × weight × ₹500 × 1.05

@@ -1,5 +1,5 @@
 /**
- * Prompt for GenAI job 4, message drafts (synthesis §5): vendor enquiry, invitation, RSVP
+ * Prompt for GenAI job 4, message drafts (GENAI_ARCHITECTURE.md): vendor enquiry, invitation, RSVP
  * reminder, volunteer brief, thank-you and plan summary, in the user's language and tone.
  *
  * Responsibility: hand the model only the draft facts (no budget in a vendor enquiry, no

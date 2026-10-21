@@ -2,9 +2,10 @@
  * Tests for the offline twin of Ask (GenAI job 5).
  *
  * Responsibility: refusals come first, then a validated change request, then an intent
- * answer; `askByRules` returns nothing when the model is needed and `askOffline` then points
- * to the What-if panel; every reply parses with the model-output schema. Boundary: plans
- * come from the real engine.
+ * answer; `askByRules` answers only refusals and change requests (a configured model answers
+ * everything else) and `askOffline` adds the intent answer, then points to the What-if
+ * panel; every reply parses with the model-output schema. Boundary: plans come from the
+ * real engine.
  */
 import { describe, expect, it } from 'vitest';
 import { askByRules, askOffline, REFUSAL_ANSWERS } from '../offline/ask.js';
@@ -29,8 +30,9 @@ describe('askByRules / askOffline', () => {
     expect(reply.answer).toContain('Press Apply');
   });
 
-  it('answers a common question by intent', () => {
-    expect(askByRules('kitne log aayenge?', plan, context, TODAY)?.sources).toEqual(['headcount']);
+  it('answers a common question by intent offline, and leaves it to a configured model', () => {
+    expect(askByRules('kitne log aayenge?', plan, context, TODAY)).toBeUndefined();
+    expect(askOffline('kitne log aayenge?', plan, context, TODAY).sources).toEqual(['headcount']);
   });
 
   it('leaves an open question to the model, and offline points to the What-if panel', () => {

@@ -53,7 +53,7 @@ export function partyBandFor(ctx: ClassifiedContext): PartyBand | null {
       ? bands.find((band) => band.setting === 'home')
       : (outside.find((band) => children <= band.guests.max) ?? outside.at(-1));
   if (chosen === undefined) return null;
-  // No Indian source covers teens: kids' bands × 1.2 (04 §5.2, grade D).
+  // No Indian source covers teens: kids' bands × 1.2 (grade D).
   const factor = ctx.kind === 'teen-birthday' ? TEEN_BAND_FACTOR : 1;
   const min = Math.round(chosen.inr.min * factor);
   return { band: chosen, min, max: Math.round((chosen.inr.max ?? chosen.inr.min) * factor) };
@@ -74,7 +74,7 @@ function weddingEstimate(ctx: ClassifiedContext): InrEstimate {
 }
 
 function bottomUpEstimate(ctx: ClassifiedContext): InrEstimate {
-  // A standard caterer is the typical class (Gap 2 §2.5: Lean and Balanced price standard).
+  // A standard caterer is the typical class (Lean and Balanced price standard).
   const catering = cateringRange(ctx, 'standard');
   // The base split's catering share: what such an event spends on food, before user toggles.
   const cateringBp = baseSplitFor(ctx.kind).shares.catering ?? BASIS_POINTS_TOTAL;

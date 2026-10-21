@@ -1,6 +1,6 @@
 /**
  * Draft facts for GenAI job 4: the only facts a vendor enquiry, invitation, RSVP reminder,
- * volunteer brief, thank-you or plan summary may use (synthesis §5 job 4).
+ * volunteer brief, thank-you or plan summary may use (GENAI_ARCHITECTURE.md, job 4).
  *
  * Responsibility: pick from the computed plan the event kind, date, city, guest count,
  * functions, the vendor's checklist questions and — for the family's own plan summary only —

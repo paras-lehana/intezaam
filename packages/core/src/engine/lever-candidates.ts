@@ -133,7 +133,7 @@ const offPeakDate: Candidate = ({ context, core }) => {
 
 const simplerCatering: Candidate = ({ context, core }) => {
   const cheaper = CHEAPER_LEVEL[core.money.level];
-  // A committee's food is its own line, never priced by caterer class (04 §6.4).
+  // A committee's food is its own line, never priced by caterer class.
   if (cheaper === null || moneyModelOf(core.ctx) === 'committee') return null;
   const saving = core.costCheck.cateringInr.mid - cateringRange(core.ctx, cheaper).mid;
   return {

@@ -2,7 +2,7 @@
  * The contract every workspace panel takes, and the anchors the plan page answers to.
  *
  * Responsibility: one props interface for the Overview, Money, Timeline, Vendors, People,
- * Ideas, Safety and Share panels (synthesis §7.3) — the computed plan, the context it came
+ * Ideas, Safety and Share panels — the computed plan, the context it came
  * from, today's date, a way to apply a typed change, and the AI narration with its state —
  * plus the closed list of `/plan#…` anchors the home page's feature tiles link to.
  * Boundary: types and ids only; panels and the plan page live with the features work.
@@ -30,7 +30,7 @@ export interface PanelProps {
   readonly hinglish?: boolean | undefined;
 }
 
-/** The eight workspace tabs, in tab order (synthesis §7.3). */
+/** The eight workspace tabs, in tab order. */
 export const WORKSPACE_TABS = [
   'overview',
   'money',

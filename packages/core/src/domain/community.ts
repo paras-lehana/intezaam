@@ -2,8 +2,8 @@
  * Community money and people (COM-01…05) — chanda, sponsors and volunteers.
  *
  * Responsibility: contribution rounding, flat-size weights for tiered contributions,
- * the volunteer roles with their ratios, and sponsor ideas for society festivals
- * (04 §6.4). Boundary: defaults the committee edits; the community engine computes.
+ * the volunteer roles with their ratios, and sponsor ideas for society festivals.
+ * Boundary: defaults the committee edits; the community engine computes.
  */
 import type { SourceId } from './sources.js';
 import type { Confidence } from './source-types.js';

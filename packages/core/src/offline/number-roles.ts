@@ -1,5 +1,5 @@
 /**
- * Number roles: decide what each number in a brief counts (research note 09 §5.2.1).
+ * Number roles: decide what each number in a brief counts.
  *
  * Responsibility: label every number phrase, first matching rule wins — 1 time ("11:30 pm",
  * "raat 11 baje"), 2 date (next to a month), 3 age ("7th", "saatvaan"), 4 guests (before a
@@ -77,7 +77,7 @@ const ORDINALS = new Map(
 
 const CLOCK = /^(\d{1,2}):(\d{2})$/;
 const HOURS_PER_HALF_DAY = 12;
-/** "raat 7–11 baje" is evening; "raat 1 baje" is after midnight (09 §5.2.1 rule 1). */
+/** "raat 7–11 baje" is evening; "raat 1 baje" is after midnight. */
 const NIGHT_FIRST_HOUR = 7;
 const LAST_CLOCK_HOUR = 23;
 const LAST_MINUTE = 59;

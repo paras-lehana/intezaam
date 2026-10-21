@@ -1,7 +1,7 @@
 /**
  * GST on event services (CST-06), after the rate changes effective 22 Sep 2025.
  *
- * Responsibility: the published service rates (04 §7) and the default rate for each budget
+ * Responsibility: the published service rates and the default rate for each budget
  * category used in budget arithmetic. Boundary: the real rate depends on the contract
  * (standalone, composite, specified premises), so every figure carries "depends on
  * contract"; categories without a researched rate return null and are flagged, not guessed.
@@ -122,7 +122,7 @@ export const GST_SERVICES: Readonly<Record<GstServiceKey, GstService>> = {
 };
 
 /**
- * Default service per category for budget arithmetic (04 §7 "default rates", grade D).
+ * Default service per category for budget arithmetic (default rates, grade D).
  * null = not researched (outfits, gifts, transport, rituals…): shown as "GST not estimated".
  */
 export const GST_SERVICE_BY_CATEGORY: Readonly<Record<BudgetCategory, GstServiceKey | null>> = {

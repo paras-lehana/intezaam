@@ -15,7 +15,9 @@ html {
   background: var(--color-bg);
   text-size-adjust: 100%;
   scroll-behavior: smooth;
-  /* Anchored headings and focused fields never hide under the sticky header. */
+  /* Anchored headings and focused fields never hide under the sticky header (WCAG 2.4.11).
+     The plan page pins more bands and adds to this: split.css (phone switch and action
+     bar) and tabs.css (wide tab bar); focus-not-obscured.test.ts checks the sums. */
   scroll-padding-top: calc(var(--header-height) + var(--space-4));
 }
 

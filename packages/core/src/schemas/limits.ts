@@ -38,13 +38,13 @@ export const MAX_HISTORY_TURNS = 4;
 /** About 120 words, with room for Indic scripts, which take more characters per word. */
 export const MAX_ANSWER_CHARS = 1_200;
 
-/** Eight functions cover the longest wedding sequences in research note 04 §4. */
+/** Eight functions cover the longest wedding sequences in domain/ceremonies.ts. */
 export const MAX_FUNCTIONS = 8;
 
 /** Top three priorities (BUD-05); more would dilute the shift to nothing. */
 export const MAX_PRIORITIES = 3;
 
-/** Five style chips keep ideas focused (synthesis feature #3). */
+/** Five style chips keep ideas focused (feature #3). */
 export const MAX_STYLE_TAGS = 5;
 
 export const MAX_CITY_CHARS = 60;

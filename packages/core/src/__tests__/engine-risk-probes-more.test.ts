@@ -2,11 +2,11 @@
  * Tests for engine/risk-probes-more.ts — the food, calendar and people risk probes.
  *
  * Responsibility: prove each probe raises its risk exactly when its cause is present, at the
- * right severity, and stays silent otherwise: Jain guests after sunset, a short food line
- * (medium beyond 10% of the estimate, info below), Chaturmas/Kharmas, festival clashes, a
- * missing rest day, silence zones, access needs, alcohol, big crowds, too few volunteers,
- * an estimated budget and charity receipts. Boundary: inputs come from riskInputsOf with
- * only the field under test changed.
+ * right severity, and stays silent otherwise: Jain guests after sunset, Chaturmas/Kharmas,
+ * festival clashes, a missing rest day, silence zones, access needs, alcohol, big crowds,
+ * too few volunteers, an estimated budget and charity receipts. Boundary: inputs come from
+ * riskInputsOf with only the field under test changed (the food and rooms gaps are tested
+ * with risk-probes-money.ts).
  */
 import { describe, expect, it } from 'vitest';
 import { MORE_PROBES } from '../engine/risk-probes-more.js';
@@ -32,16 +32,6 @@ describe('food probes', () => {
     const daytime = jaipur.timings.map((timing) => ({ ...timing, startHhmm: '12:00' }));
     expect(risk({ ...jaipur, timings: daytime }, 'risk-jain-sunset')).toBeUndefined();
     expect(risk(riskInputsOf(birthday()), 'risk-jain-sunset')).toBeUndefined();
-  });
-
-  it('rates a short food line medium beyond 10% of the estimate and info below it', () => {
-    expect(jaipur.costCheck.status).toBe('short');
-    expect(risk(jaipur, 'risk-catering-short')?.severity).toBe('medium');
-    const mid = jaipur.costCheck.cateringInr.mid;
-    const nearly = { ...jaipur.costCheck, gapInr: -Math.floor(mid / 20) };
-    expect(risk({ ...jaipur, costCheck: nearly }, 'risk-catering-short')?.severity).toBe('info');
-    const covered = { ...jaipur.costCheck, status: 'covered' as const };
-    expect(risk({ ...jaipur, costCheck: covered }, 'risk-catering-short')).toBeUndefined();
   });
 });
 

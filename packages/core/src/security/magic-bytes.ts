@@ -1,5 +1,5 @@
 /**
- * Quote-file contract and magic-byte check for `POST /api/quotes/read` (research note 09 Gap 4).
+ * Quote-file contract and magic-byte check for `POST /api/quotes/read`.
  *
  * Responsibility: accept one vendor quote as a PDF, JPEG, PNG or WebP (≤ 2 MiB decoded) and
  * prove the bytes are the type the browser claimed by reading their signature, so a renamed
@@ -19,10 +19,10 @@ export const QUOTE_FILE_TYPES = [
 
 export type QuoteFileType = (typeof QUOTE_FILE_TYPES)[number];
 
-/** 2 MiB decoded: sample quotes were 2–105 KB and phone photos a few hundred KB (09 §4.2.5). */
+/** 2 MiB decoded: sample quotes were 2–105 KB and phone photos a few hundred KB. */
 export const MAX_QUOTE_FILE_BYTES = 2 * 1024 * 1024;
 
-/** ceil(2 MiB ÷ 3) × 4 base64 characters (09 §4.2.5). */
+/** ceil(2 MiB ÷ 3) × 4 base64 characters. */
 export const MAX_QUOTE_FILE_BASE64_CHARS = Math.ceil(MAX_QUOTE_FILE_BYTES / 3) * 4;
 
 /** 16 characters decode to 12 bytes: the longest signature (WebP) ends at byte 12. */

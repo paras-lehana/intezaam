@@ -2,7 +2,8 @@
  * Home hero — the espresso cover with two gold glows, the wordmark and the ledger page.
  *
  * Responsibility: the page's one h1, the promise in one line, the two calls to action and
- * the trust points; the ruled ledger page (VerdictPreview) is the hero object. Boundary:
+ * the trust points; the ruled ledger page (VerdictPreview) is the hero object. The h1 takes
+ * focus from script after a page change (layout/RouteFocus), never from Tab. Boundary:
  * the glows are CSS gradients on the section (home.css); there is no motion here besides
  * the page's single stamp moment inside the preview.
  */
@@ -29,7 +30,7 @@ export function Hero(): ReactElement {
               इंतज़ाम
             </span>
           </p>
-          <h1 id="hero-heading" className="hero__title">
+          <h1 id="hero-heading" className="hero__title" tabIndex={-1}>
             Every arrangement, <em>one plan</em>.
           </h1>
           <p className="hero__lede">

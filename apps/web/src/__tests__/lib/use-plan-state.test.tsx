@@ -2,34 +2,27 @@
  * Responsibility: usePlanState — a submit shows the engine's plan at once (before any reply),
  * narration goes loading → ready, or offline when the server cannot be reached; a late
  * reply for an older plan is ignored; a `#plan=` link opens its plan on arrival; typed
- * changes re-plan or report why not; "continue" restores the last context.
+ * changes re-plan or report why not; "continue" restores the last context; every new plan
+ * version is announced, naming the change, even when the sentence repeats.
  * Boundary: fetch is stubbed with controllable replies; plans come from the engine.
  */
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { encodeContextForUrl } from '@intezaam/core/export';
-import { PATCH_FAILED_MESSAGE, PLAN_FRAGMENT_PREFIX, storeLastContext } from '../../lib/plan-state';
+import type { ContextPatch } from '@intezaam/core/schemas';
+import { describePatch } from '../../components/features/what-if/describe-patch';
+import {
+  PATCH_FAILED_MESSAGE,
+  PLAN_FRAGMENT_PREFIX,
+  planAnnouncement,
+  storeLastContext,
+} from '../../lib/plan-state';
 import { usePlanState } from '../../lib/use-plan-state';
 import { narrationFor, narrationResponseFor, samplePlan } from '../features/plan-fixtures';
-import { TEST_TODAY_ISO, jsonResponse } from '../helpers';
+import { TEST_TODAY_ISO, deferredFetch, jsonResponse } from '../helpers';
 
 const wedding = samplePlan('jaipur-wedding');
 const birthday = samplePlan('bengaluru-birthday');
-
-/** A fetch whose replies the test releases one at a time. */
-function deferredFetch(): { release: (index: number, response: Response) => void } {
-  const pending: ((response: Response) => void)[] = [];
-  vi.stubGlobal(
-    'fetch',
-    vi.fn<typeof fetch>(
-      () =>
-        new Promise<Response>((resolve) => {
-          pending.push(resolve);
-        }),
-    ),
-  );
-  return { release: (index, response) => pending[index]?.(response) };
-}
 
 afterEach(() => {
   window.history.replaceState(null, '', '#');
@@ -110,6 +103,26 @@ describe('usePlanState', () => {
     });
     expect(result.current.state.error).toBe(PATCH_FAILED_MESSAGE);
     expect(result.current.state.context?.guests).toBe(guests);
+  });
+
+  it('announces every recalculation with what changed, even when the words repeat', async () => {
+    deferredFetch();
+    const { result } = renderHook(() => usePlanState(TEST_TODAY_ISO));
+    act(() => {
+      result.current.submit(birthday.context);
+    });
+    await waitFor(() =>
+      expect(result.current.announcement).toBe(planAnnouncement(birthday.plan, 'submit')),
+    );
+    const patch: ContextPatch = { ops: [{ op: 'setGuests', value: birthday.context.guests }] };
+    const spoken = planAnnouncement(birthday.plan, 'patch', describePatch(patch));
+    for (const round of [1, 2]) {
+      act(() => {
+        result.current.applyPatch(patch);
+      });
+      expect(result.current.announcement, `round ${round} clears first`).toBe('');
+      await waitFor(() => expect(result.current.announcement).toBe(spoken));
+    }
   });
 
   it('offers and restores the last context from this device', () => {

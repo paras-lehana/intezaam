@@ -1,5 +1,5 @@
 /**
- * Abort on client disconnect (research note 09 Gap 4 §4.4).
+ * Abort on client disconnect.
  *
  * Responsibility: give each AI request an AbortSignal that fires when the client leaves before
  * the response is sent, so pending and follow-up model calls stop and do not spend quota.

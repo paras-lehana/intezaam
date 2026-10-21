@@ -27,8 +27,7 @@ export const MUHURAT_CONFIDENCE: Confidence = 'C';
 type MonthDays = Readonly<Partial<Record<number, readonly number[]>>>;
 
 /**
- * Drik Panchang's 2026 list; Aza Fashions and The Wedding Focus list the same dates where named
- * (research 09, Gap 3 §3.0 row 7).
+ * Drik Panchang's 2026 list; Aza Fashions and The Wedding Focus list the same dates where named.
  */
 const AGREED_2026: MonthDays = { 11: [21, 24, 25, 26], 12: [2, 3, 4, 5, 6, 11, 12] };
 const BLOGS_2026_BOTH = new Set([
@@ -44,8 +43,8 @@ const BLOGS_2026_BOTH = new Set([
 ]);
 
 /**
- * 2027: listed by Drik Panchang and VedicFeed, and confirmed by at least one independent engine
- * (research 09, Gap 3 §3.2). GaneshaSpeaks lists every one except 24 January. August to October
+ * 2027: listed by Drik Panchang and VedicFeed, and confirmed by at least one independent engine.
+ * GaneshaSpeaks lists every one except 24 January. August to October
  * are empty: Chaturmas, the Sun in Simha and Kanya, and Venus and Jupiter combust.
  */
 const AGREED_2027: MonthDays = {
@@ -61,7 +60,7 @@ const AGREED_2027: MonthDays = {
 };
 const GANESHASPEAKS_OMITS_2027 = '2027-01-24';
 
-/** Dates published sources disagree on (Gap 3 §3.3 and §3.0 row 7): both sides are shown. */
+/** Dates published sources disagree on: both sides are shown. */
 const CONFLICTS: readonly MuhuratDate[] = [
   {
     dateIso: '2026-12-01',

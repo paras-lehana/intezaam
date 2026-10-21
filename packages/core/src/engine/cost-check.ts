@@ -91,7 +91,8 @@ function notesFor(ctx: NormalisedContext, input: CostCheckInput, gapInr: number)
     `${priced} before service charge and GST.`,
     `Service charge ${SERVICE_CHARGE_PCT[input.level]}% and catering GST ${CATERING_GST_PCT}% are each added once.`,
   ];
-  if (seasonFactor(ctx) < 1) notes.push(`Off-peak or weekday date: ${OFF_PEAK_SAVING_LABEL} off food.`);
+  if (seasonFactor(ctx) < 1)
+    notes.push(`Off-peak or weekday date: ${OFF_PEAK_SAVING_LABEL} off food.`);
   if (ctx.functions.includes('reception')) {
     notes.push(
       `Reception food is planned ${RECEPTION_FOOD_DISCOUNT_PCT.min}% cheaper than the wedding dinner.`,

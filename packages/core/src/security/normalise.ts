@@ -1,8 +1,8 @@
 /**
  * Text folding for matching: the one place that decides when two spellings are "the same".
  *
- * Responsibility: `foldForMatch` turns any brief, quote or vocabulary entry into a match key
- * (research note 09 §5.3): NFD → drop the nukta and joiners → drop accents after Latin
+ * Responsibility: `foldForMatch` turns any brief, quote or vocabulary entry into a match key:
+ * NFD → drop the nukta and joiners → drop accents after Latin
  * letters only → NFC → chandrabindu to anusvara → every decimal digit to ASCII → vulgar
  * fractions to decimals → dandas to spaces → lowercase → collapse whitespace. So इंतज़ाम
  * matches इंतजाम, सातवाँ matches सातवां, Dīwālī matches diwali and २५ reads as 25.
@@ -68,7 +68,7 @@ export function toDisplayText(text: string): string {
 }
 
 /**
- * The match key for parsing and evidence checks (research note 09 §5.3, steps a–k).
+ * The match key for parsing and evidence checks (steps a–k).
  * @example
  * foldForMatch('इंतज़ाम') === foldForMatch('इंतजाम'); // true
  * foldForMatch('₹२,५०,०००'); // '₹2,50,000'

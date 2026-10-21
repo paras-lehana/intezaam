@@ -1,5 +1,5 @@
 /**
- * Back-scheduled timeline (TL-01…11) — ported from bio-bandish `checklist.plan()`.
+ * Back-scheduled timeline (TL-01…11) — ported from the owner's earlier planner.
  *
  * Responsibility: date every selected task at its lead time before the event (TL-02);
  * squeeze late tasks into the days left, longest lead first, in 1–3-day steps (TL-03);

@@ -50,7 +50,7 @@ export const NE_MONSOON_STATES: readonly string[] = [
   'Andhra Pradesh',
 ];
 
-/** Per-city rain patterns (CTX-07, 09 §5.6 row 5): which months an open-air event is rain-risk. */
+/** Per-city rain patterns (CTX-07 row 5): which months an open-air event is rain-risk. */
 export const WET_PATTERNS = ['southwest', 'southwest-and-northeast', 'bengaluru'] as const;
 
 export type WetPattern = (typeof WET_PATTERNS)[number];
@@ -112,7 +112,7 @@ export interface CalendarPause {
 /**
  * Kharmas follows the Sun into Sagittarius (Dhanu) and Pisces (Meena). The 2026 spring edges are
  * our reading of one blog (D); from winter 2026 on, Drik Panchang's day-by-day reasons and its
- * calendar give the edges (research 09, Gap 3 §3.4).
+ * calendar give the edges.
  */
 const KHARMAS_NOTE = 'Indicative: dates open again after about the 14th. Confirm with your pandit.';
 const KHARMAS_SOURCES: readonly SourceId[] = ['S-SMARTPUJA-KHARMAS-2026'];

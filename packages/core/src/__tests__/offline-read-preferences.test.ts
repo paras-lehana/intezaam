@@ -1,5 +1,5 @@
 /**
- * Tests for the preference reader (research note 09 §5.2.5–5.2.6).
+ * Tests for the preference reader.
  *
  * Responsibility: the venue city over an origin city, diet precedence and the Jain rule,
  * halal as a flag, alcohol negation, settings, access needs with elder relatives, style

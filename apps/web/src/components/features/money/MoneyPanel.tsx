@@ -2,7 +2,7 @@
  * Money: the split, how to adjust it, per function, the bottom-up check, GST, levers, the
  * payment calendar and the spend tracker.
  *
- * Responsibility: compose the budget tab (synthesis §7.3) from its sections, each with
+ * Responsibility: compose the budget tab from its sections, each with
  * "Why this?" on its numbers; the controls and levers re-plan through `onApplyPatch`.
  * Boundary: loaded lazily the first time the tab opens.
  */

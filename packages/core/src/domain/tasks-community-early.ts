@@ -1,9 +1,9 @@
 /**
  * Community task templates, part 1: committee, funds and permissions (TL-10).
  *
- * Responsibility: the first ten weeks of a community event — committee and contributions
- * (04 §6.4), society approval, pandal and police permissions with the Mumbai window as
- * the example (04 §6.2), loudspeaker, procession and fire clearances, and the structure
+ * Responsibility: the first ten weeks of a community event — committee and contributions,
+ * society approval, pandal and police permissions with the Mumbai window as
+ * the example, loudspeaker, procession and fire clearances, and the structure
  * and sound bookings. Boundary: templates only; every permission says "verify locally".
  */
 import type { TaskTemplate } from './task-types.js';

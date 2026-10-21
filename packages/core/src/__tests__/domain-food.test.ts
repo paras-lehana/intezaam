@@ -9,7 +9,6 @@ import {
   FOOD_GRAMS_PER_ADULT,
   ICE_CREAM_ML_PER_GUEST,
   KIDS_PORTION_FACTOR,
-  MIXED_MENU_VEG_SHARE,
   RAW_GRAMS_PER_GUEST,
 } from '../domain/food.js';
 
@@ -20,9 +19,7 @@ describe('food quantities (FOOD-01)', () => {
     expect(raw).toBeLessThan(FOOD_GRAMS_PER_ADULT.min);
   });
 
-  it('shares and factors are proper fractions', () => {
-    expect(MIXED_MENU_VEG_SHARE).toBeGreaterThan(0.5);
-    expect(MIXED_MENU_VEG_SHARE).toBeLessThan(1);
+  it("the kids' factor is a proper fraction and ice cream is planned per guest", () => {
     expect(KIDS_PORTION_FACTOR).toBeGreaterThan(0);
     expect(KIDS_PORTION_FACTOR).toBeLessThan(1);
     expect(ICE_CREAM_ML_PER_GUEST).toBeGreaterThan(0);

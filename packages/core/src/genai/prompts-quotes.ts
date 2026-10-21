@@ -1,11 +1,11 @@
 /**
- * Prompt for GenAI job 3, the quote reader (synthesis §5): read one to three pasted vendor
+ * Prompt for GenAI job 3, the quote reader (GENAI_ARCHITECTURE.md): read one to three pasted vendor
  * quotes and describe how they differ — neutrally, never recommending a vendor.
  *
  * Responsibility: fence each quote (already redacted: phones, email, UPI, bank details),
  * ask for the price basis, amounts copied as written with an evidence quote, inclusions,
  * exclusions, advance, cancellation, validity and GST wording, then neutral differences and
- * questions per quote (bio-bandish QUOTE_DIFFERENCES@1 rules). Code parses every amount and
+ * questions per quote (never a recommendation or a ranking). Code parses every amount and
  * computes totals, GST and the gap to the budget line afterwards. Boundary: builds strings.
  */
 import type { LanguageCode } from '../domain/languages.js';

@@ -1,5 +1,5 @@
 /**
- * Prompt for GenAI job 2, the plan narrator (synthesis §5): explain the verdict and write
+ * Prompt for GenAI job 2, the plan narrator (GENAI_ARCHITECTURE.md): explain the verdict and write
  * personalised ideas inside the limits code computed — one call per plan.
  *
  * Responsibility: give the model the numbered plan facts, the trace items and tasks it may
@@ -29,7 +29,7 @@ export interface NarrationPromptInput {
   readonly nonce: string;
 }
 
-/** The narrative cites the verdict's and the top risks' trace items (synthesis §5: top 5). */
+/** The narrative cites the verdict's and the top risks' trace items (GENAI_ARCHITECTURE.md: top 5). */
 /** Written for a constraint the context leaves open (no age band, no season). */
 export const UNCONSTRAINED = 'any';
 

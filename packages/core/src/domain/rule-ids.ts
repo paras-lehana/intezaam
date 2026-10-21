@@ -1,13 +1,13 @@
 /**
  * Rule ids — the closed vocabulary of every deterministic decision the planner makes.
  *
- * Responsibility: the ids from the decision-engine design (synthesis §4), grouped the
+ * Responsibility: the ids from the decision-engine design, grouped the
  * way the rule descriptions are grouped, so every trace item, risk and permission points
  * at exactly one documented rule. Boundary: ids only; titles, summaries and sources are
  * in rules.ts.
  */
 
-/** CTX classifiers, BUD budget split rules and CST cost rules (synthesis §4.3–4.4). */
+/** CTX classifiers, BUD budget split rules and CST cost rules. */
 export const CONTEXT_BUDGET_RULE_IDS = [
   'CTX-01',
   'CTX-02',
@@ -34,7 +34,7 @@ export const CONTEXT_BUDGET_RULE_IDS = [
   'CST-06',
 ] as const;
 
-/** VER verdict axes, LEV levers, TL timeline, DATE date intelligence, FN functions (§4.5–4.6). */
+/** VER verdict axes, LEV levers, TL timeline, DATE date intelligence, FN functions. */
 export const DECISION_TIME_RULE_IDS = [
   'VER-M',
   'VER-F',
@@ -68,7 +68,7 @@ export const DECISION_TIME_RULE_IDS = [
   'FN-04',
 ] as const;
 
-/** VEN vendors, HC headcount, FOOD, SPACE, DIET and ACC accessibility rules (§4.6–4.7). */
+/** VEN vendors, HC headcount, FOOD, SPACE, DIET and ACC accessibility rules. */
 export const VENDOR_PEOPLE_RULE_IDS = [
   'VEN-01',
   'VEN-02',
@@ -93,9 +93,9 @@ export const VENDOR_PEOPLE_RULE_IDS = [
 ] as const;
 
 /**
- * PERM permissions, CROWD safety, COM community money (§4.8), RISK, the severity ladder
- * named in §4.2 and §4.8, and READY-01, the readiness score of feature #9 (an addition:
- * the synthesis lists the feature but gives its rule no id).
+ * PERM permissions, CROWD safety, COM community money, RISK, the severity ladder
+ * and READY-01, the readiness score of feature #9 (an addition:
+ * the feature list gives its rule no id).
  */
 export const SAFETY_COMMUNITY_RULE_IDS = [
   'PERM-01',

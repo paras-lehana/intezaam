@@ -1,6 +1,6 @@
 /**
  * The Google services catalog: the single source for the README table, GET
- * /api/google/services and the About page (synthesis §6; SPEC-MVP addendum item 11).
+ * /api/google/services and the About page (README.md, "Google services").
  *
  * Responsibility: one honest entry per Google service — exact name, status `implemented`
  * (code and a test exist) or `declined` (with the reason in `purpose`), what it does for a

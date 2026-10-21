@@ -1,5 +1,5 @@
 /**
- * Command parser for Ask (synthesis §5 job 5 fallback): natural-language changes in
+ * Command parser for Ask (GENAI_ARCHITECTURE.md, job 5 fallback): natural-language changes in
  * English, Hinglish or Hindi become patch operations — "add 50 guests", "50 log kam karo",
  * "budget 20 lakh", "move to 12 December", "make it outdoor", "jain khana", "no alcohol",
  * "add sangeet", "haldi hata do", "date not fixed".
@@ -103,6 +103,15 @@ function functionOps(tokens: readonly Token[], way: Direction): PatchOp[] {
   return findPhrases(tokens, FUNCTIONS).map(({ value }) =>
     way === 'remove' ? { op: 'removeFunction', value } : { op: 'addFunction', value },
   );
+}
+
+/**
+ * The functions a question names ("reception", "haldi"), each once.
+ * @example
+ * namedFunctions(tokenise('Should we cut the reception?').tokens); // ['reception']
+ */
+export function namedFunctions(tokens: readonly Token[]): FunctionKind[] {
+  return [...new Set(findPhrases(tokens, FUNCTIONS).map(({ value }) => value))];
 }
 
 /**

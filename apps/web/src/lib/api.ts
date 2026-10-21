@@ -46,7 +46,7 @@ export interface ApiError {
 
 export type ApiResult<T> = Result<T, ApiError>;
 
-/** Every route the web calls, in one table (SPEC-API "Server routes"). */
+/** Every route the web calls, in one table. */
 export const API_PATHS = {
   brief: '/api/brief',
   narration: '/api/plan/narration',

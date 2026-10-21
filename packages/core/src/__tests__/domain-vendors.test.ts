@@ -12,7 +12,6 @@ import { TASK_TEMPLATES } from '../domain/tasks.js';
 import { TRADITIONS } from '../domain/traditions.js';
 import {
   OFFICIANT_VENDORS,
-  VENDOR_GROUP_LABELS,
   VENDOR_GROUPS,
   VENDOR_PROFILES,
   VENDOR_TYPES,
@@ -27,7 +26,8 @@ describe('vendor taxonomy', () => {
       expect(VENDOR_GROUPS).toContain(profile.group);
       expect(BUDGET_CATEGORIES).toContain(profile.category);
     }
-    for (const group of VENDOR_GROUPS) expect(VENDOR_GROUP_LABELS[group].length).toBeGreaterThan(0);
+    const used = new Set(VENDOR_TYPES.map((type) => VENDOR_PROFILES[type].group));
+    for (const group of VENDOR_GROUPS) expect(used.has(group)).toBe(true);
   });
 
   it('officiants are ritual vendors paid from the rituals line', () => {

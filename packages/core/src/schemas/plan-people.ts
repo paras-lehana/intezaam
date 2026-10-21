@@ -1,6 +1,5 @@
 /**
- * Plan contracts, part 3: vendors, headcount, food, space and the community toolkit
- * (synthesis §3 E, F, H; §4.6–4.8).
+ * Plan contracts, part 3: vendors, headcount, food, space and the community toolkit.
  *
  * Responsibility: the wire shapes of per-vendor checklists, the headcount forecast, the
  * food plan, the venue space check and the community contribution, ledger and volunteer

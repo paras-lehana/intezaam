@@ -2,7 +2,7 @@
  * City tiers and city anchors (CTX-02) — how local prices scale.
  *
  * Responsibility: the three cost tiers with their multipliers (derived from per-plate
- * midpoints, 04 §1.3) and the eight cities with a published 300-guest mid-range wedding
+ * midpoints) and the eight cities with a published 300-guest mid-range wedding
  * figure, which override the tier when present. Boundary: data only; the gazetteer that
  * maps a typed city name to these is city-table.ts.
  */
@@ -58,7 +58,7 @@ export const TIER_PROFILES: Readonly<Record<CityTier, TierProfile>> = {
 /** A city we cannot find is priced as tier-2, the middle band, and the trace says so (CTX-02). */
 export const UNKNOWN_CITY_TIER: CityTier = 'tier2';
 
-/** Cities with a published wedding cost figure (VK 2026 city cross-check, 04 §1.3). */
+/** Cities with a published wedding cost figure (VK 2026 city cross-check). */
 export const ANCHOR_CITIES = [
   'mumbai',
   'delhi-ncr',
@@ -107,6 +107,3 @@ export const CITY_ANCHORS: Readonly<Record<AnchorCity, CityAnchor>> = {
   ahmedabad: anchor('Ahmedabad', 24, 40),
   kolkata: anchor('Kolkata', 20, 36),
 };
-
-/** Each extra 100 guests adds roughly ₹2–5 L, depending on the city (S-IMW-2026). */
-export const EXTRA_PER_100_GUESTS_INR = lakhRange(2, 5);

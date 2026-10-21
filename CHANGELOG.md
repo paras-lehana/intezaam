@@ -27,7 +27,8 @@ todayIso)` returns a validated plan with a two-axis verdict (money × time, plus
   the narration alone to the browser that already built the plan), quote reader (`POST /api/quotes/read`,
   `POST /api/quotes/compare`), drafts in 11 languages (`POST /api/drafts`) and Ask with approved patches
   (`POST /api/ask`). Each has code-enforced guards (evidence quotes, faithfulness, idea limits, quote maths, refusals)
-  and an offline twin with the same shape; every response carries provenance.
+  and an offline twin with the same shape; every response carries provenance. Offline, drafts come in English, Hindi
+  or Hinglish, the narration in English, and reading a quote from a photo or PDF needs Gemini.
 - **Model chain:** `gemini-3.5-flash-lite`, failing over to `gemini-3.1-flash-lite`, 45 s per attempt, a per-model daily
   budget (`LLM_DAILY_LIMITS`, default 450 each) reset at midnight Pacific time, and offline reasons `daily_quota`,
   `upstream_error` and `not_configured`.
@@ -49,10 +50,10 @@ todayIso)` returns a validated plan with a two-axis verdict (money × time, plus
 
 ### Verified
 
-- `npm run test:coverage` (2026-10-21): 1,704 tests pass — core 1,179 (163 files), server 134 (14 files), web 391 (69
-  files). Coverage: core 100% lines / 96.30% branches; server 99.68% lines / 93.65% branches; web 95.23% lines /
-  81.47% branches.
-- `npx playwright test`: 42 of 42 pass (journeys, personas and axe scans, desktop and a 390×844 phone) against the
-  production build with the offline planner.
+- `npm run test:coverage` (2026-10-21): 2,073 tests pass — core 1,389 (172 files), server 172 (18 files), web 512 (98
+  files). Coverage: core 99.92% lines / 95.78% branches; server 99.7% lines / 94.02% branches; web 98.45% lines /
+  87.74% branches.
+- `npx playwright test`: 46 of 46 pass (11 journeys, 4 persona checks and 8 axe scans on each of desktop and a 390×844
+  phone) against the production build with the offline planner.
 - `npm run type-check`, `npm run lint` (zero warnings), `npm run dup-check` (0 clones) and `npm audit` (0
   vulnerabilities) pass.

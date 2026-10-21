@@ -1,5 +1,5 @@
 /**
- * Tests for engine/community-money.ts — the community estimate and food line (04 §6.4).
+ * Tests for engine/community-money.ts — the community estimate and food line.
  *
  * Responsibility: prove a community estimate with the committee's budget IS the planned spend
  * (heads before the contingency buffer up to the whole plan), so it agrees with the funding

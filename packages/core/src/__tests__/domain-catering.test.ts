@@ -57,7 +57,7 @@ describe('per-plate bands (CST-01)', () => {
   });
 });
 
-describe('caterer classes (LEV-03, Gap 2 §2.5)', () => {
+describe('caterer classes (LEV-03)', () => {
   it('class bands are ordered and rise from community to premium', () => {
     const mins = CATERING_LEVELS.map((level) => CATERER_CLASS_VEG_INR[level].min);
     expect(mins).toEqual([...mins].sort((a, b) => a - b));
@@ -75,7 +75,7 @@ describe('caterer classes (LEV-03, Gap 2 §2.5)', () => {
   });
 });
 
-describe('service charge (CST-02, Gap 2 §2.6)', () => {
+describe('service charge (CST-02)', () => {
   it('is zero at a community caterer and rises with the class', () => {
     expect(SERVICE_CHARGE_PCT.community).toBe(0);
     const charges = CATERING_LEVELS.map((level) => SERVICE_CHARGE_PCT[level]);
@@ -83,13 +83,11 @@ describe('service charge (CST-02, Gap 2 §2.6)', () => {
   });
 });
 
-describe('floor plate (Gap 2 §2.4)', () => {
+describe('floor plate', () => {
   it('metro is the community minimum and smaller tiers are their standard low × the community factor', () => {
     expect(FLOOR_PLATE_VEG_INR.metro).toBe(CATERER_CLASS_VEG_INR.community.min);
     for (const tier of ['tier2', 'tier3'] as const) {
-      expect(FLOOR_PLATE_VEG_INR[tier]).toBe(
-        PER_PLATE_INR[tier].veg.min * LEVEL_FACTOR.community,
-      );
+      expect(FLOOR_PLATE_VEG_INR[tier]).toBe(PER_PLATE_INR[tier].veg.min * LEVEL_FACTOR.community);
     }
   });
 

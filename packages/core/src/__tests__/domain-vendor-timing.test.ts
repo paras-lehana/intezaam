@@ -13,7 +13,7 @@ import {
 } from '../domain/vendor-timing.js';
 import { VENDOR_TYPES } from '../domain/vendors.js';
 
-/** 04 §3: the longest published wedding lead is 12 months. */
+/** The longest published wedding lead is 12 months. */
 const LONGEST_LEAD_MONTHS = 12;
 /** Nobody arrives more than a few hours early; decor's 3 hours is the longest (FN-03). */
 const LONGEST_ARRIVAL_MIN = 180;
@@ -30,7 +30,7 @@ describe('vendor timing', () => {
     }
   });
 
-  it('the venue and planner are booked first (04 §3)', () => {
+  it('the venue and planner are booked first', () => {
     expect(VENDOR_LEAD_MONTHS.venue.months).toBe(LONGEST_LEAD_MONTHS);
     expect(VENDOR_LEAD_MONTHS.planner.months).toBe(LONGEST_LEAD_MONTHS);
   });

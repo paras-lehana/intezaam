@@ -3,7 +3,8 @@
  *
  * Responsibility: a native range input (arrow keys, Page Up/Down, Home/End all work) with
  * a visible label, an `<output>` showing the value in words, and the same words as
- * aria-valuetext so a screen reader hears "250 guests (50 fewer)", not "250". Boundary:
+ * aria-valuetext so a screen reader hears "250 guests (50 fewer)", not "250" — once: the
+ * visible `<output>` is marked not live, so the words are not repeated. Boundary:
  * controlled; the scenario owns the value.
  */
 import type { ReactElement } from 'react';
@@ -40,7 +41,10 @@ export function RangeControl({
         aria-valuetext={valueText}
         onChange={(event) => onChange(Number(event.target.value))}
       />
-      <output htmlFor={id}>{valueText}</output>
+      {/* Not live: the slider's aria-valuetext already speaks these words on every step. */}
+      <output htmlFor={id} aria-live="off">
+        {valueText}
+      </output>
     </div>
   );
 }

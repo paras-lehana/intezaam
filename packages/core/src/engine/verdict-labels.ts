@@ -3,7 +3,7 @@
  *
  * Responsibility: the `MoneyVerdict` every money model returns and `MONEY_LABELS`, keyed by
  * the closed status union so a new status cannot ship without its words. Stretch reads
- * "Needs changes", never "not feasible" (addendum 1, 14). Boundary: words and shapes only;
+ * "Needs changes", never "not feasible". Boundary: words and shapes only;
  * verdict-money.ts and verdict-wedding.ts decide the status.
  */
 import type { CateringLevel } from '../domain/catering.js';
@@ -13,7 +13,7 @@ export interface MoneyVerdict {
   readonly status: MoneyStatus;
   readonly reason: string;
   readonly traceIds: readonly string[];
-  /** The caterer class the cost check prices at (Gap 2 §2.5; fixed per model elsewhere). */
+  /** The caterer class the cost check prices at (fixed per model elsewhere). */
   readonly level: CateringLevel;
 }
 

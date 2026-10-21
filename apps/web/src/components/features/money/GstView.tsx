@@ -1,7 +1,7 @@
 /**
  * GST per budget line: the default rate, the tax inside each line and the total.
  *
- * Responsibility: the GST view (synthesis feature #12, CST-06) — rates in force since the
+ * Responsibility: the GST view (feature #12, CST-06) — rates in force since the
  * date the engine reports, "not estimated" where research has no rate, and the standing
  * "depends on the contract" note. Boundary: display only; GST is counted once, per line.
  */

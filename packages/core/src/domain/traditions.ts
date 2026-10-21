@@ -4,14 +4,14 @@
  * Responsibility: for each tradition, its faith (which decides whether muhurat, Chaturmas
  * and Kharmas apply), officiant, default functions and their local names, ceremony time
  * overrides, hard rules (Anand Karaj only in a gurdwara; church weddings 6 am–7 pm) and
- * inputs that must be settled first (04 §4). Boundary: indicative — families vary, and a
+ * inputs that must be settled first. Boundary: indicative — families vary, and a
  * tradition is only ever taken from what the user states, never inferred.
  */
 import type { DietRuleKey } from './diet.js';
 import type { FunctionKind } from './functions.js';
 import type { SourceId } from './sources.js';
 import type { Confidence } from './source-types.js';
-import type { VendorType } from './vendors.js';
+import type { OfficiantVendor } from './vendors.js';
 
 export const TRADITIONS = [
   'north-hindu',
@@ -43,7 +43,7 @@ export interface TraditionProfile {
   readonly faith: Faith;
   /** CTX-08: muhurat, Chaturmas and Kharmas apply to Hindu traditions only. */
   readonly muhurat: boolean;
-  readonly officiant: VendorType | null;
+  readonly officiant: OfficiantVendor | null;
   readonly defaultFunctions: readonly FunctionKind[];
   /** Local names shown on function cards (e.g. wedding → "Nikah"). */
   readonly functionNames: Readonly<Partial<Record<FunctionKind, string>>>;
@@ -89,7 +89,7 @@ export const TRADITION_PROFILES: Readonly<Record<Tradition, TraditionProfile>> =
     labelHi: 'तमिल',
     defaultFunctions: ['engagement', 'wedding', 'reception'],
     functionNames: { engagement: 'Nichayathartham', wedding: 'Muhurtham' },
-    // Tamil muhurthams are usually in the morning (04 §4.2); 07:00 is our default.
+    // Tamil muhurthams are usually in the morning; 07:00 is our default.
     ceremonyStartHhmm: '07:00',
     sourceIds: ['S-VEDADHARA-ND', 'S-WEDDINGSUTRA-ND'],
     confidence: 'C',
@@ -100,7 +100,7 @@ export const TRADITION_PROFILES: Readonly<Record<Tradition, TraditionProfile>> =
     labelHi: 'तेलुगु',
     defaultFunctions: ['engagement', 'haldi', 'wedding', 'reception'],
     functionNames: { engagement: 'Nischitartham', haldi: 'Pellikuthuru', wedding: 'Muhurtham' },
-    // Telugu muhurthams often fall near midnight (04 §4.2), which meets the 10 pm sound rule.
+    // Telugu muhurthams often fall near midnight, which meets the 10 pm sound rule.
     ceremonyStartHhmm: '23:30',
     sourceIds: ['S-WIKI-TELUGU'],
     confidence: 'B',

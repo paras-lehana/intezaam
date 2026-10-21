@@ -4,7 +4,7 @@
  *
  * Responsibility: RFC 4180 parsing (quoted fields, doubled quotes, embedded commas and line
  * breaks, a byte-order mark, `,` `;` or tab guessed from the first line), header detection
- * with English, Hindi and Hinglish column names (gm-core `headerMap`), Google Contacts'
+ * with English, Hindi and Hinglish column names (as the owner's earlier guest manager read them), Google Contacts'
  * "First Name" / "Last Name" columns, and an export through core's `csvCell`, which
  * neutralises cells that a spreadsheet would run as formulas. Boundary: pure text in and
  * out; phone numbers and e-mails are never read, so they never enter the app at all.
@@ -36,7 +36,7 @@ const GUEST_COLUMNS = [
 type GuestColumn = (typeof GUEST_COLUMNS)[number];
 
 /**
- * Header words per column (gm-core HEADER_SYN). `name` is anchored so Google's
+ * Header words per column. `name` is anchored so Google's
  * "Name Prefix" or "Phonetic First Name" never becomes the guest's name.
  */
 const HEADER_PATTERNS: Readonly<Record<GuestColumn, RegExp>> = {

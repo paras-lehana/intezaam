@@ -1,5 +1,5 @@
 /**
- * Date reader for briefs (research note 09 §5.2.2): resolves what a brief says about the
+ * Date reader for briefs: resolves what a brief says about the
  * date against `todayIso`.
  *
  * Responsibility: in order — an explicit day and month ("25 Nov 2026", "12 mai") → that

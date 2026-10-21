@@ -1,5 +1,5 @@
 /**
- * The Ideas tab (synthesis §3 G): personalised ideas, the style quiz, wedding hashtags and
+ * The Ideas tab: personalised ideas, the style quiz, wedding hashtags and
  * the invitation and message studio.
  *
  * Responsibility: compose the creative side of the plan — ideas the model writes inside

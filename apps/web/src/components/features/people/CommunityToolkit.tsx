@@ -1,5 +1,5 @@
 /**
- * Community toolkit (synthesis §3 H): chanda, the ledger, volunteers and sponsor ideas.
+ * Community toolkit: chanda, the ledger, volunteers and sponsor ideas.
  *
  * Responsibility: shown only for community events — the contribution planner (when the
  * committee has given its community details), the collected-vs-spent ledger, the volunteer

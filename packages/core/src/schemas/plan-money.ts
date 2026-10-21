@@ -1,6 +1,6 @@
 /**
  * Plan contracts, part 1: verdict, readiness, budget, cost check, GST, levers and
- * payments (synthesis §3 B–C, §4.4–4.6).
+ * payments.
  *
  * Responsibility: the wire shapes of the money side of a plan — the two-axis verdict
  * (plus funding for community events), budget lines that always sum to the total,
@@ -32,7 +32,7 @@ import { contextPatchSchema } from './patch.js';
 
 /**
  * Money axis, cheapest first. `home-style` sits between Stretch and Lean: a wedding below
- * the published budget rows that still works with a local caterer (09 Gap 2 §2.4, addendum 14).
+ * the published budget rows that still works with a local caterer.
  */
 export const MONEY_STATUSES = ['stretch', 'home-style', 'lean', 'balanced', 'premium'] as const;
 export const TIME_STATUSES = ['on-track', 'compressed', 'critical'] as const;

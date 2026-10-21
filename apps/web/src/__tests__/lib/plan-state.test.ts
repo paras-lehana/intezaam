@@ -80,6 +80,13 @@ describe('words and dates', () => {
     expect(planAnnouncement(plan, 'patch')).toMatch(/^Plan updated/);
   });
 
+  it('names what a typed change did, so a repeat verdict still says what moved', () => {
+    const change = ['Guests: 250', 'Leave out decor'];
+    const text = planAnnouncement(plan, 'patch', change);
+    expect(text.startsWith(`Plan updated (${change.join('; ')}): `)).toBe(true);
+    expect(text).not.toBe(planAnnouncement(plan, 'patch'));
+  });
+
   it('reads today from the browser clock as a local ISO day', () => {
     vi.useFakeTimers({ toFake: ['Date'] });
     vi.setSystemTime(new Date(`${TEST_TODAY_ISO}T10:00:00`));

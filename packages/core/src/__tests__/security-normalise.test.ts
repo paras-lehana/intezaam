@@ -1,6 +1,5 @@
 /**
- * Tests for the match-key folding used by the brief reader and every evidence check
- * (research note 09 §5.3).
+ * Tests for the match-key folding used by the brief reader and every evidence check.
  *
  * Responsibility: nukta and chandrabindu variants fold together, Indic digits become
  * ASCII, vulgar fractions become decimals without the NFKC "1½ → 11⁄2" trap, Latin accents
@@ -52,7 +51,7 @@ describe('foldForMatch', () => {
   });
 });
 
-describe('foldForMatch on the measured traps of 09 §5.3', () => {
+describe('foldForMatch on the measured spelling traps', () => {
   it('drops the nukta from precomposed letters NFC keeps apart, and from ऩ ऱ ऴ', () => {
     // U+095B (ज़) is a composition exclusion: NFC alone never folds it into ज.
     expect(foldForMatch('\u{95B}')).toBe('\u{91C}');

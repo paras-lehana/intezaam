@@ -1,7 +1,7 @@
 /**
  * Tests for the server-only barrels (genai, offline, security) and their root re-exports.
  *
- * Responsibility: every server-only name SPEC-API lists — the five prompt builders, the five
+ * Responsibility: every server-only name the public API lists — the five prompt builders, the five
  * offline twins, the code guards and the input-hygiene helpers — is exported from its barrel
  * and from the package root, and the browser-safe export and integrations subpaths carry
  * the link builders. Boundary: names only; behaviour is tested per module.
@@ -14,7 +14,7 @@ import * as integrations from '../integrations/index.js';
 import * as offline from '../offline/index.js';
 import * as security from '../security/index.js';
 
-/** SPEC-API "Server routes": prompt builders, guards and helpers. */
+/** Server-only prompt builders, guards and helpers. */
 const GENAI_NAMES = [
   'buildBriefPrompt',
   'buildNarrationPrompt',
@@ -34,7 +34,7 @@ const GENAI_NAMES = [
   'matchesLanguageScript',
 ];
 
-/** SPEC-API offline twins, returning the model-output shapes. */
+/** The offline twins, returning the model-output shapes. */
 const OFFLINE_NAMES = [
   'readBriefOffline',
   'narrateOffline',
@@ -46,7 +46,7 @@ const OFFLINE_NAMES = [
 
 const SECURITY_NAMES = ['sanitizeUserText', 'foldForMatch', 'quoteFileSchema', 'sniffFileType'];
 
-/** SPEC-API "[integrations]". */
+/** Link builders on the browser-safe integrations subpath. */
 const LINK_NAMES = [
   'buildGoogleCalendarUrl',
   'buildMapsSearchUrl',

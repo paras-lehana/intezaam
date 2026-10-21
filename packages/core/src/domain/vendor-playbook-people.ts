@@ -3,7 +3,7 @@
  *
  * Responsibility: the questions, written commitments and red flags for makeup, mehendi,
  * outfits, jewellery, music, performers, officiants and idol makers, drawing on the
- * noise rules (04 §6.1), tradition hard rules (04 §4.6–4.8) and planning guides.
+ * noise rules, tradition hard rules and planning guides.
  * Boundary: a "planner checklist", not legal or religious advice; merged in
  * vendor-playbook.ts.
  */

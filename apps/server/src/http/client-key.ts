@@ -1,5 +1,5 @@
 /**
- * Client key for rate limiting behind Cloudflare → Traefik (research note 09 Gap 4 §4.3).
+ * Client key for rate limiting behind Cloudflare → Traefik.
  *
  * Responsibility: name the visitor a request belongs to. With `trust proxy` = 1, `req.ip` is
  * the peer Traefik saw. `CF-Connecting-IP` is trusted ONLY when that peer is inside

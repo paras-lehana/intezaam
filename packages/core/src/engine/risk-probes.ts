@@ -78,7 +78,7 @@ const blockerProbe: Probe = ({ permissions }) => {
 const traditionProbe: Probe = ({ ctx, timings }) => {
   if (ctx.family !== 'wedding') return null;
   // Only an Anand Karaj is gurdwara-only: "Punjabi" alone (anandKaraj false) is not one, and
-  // when the family has not said, the rule is shown as an "if" (research 09 §5.2).
+  // when the family has not said, the rule is shown as an "if".
   const anandKaraj = ctx.input.anandKaraj;
   if (ctx.traditionProfile?.ceremonyVenue === 'gurdwara' && anandKaraj !== false) {
     return {

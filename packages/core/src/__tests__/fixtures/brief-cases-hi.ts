@@ -1,5 +1,5 @@
 /**
- * Brief battery, Hindi briefs in Devanagari (research note 09 §5.4: B25–B34).
+ * Brief battery, Hindi briefs in Devanagari (B25–B34).
  *
  * Responsibility: Devanagari digits and Indian grouping, nukta and chandrabindu spellings that
  * must read the same, Hindi fraction words and the ambiguous "saalgirah". Boundary: labelled

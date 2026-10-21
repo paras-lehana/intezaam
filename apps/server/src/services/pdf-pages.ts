@@ -1,5 +1,5 @@
 /**
- * PDF page counter for the quote reader's page cap (research note 09 Gap 4 §4.2.5).
+ * PDF page counter for the quote reader's page cap.
  *
  * Responsibility: estimate a PDF's page count without a dependency — the number of
  * `/Type /Page` objects or the largest page-tree `/Count`, whichever is higher (this heuristic

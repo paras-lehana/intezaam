@@ -3,7 +3,7 @@
  *
  * Responsibility: for every event kind, its family, labels, default and typical guest
  * counts, default functions and age band, with the source of each default (birthday
- * ranges are published, 04 §5.2; other defaults are the owner's planner values or our
+ * ranges are published; other defaults are the owner's planner values or our
  * assumptions, grade D). Boundary: defaults only; the user's context always wins.
  */
 import type { AgeBand, EventFamily, EventKind } from './events.js';
@@ -52,7 +52,7 @@ function kind(
 
 const OWNER = { sourceId: 'S-OWNER-DEFAULTS', confidence: 'D' } as const;
 const ASSUMED = { sourceId: 'S-INTEZAAM-D', confidence: 'D' } as const;
-/** Birthday guest ranges are published (04 §5.2); the default is our mid-point. */
+/** Birthday guest ranges are published; the default is our mid-point. */
 const BIRTHDAY_RANGES = { sourceId: 'S-CHARMBOX-2026', confidence: 'C' } as const;
 
 export const EVENT_KIND_PROFILES: Readonly<Record<EventKind, EventKindProfile>> = {

@@ -16,7 +16,7 @@ import {
 } from '../domain/gst.js';
 import { isSourceId } from '../domain/sources.js';
 
-/** After GST 2.0 the event services in 04 §7 sit at 5% or 18%. */
+/** After GST 2.0 the event services in domain/gst.ts sit at 5% or 18%. */
 const EVENT_SLABS = [5, 18];
 
 describe('GST (CST-06)', () => {

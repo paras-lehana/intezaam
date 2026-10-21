@@ -49,7 +49,7 @@ export interface CommunityState {
 
 /**
  * Whether a Punjabi or Sikh wedding is an Anand Karaj. Three answers, because "not said"
- * differs from "no": unsaid keeps the gurdwara rule as an "if", no drops it (09 §5.2).
+ * differs from "no": unsaid keeps the gurdwara rule as an "if", no drops it.
  */
 export const ANAND_KARAJ_CHOICES = ['unsaid', 'yes', 'no'] as const;
 export type AnandKarajChoice = (typeof ANAND_KARAJ_CHOICES)[number];

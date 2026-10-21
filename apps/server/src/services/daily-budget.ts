@@ -4,7 +4,7 @@
  * Responsibility: count attempts per model for the current quota day and report a model as
  * spent once it reaches its limit (default 450 = 90% of the free tier's 500 RPD), so the
  * failover skips it and, when all are spent, the server serves the labelled offline twin with
- * reason `daily_quota` (SPEC-MVP addendum item 13). The quota day turns over at midnight
+ * reason `daily_quota`. The quota day turns over at midnight
  * America/Los_Angeles, when Google resets requests-per-day. Boundary: in memory, per process;
  * the clock is injected so tests cross midnight without waiting.
  */

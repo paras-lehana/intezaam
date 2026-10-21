@@ -1,14 +1,15 @@
 /**
  * Engine barrel (`@intezaam/core/engine`) — the pure, deterministic planner.
  *
- * Responsibility: the browser-safe entry point for the SPEC-API engine functions —
+ * Responsibility: the browser-safe entry point for the engine functions —
  * `buildPlan`, `normaliseContext`, `applyPatch`, `diffPlans`, `summarisePlanFacts` — plus
- * the trace log and the money-core helpers the server and web reuse. Boundary: pure
- * functions only; no prompts, network or clock.
+ * the trace log, the money-core helpers and the percent units the server, web and exports
+ * reuse. Boundary: pure functions only; no prompts, network or clock.
  */
 export { classifyContext, normaliseContext, resolveFunctions } from './context.js';
 export { diffPlans } from './diff.js';
 export { summarisePlanFacts } from './facts.js';
+export { BP_PER_PERCENT, PERCENT } from './percent.js';
 export { buildPlan } from './plan.js';
 export { collectSources, createTraceLog, type TraceLog, type TraceSpec } from './trace.js';
 export type { ClassifiedContext, NormalisedContext, SeasonInfo, ShareTable } from './types.js';

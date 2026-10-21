@@ -1,6 +1,6 @@
 /**
  * Tests for http/client-key.ts: the rate-limit key behind Cloudflare → Traefik, in the eight
- * scenarios of research note 09 Gap 4 §4.3.2, edge cases, IPv6 /64 bucketing, and the limiter
+ * scenarios (SECURITY.md, "Threat model"), edge cases, IPv6 /64 bucketing, and the limiter
  * wired into the app.
  *
  * Responsibility: prove a forged CF-Connecting-IP sent straight to the origin never mints a new

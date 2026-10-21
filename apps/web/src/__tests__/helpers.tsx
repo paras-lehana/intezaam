@@ -1,5 +1,6 @@
 /**
- * Shared test helpers: fetch stubbing, JSON responses, routed rendering and a fixed today.
+ * Shared test helpers: fetch stubbing (immediate or released by the test), JSON responses,
+ * routed rendering and a fixed today.
  *
  * Responsibility: keep tests focused on behaviour by hiding fetch and router plumbing.
  * Boundary: test-only; never imported by application code.
@@ -37,6 +38,26 @@ export function stubFetch(...responses: readonly Response[]): Mock<typeof fetch>
   for (const response of responses) fetchMock.mockResolvedValueOnce(response);
   vi.stubGlobal('fetch', fetchMock);
   return fetchMock;
+}
+
+/**
+ * Replaces global fetch with one whose replies the test releases one at a time, by call order.
+ * @example
+ * const replies = deferredFetch();
+ * replies.release(0, jsonResponse({ ok: true }));
+ */
+export function deferredFetch(): { release: (index: number, response: Response) => void } {
+  const pending: ((response: Response) => void)[] = [];
+  vi.stubGlobal(
+    'fetch',
+    vi.fn<typeof fetch>(
+      () =>
+        new Promise<Response>((resolve) => {
+          pending.push(resolve);
+        }),
+    ),
+  );
+  return { release: (index, response) => pending[index]?.(response) };
 }
 
 /**

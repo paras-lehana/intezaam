@@ -1,5 +1,5 @@
 /**
- * Tests for abort-on-disconnect (09 Gap 4 §4.4).
+ * Tests for abort-on-disconnect.
  *
  * Responsibility: prove a client that leaves stops the model call and the failover, and one
  * that waits is never aborted — the regression the request's `close` event would cause. (The

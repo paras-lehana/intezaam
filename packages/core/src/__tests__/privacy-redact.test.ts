@@ -3,11 +3,12 @@
  * Aadhaar, PAN, IFSC, cards).
  *
  * Responsibility: each identifier becomes its typed placeholder and is counted, whether its
- * digits are ASCII, Devanagari, Bengali, Tamil or full width; amounts, guest counts and dates
- * in a brief survive. Boundary: pure.
+ * digits are ASCII, Indic, Thai, full width or a mathematical look-alike set; amounts, guest
+ * counts and dates in a brief survive. Boundary: pure.
  */
 import { describe, expect, it } from 'vitest';
 import { passesLuhn, redactPii } from '../privacy/redact.js';
+import { foldForMatch } from '../security/normalise.js';
 
 describe('redactPii', () => {
   it('redacts Indian mobile numbers in every common form', () => {
@@ -59,8 +60,18 @@ const DIGIT_ZEROS = {
   devanagari: 0x0966,
   bengali: 0x09e6,
   tamil: 0x0be6,
+  thai: 0x0e50,
   fullWidth: 0xff10,
+  mathBold: 0x1d7ce,
+  mathMonospace: 0x1d7f6,
 } as const;
+
+/** Unicode's highest code point; the sweep below covers every assigned decimal digit. */
+const MAX_CODE_POINT = 0x10ffff;
+const ONE_DIGIT = /^\p{Nd}$/u;
+const NON_ASCII_DIGITS = Array.from({ length: MAX_CODE_POINT + 1 }, (_unused, codePoint) =>
+  String.fromCodePoint(codePoint),
+).filter((char) => ONE_DIGIT.test(char) && !/[0-9]/.test(char));
 
 /** ASCII samples the redactor already catches; each is re-spelt in every block above. */
 const ASCII_SAMPLES = [
@@ -97,6 +108,18 @@ describe('redactPii with digits outside ASCII', () => {
       }
     });
   }
+
+  it('spells every Unicode decimal digit as the ASCII digit the normaliser reads it as', () => {
+    // Guards the sweep: Unicode has well over 600 decimal digits outside ASCII.
+    expect(NON_ASCII_DIGITS.length).toBeGreaterThan(600);
+    for (const digit of NON_ASCII_DIGITS) {
+      const spelt = redactPii(digit).text;
+      expect(spelt).toMatch(/^[0-9]$/);
+      // foldForMatch knows the Indic, Arabic and full-width blocks: an independent oracle there.
+      const folded = foldForMatch(digit);
+      if (folded !== digit) expect(spelt).toBe(folded);
+    }
+  });
 
   it('keeps amounts and counts typed in Devanagari, spelt in ASCII', () => {
     const brief = 'बजट ₹25,00,000, 300 मेहमान, 25 नवंबर 2026';

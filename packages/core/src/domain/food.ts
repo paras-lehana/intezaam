@@ -1,17 +1,14 @@
 /**
  * Food quantities (FOOD-01) — how much to cook per guest.
  *
- * Responsibility: grams per adult per sitting, the mixed-menu veg share, the kids'
- * portion factor and per-guest raw quantities a caterer can check (04 §8.4).
+ * Responsibility: grams per adult per sitting, the kids' portion factor and per-guest raw
+ * quantities a caterer can check.
  * Boundary: planning quantities only; the caterer's menu decides the final list.
  */
 import { range } from './units.js';
 
 /** 600–750 g of food per adult per sitting, however many dishes are served (S-HASSANCHEF-2026). */
 export const FOOD_GRAMS_PER_ADULT = range(600, 750);
-
-/** A mixed menu is planned 60:40 veg to non-veg by weight (same source, grade C). */
-export const MIXED_MENU_VEG_SHARE = 0.6;
 
 /** Children eat about half an adult portion (grade D). */
 export const KIDS_PORTION_FACTOR = 0.5;

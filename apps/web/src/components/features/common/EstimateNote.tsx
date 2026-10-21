@@ -9,7 +9,7 @@
 import type { ReactElement } from 'react';
 import type { SourceRef } from '@intezaam/core/schemas';
 
-/** Comparing three written quotes is the research's standing advice (04 §0). */
+/** Comparing three written quotes is the standing advice of the planning guides. */
 export const WRITTEN_QUOTES = 3;
 
 export interface EstimateNoteProps {

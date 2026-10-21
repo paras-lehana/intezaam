@@ -1,5 +1,5 @@
 /**
- * Tests for the brief date reader (research note 09 §5.2.2).
+ * Tests for the brief date reader.
  *
  * Responsibility: explicit dates (with and without a year, "mai" rule, invalid days),
  * festival windows (after, before, around, on, disputed dates, ambiguous Eid, no curated

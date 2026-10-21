@@ -1,5 +1,5 @@
 /**
- * Trace contracts — the "Why this?" behind every number (synthesis §4.1).
+ * Trace contracts — the "Why this?" behind every number.
  *
  * Responsibility: the wire shapes of a source reference and of one trace item (rule id,
  * the context signals that triggered it, its effect, cited sources, grade and whether it

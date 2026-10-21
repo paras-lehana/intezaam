@@ -7,11 +7,9 @@
 import { describe, expect, it } from 'vitest';
 import { isSourceId } from '../domain/sources.js';
 import {
-  DANCING_GUEST_SHARE,
   layoutCapacity,
   SPACE_LAYOUT_PROFILES,
   SPACE_LAYOUTS,
-  SQFT_PER_SQM,
   USABLE_FLOOR_SHARE,
 } from '../domain/space.js';
 
@@ -40,10 +38,5 @@ describe('space per guest (SPACE-01)', () => {
     expect(layoutCapacity(AREA_SQFT, 'standing')).toBeGreaterThan(
       layoutCapacity(AREA_SQFT, 'banquet-rounds'),
     );
-  });
-
-  it('unit constants are consistent', () => {
-    expect(SQFT_PER_SQM).toBeCloseTo(10.764);
-    expect(DANCING_GUEST_SHARE.min).toBeLessThan(DANCING_GUEST_SHARE.max);
   });
 });

@@ -1,6 +1,6 @@
 /**
  * Guards for GenAI job 5 (Ask and change): code decides what is refused and which changes
- * may be proposed (synthesis §5 job 5; bio-bandish assistant allow-list, 01 §3.9).
+ * may be proposed (GENAI_ARCHITECTURE.md, job 5: an allow-list of fields).
  *
  * Responsibility: `detectRefusal` refuses booking, payment, money transfers, legal advice
  * and off-scope questions before any model call (so refusal recall does not depend on the

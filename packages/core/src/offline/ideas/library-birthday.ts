@@ -3,7 +3,7 @@
  * library).
  *
  * Responsibility: themes, menus, activities, music and return gifts tagged by age band
- * (04 §5.2: baby, kid, teen, adult, elder), season (rainy-day indoor plans) and setting, so
+ * (baby, kid, teen, adult, elder), season (rainy-day indoor plans) and setting, so
  * a 7th birthday in the monsoon and a 60th Shashtiabdapurti get different suggestions.
  * No prices: code attaches the cost band. Boundary: data only.
  */
@@ -72,9 +72,12 @@ export const BIRTHDAY_IDEAS: readonly LibraryIdea[] = [
     effort: 'med',
     eco: false,
     costBand: 'within',
+    budgetLine: 'entertainment',
     youtubeQuery: 'retro bollywood theme party decor',
     fit: {
       families: ['birthday', 'family-function'],
+      // A Hindi-film night: South Indian families get their own music ideas instead.
+      avoidTraditions: ['tamil', 'telugu'],
       ages: ['adult', 'elder'],
       styles: ['quirky', 'colourful', 'fusion'],
     },

@@ -35,7 +35,7 @@ const NEARBY_MUHURATS = 2;
 
 const CONFIRM = 'Indicative only; confirm with your family priest.';
 
-/** The computed panchang every other muhurat list was diffed against (research 09 Gap 3 §3.1). */
+/** The computed panchang every other muhurat list was diffed against. */
 const PRIMARY_PANCHANG = 'Drik Panchang';
 
 function note(spec: NoteSpec, ctx: ClassifiedContext, trace: TraceLog): DateNote {

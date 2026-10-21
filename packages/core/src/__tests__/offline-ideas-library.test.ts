@@ -15,7 +15,7 @@ import { IDEAS_LIBRARY } from '../offline/ideas/select-ideas.js';
 import { modelIdeaSchema } from '../schemas/model-outputs.js';
 import { MIN_IDEAS } from '../schemas/limits.js';
 
-/** Synthesis §5 job 2: "about 80 entries". */
+/** GENAI_ARCHITECTURE.md, job 2: "about 80 entries". */
 const LIBRARY_SIZE = 80;
 
 function textOf(idea: (typeof IDEAS_LIBRARY)[number]): string {

@@ -18,13 +18,13 @@ import {
   VENDOR_PEOPLE_RULE_IDS,
 } from '../domain/rule-ids.js';
 import { ruleInfo } from '../domain/rule-info.js';
-import { isAssumptionRule, RULES } from '../domain/rules.js';
+import { RULES } from '../domain/rules.js';
 import { isSourceId } from '../domain/sources.js';
 import { TASK_TEMPLATES } from '../domain/tasks.js';
 
 const ruleIdSet: ReadonlySet<string> = new Set(RULE_IDS);
 
-/** Ids copied verbatim from the decision-engine design (synthesis §4), a spot check per group. */
+/** Ids copied verbatim from the decision-engine design, a spot check per group. */
 const DESIGN_IDS = ['CTX-02', 'BUD-05', 'CST-06', 'VER-M', 'VER-F', 'VER-T', 'LEV-01', 'TL-03'];
 const MORE_DESIGN_IDS = ['DATE-02', 'FN-03', 'VEN-04', 'HC-02', 'PERM-02', 'CROWD-03', 'COM-01'];
 
@@ -55,11 +55,6 @@ describe('RULES documentation', () => {
       expect(rule.sourceIds.length).toBeGreaterThan(0);
       for (const sourceId of rule.sourceIds) expect(isSourceId(sourceId)).toBe(true);
     }
-  });
-
-  it('flags grade-D rules as assumptions and grade-A rules as published', () => {
-    expect(isAssumptionRule('VEN-04')).toBe(RULES['VEN-04'].confidence === 'D');
-    expect(isAssumptionRule('PERM-02')).toBe(false);
   });
 
   it('ruleInfo builds an entry from its parts', () => {

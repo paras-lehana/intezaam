@@ -1,6 +1,6 @@
 /**
- * Idea constraints: the limits computed by code that every idea must respect (synthesis
- * §5 job 2, feature #29).
+ * Idea constraints: the limits computed by code that every idea must respect
+ * (GENAI_ARCHITECTURE.md, job 2; feature #29).
  *
  * Responsibility: derive once, from the plan and the context, what an idea may suggest —
  * family and kind, age band, season (rain risk wins), setting, diet (Jain, veg, halal,
@@ -50,7 +50,7 @@ const SEASON_MONTHS: Readonly<Record<Exclude<IdeaSeason, 'monsoon'>, readonly nu
   summer: [3, 4, 5, 6],
 };
 
-/** Festivals and religious occasions where alcohol is never suggested (01 §3.9; DIET-01 alcohol-free rule). */
+/** Festivals and religious occasions where alcohol is never suggested (DIET-01 alcohol-free rule). */
 const ALCOHOL_FREE_KINDS: ReadonlySet<EventKind> = new Set([
   'religious-gathering',
   'festival-pandal',

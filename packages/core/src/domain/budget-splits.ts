@@ -22,9 +22,9 @@ export interface SplitRow {
   readonly confidence: Confidence;
 }
 
-/** BUD-01 base splits, verbatim from synthesis §4.4 (each row sums to 10,000). */
+/** BUD-01 base splits, shares out of 10,000 (each row sums to 10,000). */
 export const BUDGET_SPLITS: Readonly<Record<EventFamily, SplitRow>> = {
-  // 04 §1.1: our default inside every source's range; jewellery is tracked separately.
+  // Our default inside every source's range; jewellery is tracked separately.
   wedding: {
     shares: {
       venue: 2_000,
@@ -45,7 +45,7 @@ export const BUDGET_SPLITS: Readonly<Record<EventFamily, SplitRow>> = {
     sourceIds: ['S-WP-2026', 'S-VK-2026', 'S-IMW-2026'],
     confidence: 'C',
   },
-  // 04 §5.1: ChocoCraft ranges; BUD-07 then adds the 10% contingency floor.
+  // S-CHOCOCRAFT-2025 ranges; BUD-07 then adds the 10% contingency floor.
   birthday: {
     shares: {
       venue: 2_500,
@@ -58,7 +58,7 @@ export const BUDGET_SPLITS: Readonly<Record<EventFamily, SplitRow>> = {
     sourceIds: ['S-CHOCOCRAFT-2025'],
     confidence: 'C',
   },
-  // 04 §6.4: NoBrokerHood names the heads; the shares are our assumption.
+  // S-NOBROKERHOOD-ND names the heads; the shares are our assumption.
   community: {
     shares: {
       venue: 2_500,
@@ -73,7 +73,7 @@ export const BUDGET_SPLITS: Readonly<Record<EventFamily, SplitRow>> = {
     sourceIds: ['S-NOBROKERHOOD-ND', 'S-NDMA-2014', 'S-INTEZAAM-D'],
     confidence: 'D',
   },
-  // Owner's "gathering" row (01 §3.1); venue and catering split 4:5 as in the wedding split.
+  // Owner's "gathering" row; venue and catering split 4:5 as in the wedding split.
   'family-function': {
     shares: {
       venue: 2_400,
@@ -92,8 +92,8 @@ const OWNER_ROW = { sourceIds: ['S-OWNER-DEFAULTS'], confidence: 'D' } as const;
 
 /**
  * Kinds whose costs differ from their family's base. Family-function rows are the owner's
- * planner defaults (01 §3.1, venue and catering split 4:5); the 60th birthday weights
- * priests and homam like a small wedding (04 §5.2, grade D).
+ * planner defaults (venue and catering split 4:5); the 60th birthday weights
+ * priests and homam like a small wedding (grade D).
  */
 export const KIND_SPLIT_OVERRIDES: Readonly<Partial<Record<EventKind, SplitRow>>> = {
   'sixtieth-birthday': {

@@ -1,5 +1,5 @@
 /**
- * Tests for engine/timeline-schedule.ts — the ported bio-bandish scheduler (TL-02…07).
+ * Tests for engine/timeline-schedule.ts — the scheduler ported from the owner's earlier planner (TL-02…07).
  *
  * Responsibility: prove on-time tasks are due their lead time before the event; late tasks
  * are packed into the days left, longest lead first, in 1–3-day steps and never after the
@@ -10,7 +10,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import { addDaysIso, daysBetweenIso } from '../domain/calendar.js';
-import { findTaskTemplate } from '../domain/tasks.js';
+import { TASK_TEMPLATES } from '../domain/tasks.js';
 import type { TaskTemplate } from '../domain/task-types.js';
 import { DAYS_PER_WEEK } from '../domain/timeline.js';
 import { selectTemplates } from '../engine/task-conditions.js';
@@ -31,7 +31,7 @@ import {
 } from './fixtures/engine-contexts.js';
 
 function template(id: string): TaskTemplate {
-  const found = findTaskTemplate(id);
+  const found = TASK_TEMPLATES.find((candidate) => candidate.id === id);
   if (found === undefined) throw new Error(`missing template ${id}`);
   return found;
 }

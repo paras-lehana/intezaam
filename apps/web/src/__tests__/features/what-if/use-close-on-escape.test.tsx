@@ -50,7 +50,7 @@ describe('Escape closes a tool', () => {
     render(<ToolsHarness panelProps={samplePanel('bengaluru-birthday').props} />);
     const button = screen.getByRole('button', { name: 'Ask Intezaam' });
     await user.click(button);
-    await user.click(await screen.findByLabelText(/Your question/));
+    await user.click(await screen.findByRole('textbox', { name: /^Your question/ }));
     await user.keyboard('{Escape}');
     expect(button).toHaveAttribute('aria-expanded', 'false');
     expect(button).toHaveFocus();

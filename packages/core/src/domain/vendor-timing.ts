@@ -1,8 +1,8 @@
 /**
  * Vendor timing — how early to book (VEN-02) and how early they arrive (FN-03).
  *
- * Responsibility: wedding booking lead times per vendor (04 §3; other families take their
- * book-by dates from their own task templates), run-sheet arrival leads (01 §3.6) and the
+ * Responsibility: wedding booking lead times per vendor (other families take their
+ * book-by dates from their own task templates), run-sheet arrival leads and the
  * share of couples who book each vendor (VEN-01 ordering). Boundary: data only.
  */
 import type { SourceId } from './sources.js';
@@ -10,7 +10,7 @@ import type { Confidence } from './source-types.js';
 import type { VendorType } from './vendors.js';
 
 export interface VendorLead {
-  /** Months before the wedding to book (04 §3 default, the earlier end in peak season). */
+  /** Months before the wedding to book (S-IMW-2026 default, the earlier end in peak season). */
   readonly months: number;
   readonly sourceId: SourceId;
   readonly confidence: Confidence;
@@ -26,7 +26,7 @@ const fromManyavar = (months: number): VendorLead => ({
   sourceId: 'S-MANYAVAR-2024',
   confidence: 'C',
 });
-/** Vendors 04 §3 does not list get a lead next to the closest listed vendor (grade D). */
+/** Vendors the lead-time sources do not list get a lead next to the closest listed vendor (grade D). */
 const assumedLead = (months: number): VendorLead => ({
   months,
   sourceId: 'S-INTEZAAM-D',
@@ -72,7 +72,7 @@ export const VENDOR_LEAD_MONTHS: Readonly<Record<VendorType, VendorLead>> = {
 
 /**
  * FN-03: minutes before a function starts that each vendor must be on site (owner's run
- * sheet, 01 §3.6: decor 180, makeup 150, outfits 120, catering 90, music and gifts 60,
+ * sheet: decor 180, makeup 150, outfits 120, catering 90, music and gifts 60,
  * photo and rituals 30; grade D). null = no run-sheet slot (rooms, printed invitations).
  */
 export const VENDOR_ARRIVAL_LEAD_MIN: Readonly<Record<VendorType, number | null>> = {

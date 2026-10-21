@@ -1,5 +1,5 @@
 /**
- * Feature tiles, part 2: Timelines, Vendor checklists and Ideas (synthesis §3 D, E, G).
+ * Feature tiles, part 2: Timelines, Vendor checklists and Ideas.
  *
  * Responsibility: the user-facing title, one-line description and target of each tile in
  * these three groups. Boundary: copy only; every claim describes what the plan page does.

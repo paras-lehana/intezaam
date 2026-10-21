@@ -1,7 +1,7 @@
 /**
  * Faithfulness guard for GenAI job 2 (and the number check jobs 4 and 5 reuse): every number
- * the model writes must already exist in the numbered plan facts (synthesis §5; the fifa
- * eval pattern, 06 §4 row 10).
+ * the model writes must already exist in the numbered plan facts
+ * (GENAI_ARCHITECTURE.md, "Safety and privacy").
  *
  * Responsibility: read the numbers in model text with the same number grammar the brief
  * reader uses ("₹25 L", "25 lakh" and "₹25,00,000" are all 25,00,000), compare them with the

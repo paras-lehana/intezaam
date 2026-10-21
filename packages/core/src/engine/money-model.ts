@@ -3,10 +3,10 @@
  *
  * Responsibility: the ONE closed table saying, for every event kind, which money model judges
  * the budget and how its food is priced — the published wedding rows (weddings, and the 60th,
- * which 04 §5.2 prices as an intimate wedding in the same city, grade D), the published party
+ * which prices as an intimate wedding in the same city, grade D), the published party
  * bands (first, kids' and teen birthdays, where children eat party food at ₹150–500 a head),
  * a bottom-up estimate from catered meals (milestone birthdays and family functions), or the
- * committee's own planned heads (community events: 04 §6.4 finds no published per-visitor
+ * committee's own planned heads (community events: no source publishes a per-visitor
  * cost, "the committee sets it") — plus the caterer class each model prices food at.
  * Boundary: classification only; estimate.ts, verdict-money.ts, catering-basis.ts (the food
  * basis), cost-check.ts and the levers read it.
@@ -30,7 +30,7 @@ export interface KindMoney {
 
 /**
  * A missing kind is a compile error, so every new occasion must choose both its money model
- * and its food basis in this one row (04 §5.2, §6.4; synthesis §4.5).
+ * and its food basis in this one row.
  */
 export const KIND_MONEY: Readonly<Record<EventKind, KindMoney>> = {
   wedding: { model: 'wedding-rows', food: 'plate' },
@@ -56,8 +56,8 @@ export const KIND_MONEY: Readonly<Record<EventKind, KindMoney>> = {
 /**
  * The caterer class food is priced at when the model does not tie it to a money band: a
  * party's adults eat from a local party caterer (grade D), milestone and family functions
- * book a standard caterer (04 §5.2 "guests × per-plate"), and a committee buys at community
- * rates. Wedding rows follow the band instead (09 Gap 2 §2.5).
+ * book a standard caterer ("guests × per-plate"), and a committee buys at community
+ * rates. Wedding rows follow the band instead.
  */
 export const DEFAULT_LEVEL_BY_MODEL: Readonly<Record<MoneyModel, CateringLevel>> = {
   'wedding-rows': 'standard',
@@ -83,8 +83,8 @@ const WEDDING_SUBJECT: RowsSubject = {
 };
 
 /**
- * 04 §5.2: "treat as an intimate or mid wedding in the same tier minus attire and jewellery".
- * The VK rows already leave out trousseau, jewellery and guest rooms (04 §1.3), and the event
+ * The 60th is treated "as an intimate or mid wedding in the same tier minus attire and jewellery".
+ * The VK rows already leave out trousseau, jewellery and guest rooms, and the event
  * spend drops those lines too, so the 60th is compared like-for-like without a further cut.
  */
 const SUBJECT_BY_KIND: Readonly<Partial<Record<EventKind, RowsSubject>>> = {

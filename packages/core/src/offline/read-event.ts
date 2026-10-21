@@ -1,6 +1,5 @@
 /**
- * Event reader: family, kind, wedding functions and tradition from explicit words
- * (research note 09 §5.2.3–5.2.4).
+ * Event reader: family, kind, wedding functions and tradition from explicit words.
  *
  * Responsibility: decide what is being celebrated — a 60th (Shashtiabdapurti) first, then a
  * community occasion (a festival word plus a community marker, or a gathering word such as
@@ -96,7 +95,7 @@ const PREMISES_WORDS = buildPhraseIndex<Premises>([
   ...RESIDENTIAL_WORDS.map((phrase) => [phrase, 'private'] as const),
 ]);
 
-/** Birthday kinds by age (04 §5.2 bands): 1 first, up to 12 kids, 13–17 teen, then milestone. */
+/** Birthday kinds by age (the published party bands): 1 first, up to 12 kids, 13–17 teen, then milestone. */
 const FIRST_BIRTHDAY_AGE = 1;
 const LAST_KIDS_AGE = 12;
 const LAST_TEEN_AGE = 17;
@@ -140,7 +139,7 @@ function reading(
 
 /**
  * Community: a gathering word, or a festival plus a community marker ("mandal", "RWA"). A
- * festival inside a housing society is a society festival even with a pandal (09 §5.5).
+ * festival inside a housing society is a society festival even with a pandal.
  */
 function communityReading(matches: readonly PhraseMatch<EventCue>[]): EventReading | undefined {
   const named = cueOf(matches, 'community-kind');
@@ -171,7 +170,7 @@ export function readEvent(tokens: readonly Token[], age: number | undefined): Ev
   const wedding = cueOf(matches, 'wedding');
   if (wedding !== undefined) return reading('wedding', 'wedding', wedding);
   const familyKind = cueOf(matches, 'family-kind');
-  // A puja is a family function only at family scale; in a society it is a gathering (09 §5.2.3).
+  // A puja is a family function only at family scale; in a society it is a gathering.
   const marker = cueOf(matches, 'residential') ?? cueOf(matches, 'community');
   if (familyKind?.value.kind === 'home-puja' && marker !== undefined)
     return reading('community', 'religious-gathering', familyKind, marker);

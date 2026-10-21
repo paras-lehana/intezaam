@@ -6,7 +6,7 @@
  * over the condition table and real templates.
  */
 import { describe, expect, it } from 'vitest';
-import { findTaskTemplate, templatesForFamily } from '../domain/tasks.js';
+import { TASK_TEMPLATES, templatesForFamily } from '../domain/tasks.js';
 import {
   selectTemplates,
   TASK_CONDITION_CHECKS,
@@ -62,8 +62,8 @@ describe('TASK_CONDITION_CHECKS', () => {
 
 describe('templateApplies and selectTemplates', () => {
   it('filters by kind, planned functions and condition', () => {
-    const sixtieth = findTaskTemplate('b-sixtieth-priest');
-    const mehendi = findTaskTemplate('w-book-mehendi');
+    const sixtieth = TASK_TEMPLATES.find((template) => template.id === 'b-sixtieth-priest');
+    const mehendi = TASK_TEMPLATES.find((template) => template.id === 'w-book-mehendi');
     if (sixtieth === undefined || mehendi === undefined) throw new Error('templates expected');
     expect(templateApplies(classified(birthday()), sixtieth)).toBe(false);
     expect(templateApplies(classified(birthday({ kind: 'sixtieth-birthday' })), sixtieth)).toBe(

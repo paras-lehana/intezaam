@@ -9,7 +9,6 @@ import {
   ANCHOR_CITIES,
   CITY_ANCHORS,
   CITY_TIERS,
-  EXTRA_PER_100_GUESTS_INR,
   TIER_PROFILES,
   UNKNOWN_CITY_TIER,
 } from '../domain/cities.js';
@@ -45,9 +44,5 @@ describe('city anchors', () => {
     const mins = ANCHOR_CITIES.map((city) => CITY_ANCHORS[city].midRangeInr.min);
     expect(CITY_ANCHORS.mumbai.midRangeInr.min).toBe(Math.max(...mins));
     expect(CITY_ANCHORS.kolkata.midRangeInr.min).toBe(Math.min(...mins));
-  });
-
-  it('the extra-guests range is ordered', () => {
-    expect(EXTRA_PER_100_GUESTS_INR.min).toBeLessThan(EXTRA_PER_100_GUESTS_INR.max);
   });
 });

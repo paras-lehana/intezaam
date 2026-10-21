@@ -81,15 +81,19 @@ Where each evaluation area is delivered, with a path for every claim.
 
 ## 5. Testing
 
-- Core unit tests (1,179), server integration tests (134) and web component tests (391), all passing on 2026-10-21 →
+- Core unit tests (1,389), server integration tests (172) and web component tests (512), all passing on 2026-10-21 →
   [`packages/core/src/__tests__`](packages/core/src/__tests__), [`apps/server/src/__tests__`](apps/server/src/__tests__),
   [`apps/web/src/__tests__`](apps/web/src/__tests__)
-- Coverage gates on core (95/95/95/90) and server (85/85/85/75); measured core 100% lines, server 99.68% lines →
-  [`packages/core/vitest.config.ts`](packages/core/vitest.config.ts), [`apps/server/vitest.config.ts`](apps/server/vitest.config.ts)
+- Coverage gates on core (95/95/95/90), server (85/85/85/75) and web (95/93/95/83); measured core 99.92% lines, server
+  99.7% lines, web 98.45% lines → [`packages/core/vitest.config.ts`](packages/core/vitest.config.ts),
+  [`apps/server/vitest.config.ts`](apps/server/vitest.config.ts), [`apps/web/vitest.config.ts`](apps/web/vitest.config.ts)
 - Fixtures derived from the engine; a 60-brief battery and a GenAI eval battery →
   [`fixtures/eval-battery.ts`](packages/core/src/__tests__/fixtures/eval-battery.ts)
-- 42 Playwright tests (journeys, personas, axe) on desktop and a 390×844 phone → [`e2e`](e2e)
-- Details and counts → [`TESTING.md`](TESTING.md)
+- 46 Playwright tests (11 journeys, 4 persona checks and 8 axe scans per device) on desktop and a 390×844 phone →
+  [`e2e`](e2e)
+- Details and counts, from the latest run → [`TESTING.md`](TESTING.md); a core test,
+  [`docs-test-counts.test.ts`](packages/core/src/__tests__/docs-test-counts.test.ts), fails if this file, the README or
+  the changelog states other figures than TESTING.md
 
 ## 6. Accessibility
 

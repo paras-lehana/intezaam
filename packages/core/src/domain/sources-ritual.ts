@@ -2,12 +2,12 @@
  * Source register, part 4: ceremonies, traditions and dietary rules.
  *
  * Responsibility: the reference pages behind ceremony sequences, tradition hard rules
- * and diet rules (research note 04 §4, §5.2, §8.7). Wikipedia pages carry the year they
+ * and diet rules. Wikipedia pages carry the year they
  * were read. Boundary: metadata only; merged with the other parts in sources.ts.
  */
 import type { SourceEntry } from './source-types.js';
 
-/** Wikipedia pages are cited with the year they were accessed (research note 04 §0). */
+/** Wikipedia pages are cited with the year they were accessed. */
 const ACCESSED_YEAR = 2026;
 
 export const RITUAL_SOURCES = {

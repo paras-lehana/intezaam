@@ -1,7 +1,7 @@
 /**
  * Who wrote a piece of text: Gemini (with model and seconds) or the offline planner.
  *
- * Responsibility: honest provenance on every AI output (synthesis feature #40) — the badge
+ * Responsibility: honest provenance on every AI output (feature #40) — the badge
  * names the model and how long it took, says "Offline planner" whenever the server's
  * offline twin answered (with why, when the server says: today's free quota is spent, the
  * model did not answer, or no model is set up) or the server could not be reached, and

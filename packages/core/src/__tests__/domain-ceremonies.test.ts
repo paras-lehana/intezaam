@@ -10,7 +10,7 @@ import { functionAllowedFor } from '../domain/functions.js';
 import { TRADITION_PROFILES, TRADITIONS } from '../domain/traditions.js';
 import { VENDOR_TYPES } from '../domain/vendors.js';
 
-describe('ceremony sequences (04 §4)', () => {
+describe('ceremony sequences', () => {
   it('every step names a wedding function (or none) and known vendors', () => {
     for (const tradition of TRADITIONS) {
       for (const step of CEREMONY_SEQUENCES[tradition]) {

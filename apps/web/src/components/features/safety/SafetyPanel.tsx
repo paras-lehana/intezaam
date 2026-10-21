@@ -1,5 +1,5 @@
 /**
- * The Safety tab (synthesis §7.3): permissions, crowd safety, the risk radar and the
+ * The Safety tab: permissions, crowd safety, the risk radar and the
  * accessibility and elders plan.
  *
  * Responsibility: compose the four Safety sections in the order a committee works through

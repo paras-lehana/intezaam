@@ -2,7 +2,7 @@
  * Where the money goes: every budget line with amount, share, per guest, cost type and
  * "Why this?", with the bars above as a visual summary.
  *
- * Responsibility: the budget split (synthesis feature #10) as a real data table — caption,
+ * Responsibility: the budget split (feature #10) as a real data table — caption,
  * column and row headers, a total row — so the numbers are readable without the bars.
  * The lines always add up to the total exactly (largest-remainder split in core).
  * Boundary: display only; changes go through CategoryControls.

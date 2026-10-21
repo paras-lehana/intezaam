@@ -2,7 +2,7 @@
  * Exact integer splits (BUD-09) — money and shares that always add up.
  *
  * Responsibility: split a whole-rupee total by basis points with the remainder going to one
- * named line (ported from bio-bandish `split_amounts`), and split a total over weights by
+ * named line (ported from the owner's earlier planner), and split a total over weights by
  * the largest-remainder method. Boundary: arithmetic only; the budget rules decide what
  * moves where.
  */

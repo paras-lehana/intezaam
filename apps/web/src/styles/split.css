@@ -113,7 +113,9 @@
   }
 
   html:has(.plan-split) {
-    scroll-padding-bottom: calc(var(--action-bar-height) + env(safe-area-inset-bottom) + var(--space-3));
+    scroll-padding-bottom: calc(
+      var(--action-bar-height) + env(safe-area-inset-bottom) + var(--space-3)
+    );
   }
 
   /* The switch sticks only over the panes, so only their content steps below it; as a

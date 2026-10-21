@@ -1,5 +1,5 @@
 /**
- * Brief battery, mixed-script briefs and guardrails (research note 09 §5.4: B35–B40, B50–B52,
+ * Brief battery, mixed-script briefs and guardrails (B35–B40, B50–B52,
  * B54, B56, B57, B59, B60).
  *
  * Responsibility: Devanagari and Latin in one sentence, community occasions of every faith,

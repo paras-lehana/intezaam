@@ -2,9 +2,17 @@
  * Rule documentation, part 4: permissions (PERM), crowd safety (CROWD), community money
  * (COM), the risk severity ladder (RISK) and the readiness score (READY-01).
  *
- * Responsibility: the title, summary, grade and sources of each rule in synthesis §4.8.
+ * Responsibility: the title, summary, grade and sources of each rule;
+ * summaries that quote a noise figure read it from permissions.ts.
  * Boundary: documentation only; every permission says "verify locally" in the UI.
  */
+import {
+  FESTIVE_EXEMPTION_MAX_DAYS,
+  LOUDSPEAKER_ABOVE_AMBIENT_DBA,
+  LOUDSPEAKER_BOUNDARY_MAX_DBA,
+  NOISE_LIMITS_DBA,
+  SILENCE_ZONE_RADIUS_M,
+} from './permissions.js';
 import type { RuleInfo } from './rule-info.js';
 import { ruleInfo } from './rule-info.js';
 import type { SafetyCommunityRuleId } from './rule-ids.js';
@@ -12,19 +20,19 @@ import type { SafetyCommunityRuleId } from './rule-ids.js';
 export const SAFETY_COMMUNITY_RULES: Readonly<Record<SafetyCommunityRuleId, RuleInfo>> = {
   'PERM-01': ruleInfo(
     'Loudspeaker permission',
-    'Any amplified sound in the open needs written permission from the designated authority.',
+    `Any amplified sound in the open needs written permission from the designated authority; at the boundary sound may not exceed the area's limit plus ${LOUDSPEAKER_ABOVE_AMBIENT_DBA} dB(A), or ${LOUDSPEAKER_BOUNDARY_MAX_DBA} dB(A), whichever is lower.`,
     'A',
     ['S-NOISE-RULE5-ND'],
   ),
   'PERM-02': ruleInfo(
     'Night sound ban',
-    'Outdoor amplified sound is not allowed from 10 pm to 6 am; a state festival exemption allows up to midnight on at most 15 days a year.',
+    `Outdoor amplified sound is not allowed from 10 pm to 6 am; a state festival exemption allows up to midnight on at most ${FESTIVE_EXEMPTION_MAX_DAYS} days a year.`,
     'A',
     ['S-NOISE-RULE5-ND'],
   ),
   'PERM-03': ruleInfo(
     'Silence zone',
-    'Within about 100 m of a hospital, school or court the limits are 50 dB by day and 40 dB at night (verify the radius).',
+    `Within about ${SILENCE_ZONE_RADIUS_M} m of a hospital, school or court the limits are ${NOISE_LIMITS_DBA.silence.day} dB by day and ${NOISE_LIMITS_DBA.silence.night} dB at night (verify the radius).`,
     'A',
     ['S-SILENCE-ZONE-2000', 'S-NOISE-SCHEDULE-2022'],
   ),

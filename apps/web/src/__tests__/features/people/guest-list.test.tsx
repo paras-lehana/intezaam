@@ -1,21 +1,21 @@
 /**
  * Responsibility: the browser-only guest list — a party added by hand or a CSV imported with
- * Hinglish words is counted in people (not rows), an RSVP change and a removal recount,
- * "Plan for N guests" sends only a head count, the export is formula-safe, the list is
- * remembered on this device, and nothing is ever sent over the network. Boundary: counts
+ * Hinglish words is counted in people (not rows), an RSVP change and a removal recount, a
+ * removal or a clear keeps focus in the section (next Remove button, else the name box) and
+ * is announced, "Plan for N guests" sends only a head count, the export is formula-safe, and
+ * nothing is sent over the network (device storage is in guest-list-device.test.tsx). Boundary: counts
  * and CSV text come from the pure modules under test (`importGuests`, `countGuests`).
  */
-import { render, screen, within } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
-import { GUEST_LIST_STORAGE_KEY } from '../../../components/features/people/guest-store';
 import {
   MAX_IMPORT_BYTES,
   guestsToCsv,
   importGuests,
 } from '../../../components/features/people/guest-csv';
 import { TOO_LARGE } from '../../../components/features/people/GuestImport';
-import { GuestList } from '../../../components/features/people/GuestList';
+import { CLEARED, GuestList } from '../../../components/features/people/GuestList';
 import { countGuests } from '../../../components/features/people/guest-rules';
 import { stubFetch } from '../../helpers';
 import { captureDownloads, samplePanel } from '../panel-fixtures';
@@ -112,23 +112,24 @@ describe('GuestList', () => {
     ).toBeInTheDocument();
     await user.click(screen.getByRole('button', { name: 'Remove Sharma ji' }));
     expect(screen.queryByRole('rowheader', { name: 'Sharma ji' })).not.toBeInTheDocument();
+    // The pressed button is gone: focus moves to the next row's, and the removal is spoken.
+    const next = guests[guests.findIndex((guest) => guest.name === 'Sharma ji') + 1];
+    if (next === undefined) throw new Error('the CSV has a row after Sharma ji');
+    expect(screen.getByRole('button', { name: `Remove ${next.name}` })).toHaveFocus();
+    expect(screen.getByText('Removed Sharma ji.')).toHaveAttribute('aria-live', 'polite');
     await user.click(screen.getByRole('button', { name: 'Clear the list' }));
     expect(screen.queryByRole('table', { name: 'Your guest list' })).not.toBeInTheDocument();
+    expect(screen.getByLabelText('Name or family')).toHaveFocus();
+    expect(screen.getByText(CLEARED)).toHaveAttribute('aria-live', 'polite');
   });
 
-  it('remembers the list on this device only', async () => {
+  it('keeps focus in the section when the last guest is removed', async () => {
     const user = userEvent.setup();
-    const fetchMock = stubFetch();
     renderList('bengaluru-birthday');
     await user.type(screen.getByLabelText('Name or family'), 'Iyer family');
     await user.click(screen.getByRole('button', { name: 'Add to the list' }));
-    expect(window.localStorage.getItem(GUEST_LIST_STORAGE_KEY)).toContain('Iyer family');
-    expect(screen.queryByLabelText('Side')).not.toBeInTheDocument();
-    renderList('bengaluru-birthday');
-    const tables = screen.getAllByRole('table', { name: 'Your guest list' });
-    expect(
-      within(tables[1] ?? document.body).getByRole('rowheader', { name: 'Iyer family' }),
-    ).toBeInTheDocument();
-    expect(fetchMock).not.toHaveBeenCalled();
+    await user.click(screen.getByRole('button', { name: 'Remove Iyer family' }));
+    expect(screen.getByLabelText('Name or family')).toHaveFocus();
+    expect(screen.getByText('Removed Iyer family.')).toHaveAttribute('aria-live', 'polite');
   });
 });

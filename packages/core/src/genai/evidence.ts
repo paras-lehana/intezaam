@@ -20,7 +20,7 @@ export type DropReason = (typeof DROP_REASONS)[number];
 
 export type Mutable<T> = { -readonly [K in keyof T]: T[K] };
 
-/** Scalar fields whose quotes must agree with each other (09 §5.3 rule 4). */
+/** Scalar fields whose quotes must agree with each other. */
 const MUST_AGREE: ReadonlySet<BriefField> = new Set(['city', 'date', 'budget', 'tradition']);
 
 /** Quotes are joined as separate clauses so clause-based readers (priorities) stay local. */

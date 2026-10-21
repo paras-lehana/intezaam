@@ -27,6 +27,7 @@ export const WORKSPACE_TABS = [
  * named by its h3), so a match never comes from a panel's fixed intro text.
  */
 export const SECTIONS = {
+  permissions: /^permissions$/i,
   riskRadar: /^risk radar$/i,
   accessPlan: /^accessibility and elders$/i,
   dateNotes: /^about your date$/i,

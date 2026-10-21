@@ -25,7 +25,7 @@ export const QUOTE_FILE_LABELS: Readonly<Record<QuoteFileType, string>> = {
 export const QUOTE_FILE_ACCEPT = Object.keys(QUOTE_FILE_LABELS).join(',');
 
 /**
- * Core's MAX_QUOTE_FILE_BYTES (2 MiB decoded, research 09 §4.2.5). Checked on the File's
+ * Core's MAX_QUOTE_FILE_BYTES (2 MiB decoded). Checked on the File's
  * size first so a 50 MB video is refused without being read into memory; the schema below
  * checks the encoded size again.
  */

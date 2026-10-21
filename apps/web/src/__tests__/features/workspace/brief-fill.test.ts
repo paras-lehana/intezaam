@@ -29,6 +29,7 @@ import {
   briefChips,
   draftToFill,
   missingPrompts,
+  nextFieldAfterBrief,
 } from '../../../components/features/workspace/brief-fill';
 import { EMPTY_FORM_STATE } from '../../../components/form';
 import { briefResponseFor } from '../plan-fixtures';
@@ -166,6 +167,11 @@ describe('missingPrompts', () => {
   it('does not ask again for an essential the brief answered', () => {
     expect(read.filled).toContain('city');
     expect(missingPrompts(read.missing)).not.toContain(MISSING_PROMPTS.city);
+  });
+
+  it('sends the reader to the first open essential, else the first question', () => {
+    expect(nextFieldAfterBrief(['styleTags', 'budget', 'date'])).toBe('date');
+    expect(nextFieldAfterBrief(['styleTags'])).toBe(ESSENTIAL_FIELDS[0]);
   });
 });
 

@@ -1,7 +1,7 @@
 /**
  * The home page's feature catalogue: its seven groups and the shape of one feature tile.
  *
- * Responsibility: the closed list of groups the 42 features (synthesis §3) are shown
+ * Responsibility: the closed list of groups the 42 features are shown
  * under — the brief's four nouns (budgets, timelines, vendor checklists, ideas) plus
  * Assistant, Community and Share — with each group's heading, line and icon, and where a
  * tile links. Boundary: copy and ids only; the tiles are listed in features-*.ts.

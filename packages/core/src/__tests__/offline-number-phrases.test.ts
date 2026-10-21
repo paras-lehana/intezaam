@@ -1,9 +1,9 @@
 /**
- * Tests for the number-phrase grammar (research note 09 §5.2.1).
+ * Tests for the number-phrase grammar.
  *
  * Responsibility: fraction words (sava, paune, saade, dedh, dhai), cardinals, multipliers,
  * decimals, ranges and the money and word-only flags. Boundary: expected values are the
- * grammar's own worked examples from the research note.
+ * grammar's own worked examples.
  */
 import { describe, expect, it } from 'vitest';
 import { readNumberAt, readNumberPhrases } from '../offline/number-phrases.js';

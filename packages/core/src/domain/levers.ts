@@ -41,5 +41,5 @@ export const LEVERS: Readonly<Record<LeverId, LeverInfo>> = {
   'trim-programme': { ruleId: 'LEV-07', label: 'Trim the cultural programme' },
 };
 
-/** Ranking: the top three levers by rupees saved are shown (synthesis §4.5). */
+/** Ranking: the top three levers by rupees saved are shown. */
 export const LEVERS_SHOWN = 3;

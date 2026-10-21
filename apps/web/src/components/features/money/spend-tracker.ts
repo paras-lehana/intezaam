@@ -2,7 +2,7 @@
  * The spend tracker's arithmetic and its on-device memory.
  *
  * Responsibility: read typed rupee amounts, compare what is committed or paid against each
- * planned line (warn at 90%, over above 100% — synthesis feature #14), and remember the
+ * planned line (warn at 90%, over above 100% — feature #14), and remember the
  * typed amounts on this device only, validated on the way back in because storage is
  * untrusted input. Boundary: no React; nothing here is ever sent to a server.
  */
@@ -13,7 +13,7 @@ import { readStored } from '../common/stored-json';
 
 export const SPEND_STORAGE_KEY = 'intezaam:spend';
 
-/** Synthesis feature #14 (from the owner's planner, 01 §2): warn once a line is 90% used. */
+/** Feature #14 (from the owner's planner): warn once a line is 90% used. */
 export const WARN_SHARE = 0.9;
 
 /** "₹12,34,56,789" is 12 characters; 16 leaves room for spaces and stops runaway input. */

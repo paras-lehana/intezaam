@@ -5,8 +5,10 @@
  * same engine the server runs — then ask /api/plan/narration for the AI narration alone
  * (idle → loading → ready, or offline when the server cannot be reached). A newer plan
  * cancels the older request, and a late reply for an older plan is ignored. The last
- * context is remembered on this device; a `#plan=` share link is opened on arrival.
- * Boundary: no markup; the page composes this with the form and the workspace.
+ * context is remembered on this device; a `#plan=` share link is opened on arrival. Every
+ * new plan version yields a live-region sentence naming what changed, re-announced even
+ * when the words repeat. Boundary: no markup; the page composes this with the form and
+ * the workspace.
  */
 import { type Dispatch, type SetStateAction, useEffect, useState } from 'react';
 import type { Result } from '@intezaam/core';
@@ -19,14 +21,17 @@ import type {
   Provenance,
 } from '@intezaam/core/schemas';
 import type { NarrationState } from '../components/features/panel-props';
+import { describePatch } from '../components/features/what-if/describe-patch';
 import { fetchNarration } from './api';
 import {
   type PlanOrigin,
   contextFromFragment,
   patchContext,
+  planAnnouncement,
   readLastContext,
   storeLastContext,
 } from './plan-state';
+import { useAnnouncement } from './use-announcement';
 
 export interface PlanState {
   readonly context?: EventContext | undefined;
@@ -39,6 +44,8 @@ export interface PlanState {
   /** Bumps with every new plan; narration is accepted only for the version it was asked for. */
   readonly version: number;
   readonly origin: PlanOrigin;
+  /** What the typed change that made this plan did, in words (empty for a whole new plan). */
+  readonly change: readonly string[];
 }
 
 export interface PlanStateApi {
@@ -49,9 +56,16 @@ export interface PlanStateApi {
   /** Applies a typed change; returns the new context so the form can show it. */
   readonly applyPatch: (patch: ContextPatch) => EventContext | undefined;
   readonly restoreLast: () => EventContext | undefined;
+  /** The live-region text: what changed and the new verdict, spoken for every plan version. */
+  readonly announcement: string;
 }
 
-const EMPTY_STATE: PlanState = { narrationState: 'idle', version: 0, origin: 'submit' };
+const EMPTY_STATE: PlanState = {
+  narrationState: 'idle',
+  version: 0,
+  origin: 'submit',
+  change: [],
+};
 
 type SetPlanState = Dispatch<SetStateAction<PlanState>>;
 
@@ -61,12 +75,13 @@ function plannedState(
   todayIso: string,
   version: number,
   origin: PlanOrigin,
+  change: readonly string[] = [],
 ): Result<PlanState, string> {
   const built = buildPlan(context, todayIso);
   return built.ok
     ? {
         ok: true,
-        value: { context, plan: built.value, narrationState: 'loading', version, origin },
+        value: { context, plan: built.value, narrationState: 'loading', version, origin, change },
       }
     : { ok: false, error: built.error.message };
 }
@@ -114,6 +129,10 @@ export function usePlanState(todayIso: string): PlanStateApi {
   const [state, setState] = useState<PlanState>(() => arrivalState(todayIso));
   const [lastContext] = useState(readLastContext);
   const { context, version, narrationState } = state;
+  const announcement = useAnnouncement(
+    state.plan === undefined ? '' : planAnnouncement(state.plan, state.origin, state.change),
+    version,
+  );
 
   // Efficiency: one narration request per plan version; a newer version's cleanup aborts it.
   useEffect(() => {
@@ -127,8 +146,8 @@ export function usePlanState(todayIso: string): PlanStateApi {
     if (context !== undefined) storeLastContext(context);
   }, [context]);
 
-  function plan(next: EventContext, origin: PlanOrigin): boolean {
-    const built = plannedState(next, todayIso, state.version + 1, origin);
+  function plan(next: EventContext, origin: PlanOrigin, change?: readonly string[]): boolean {
+    const built = plannedState(next, todayIso, state.version + 1, origin, change);
     if (!built.ok) {
       setState((current) => ({ ...current, error: built.error }));
       return false;
@@ -144,7 +163,7 @@ export function usePlanState(todayIso: string): PlanStateApi {
       setState((current) => ({ ...current, error: patched.error }));
       return undefined;
     }
-    return plan(patched.value, 'patch') ? patched.value : undefined;
+    return plan(patched.value, 'patch', describePatch(patch)) ? patched.value : undefined;
   }
 
   function restoreLast(): EventContext | undefined {
@@ -158,5 +177,6 @@ export function usePlanState(todayIso: string): PlanStateApi {
     submit: (next) => plan(next, 'submit'),
     applyPatch,
     restoreLast,
+    announcement,
   };
 }

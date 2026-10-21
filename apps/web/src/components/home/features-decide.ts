@@ -1,5 +1,5 @@
 /**
- * Feature tiles, part 1: Assistant and Budgets (synthesis §3 A, B, C, F, I, J).
+ * Feature tiles, part 1: Assistant and Budgets.
  *
  * Responsibility: the user-facing title, one-line description and target of each tile in
  * these two groups. Boundary: copy only; every claim describes what the plan page does.

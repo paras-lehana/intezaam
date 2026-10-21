@@ -99,7 +99,10 @@ export interface VendorMoney {
  * hotel is paid for the rooms CST-05 priced, so its milestones match the rooms bill even
  * when the guest-rooms line is short (the risk radar flags that gap).
  */
-function vendorBudgets(vendors: readonly VendorType[], money: VendorMoney): Map<VendorType, number> {
+function vendorBudgets(
+  vendors: readonly VendorType[],
+  money: VendorMoney,
+): Map<VendorType, number> {
   const amounts = new Map<VendorType, number>();
   for (const line of money.budget.lines) {
     const sharing = vendors.filter((v) => VENDOR_PROFILES[v].category === line.category);

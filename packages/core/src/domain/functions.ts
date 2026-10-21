@@ -50,11 +50,11 @@ export interface FunctionProfile {
   readonly labelHi: string;
   /** Families that may include this function; the context schema rejects any other pairing. */
   readonly families: readonly EventFamily[];
-  /** HH:MM, 24-hour (owner's planner defaults, 01 §3.2; grade D where marked). */
+  /** HH:MM, 24-hour (owner's planner defaults; grade D where marked). */
   readonly defaultStartHhmm: string;
   /** Planning length used by the run sheet and the noise-curfew check (grade D). */
   readonly durationHours: number;
-  /** Days from the main day (0); negative = before (04 §4, indicative). */
+  /** Days from the main day (0); negative = before (indicative). */
   readonly dayOffset: number;
   /** Visarjan closes a multi-day programme, so it sits on the last day, not day 0. */
   readonly onLastDay: boolean;

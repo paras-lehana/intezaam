@@ -1,6 +1,6 @@
 /**
  * Draft check for GenAI job 4: a model-written message may only use the draft facts and
- * must be in the language the user chose (synthesis §5 job 4 guardrails).
+ * must be in the language the user chose (GENAI_ARCHITECTURE.md, job 4 guardrails).
  *
  * Responsibility: every number and date in the subject and body must come from the facts
  * (or the host's own typed name); no links, emails or phone numbers may appear; the body

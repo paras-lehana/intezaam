@@ -1,5 +1,5 @@
 /**
- * Prompt for GenAI job 5, Ask and change (synthesis §5): grounded questions about the plan
+ * Prompt for GenAI job 5, Ask and change (GENAI_ARCHITECTURE.md): grounded questions about the plan
  * and natural-language changes turned into a typed patch the user approves.
  *
  * Responsibility: give the model the numbered plan facts (recomputed by the server from

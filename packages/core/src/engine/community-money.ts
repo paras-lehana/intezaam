@@ -2,7 +2,7 @@
  * Community money (feature #5 and CST-01 for community events) — the estimate and the food
  * line, built from the community budget heads instead of per-plate wedding logic.
  *
- * Responsibility: 04 §6.4 publishes no per-flat or per-visitor cost ("the committee sets
+ * Responsibility: the sources publish no per-flat or per-visitor cost ("the committee sets
  * it"), so a community plan is its own budget heads (structure, decor, sound, food and
  * prasad, puja, cultural, safety, contingency). With the committee's budget, the estimate IS
  * the planned spend (from the heads before the buffer up to the whole plan), so it always
@@ -24,7 +24,7 @@ import type { ClassifiedContext, NormalisedContext } from './types.js';
 
 /**
  * Grade D, used ONLY when the committee gives no budget: about one simple prasad-and-snack
- * serving per visitor. No published rate exists (04 §6.4; searches on 2026-10-20 found only
+ * serving per visitor. No published rate exists (searches on 2026-10-20 found only
  * marketing pages), so the trace marks it as an assumption and entering a budget replaces it.
  */
 export const PRASAD_PER_VISITOR_INR: NumberRange = range(40, 80);

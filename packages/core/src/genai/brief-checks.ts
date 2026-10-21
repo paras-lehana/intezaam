@@ -1,5 +1,5 @@
 /**
- * Per-field evidence checks for the brief guard (synthesis §5 job 1; research note 09 §5.3):
+ * Per-field evidence checks for the brief guard (GENAI_ARCHITECTURE.md, job 1):
  * the city, the date and the diet, which need more than "same value when re-read".
  *
  * Responsibility: a gazetteer city must equal the code's reading and an unknown town must

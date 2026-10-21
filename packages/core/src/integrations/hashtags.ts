@@ -1,6 +1,6 @@
 /**
  * Couple hashtags (feature #31): "#Rahuti"-style blends of two first names, ported from
- * the owner's earlier planner (bio-bandish `invite_page.py` `hashtag_blends`, 01 §2).
+ * the owner's earlier planner (S-OWNER-DEFAULTS).
  *
  * Responsibility: from two names typed by the user, build up to six hashtags — two name
  * blends ("Rahu" + "ti" → Rahuti, "Pre" + "hul" → Prehul), "AWedsB", "BWedsA", "AKiB" and

@@ -2,7 +2,7 @@
  * Space per guest (SPACE-01) — how many people a hall or lawn really holds.
  *
  * Responsibility: square feet per guest for each seating layout and the share of floor
- * lost to stage, bars and aisles, from published capacity guides (04 §8.3).
+ * lost to stage, bars and aisles, from published capacity guides.
  * Boundary: planning estimates only; local fire rules set the legal occupancy.
  */
 import type { SourceId } from './sources.js';
@@ -67,15 +67,8 @@ export const SPACE_LAYOUT_PROFILES: Readonly<Record<SpaceLayout, SpaceLayoutProf
   },
 };
 
-/** Subtract 15% of the floor for stage, bars and aisles before dividing (04 §8.3). */
+/** Subtract 15% of the floor for stage, bars and aisles before dividing. */
 export const USABLE_FLOOR_SHARE = 0.85;
-
-/** 1 m² = 10.764 sq ft, for users who know their hall in square metres. */
-export const SQFT_PER_SQM = 10.764;
-
-/** A dancer needs about 4.5 sq ft; 33–50% of guests dance at once (04 §8.3, grade C). */
-export const DANCE_FLOOR_SQFT_PER_DANCER = 4.5;
-export const DANCING_GUEST_SHARE = range(0.33, 0.5);
 
 /**
  * SPACE-01 capacity: floor(area × 0.85 ÷ sq ft per guest).

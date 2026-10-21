@@ -1,6 +1,6 @@
 /**
- * Sample contexts — the four "Try a sample" inputs, one per persona (synthesis feature #4,
- * research/09 Gap 5 §5.1).
+ * Sample contexts — the four "Try a sample" inputs, one per persona
+ * (feature #4; README.md, "The personas").
  *
  * Responsibility: a Jaipur North-Indian wedding (Meena), a Bengaluru 7th birthday in the monsoon
  * (Arjun), a housing-society Ganesh utsav (Kavita) and a Chennai 60th, Shashtiabdapurti (Lakshmi

@@ -2,8 +2,8 @@
  * Budget categories — the lines every plan's money is split into.
  *
  * Responsibility: one closed list of categories covering weddings, birthdays, community
- * events and family functions (synthesis BUD-01, 03 §3), each with English and Hindi
- * labels and a cost type that says whether it grows with guests (03 §3 principle 4).
+ * events and family functions (BUD-01), each with English and Hindi
+ * labels and a cost type that says whether it grows with guests.
  * Boundary: labels and cost types only; shares are in budget-splits.ts.
  */
 

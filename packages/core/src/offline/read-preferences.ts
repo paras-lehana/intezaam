@@ -1,6 +1,6 @@
 /**
  * Preference reader: city, diet, halal, alcohol, setting, access needs, style, priorities
- * and cut, each from explicit words (research note 09 §5.2.5–5.2.6, 01 §3.8).
+ * and cut, each from explicit words.
  *
  * Responsibility: turn the folded tokens into the values the form needs, each with the
  * token span that proves it. Jain only from the word Jain (it fires the sunset rule);
@@ -137,7 +137,7 @@ export function readSetting(tokens: readonly Token[]): Proven<VenueSetting> | un
 }
 
 /**
- * Access needs; grandparents count as "elderly" only beside a stated need (09 §5.2.6).
+ * Access needs; grandparents count as "elderly" only beside a stated need.
  * @example
  * readAccess(tokenise('Nani wheelchair pe hain').tokens).value; // ['elderly', 'wheelchair']
  */

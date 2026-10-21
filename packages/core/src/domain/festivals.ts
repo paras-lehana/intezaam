@@ -48,9 +48,9 @@ export interface FestivalDate {
   readonly confidence: Confidence;
 }
 
-/** The 2026 central holiday order (research 09 §5.2.2, DoPT O.M. of 3 Jul 2025). */
+/** The 2026 central holiday order (DoPT O.M. of 3 Jul 2025). */
 const DOPT_2026: readonly SourceId[] = ['S-DOPT-2026'];
-/** The central holiday order plus Drik Panchang and OfficeHolidays (research 09, Gap 3 §3.5). */
+/** The central holiday order plus Drik Panchang and OfficeHolidays. */
 const DOPT_DRIK_OH: readonly SourceId[] = ['S-DOPT-2027', 'S-DRIK-2027', 'S-OFFICEHOLIDAYS-2027'];
 const DOPT_OH: readonly SourceId[] = ['S-DOPT-2027', 'S-OFFICEHOLIDAYS-2027'];
 

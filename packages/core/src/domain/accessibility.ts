@@ -3,7 +3,7 @@
  *
  * Responsibility: the needs a host can tick (elderly guests, wheelchair users, young
  * children) and the venue and day-of checks each need adds, from India's 2021
- * Harmonised Guidelines and the NDMA crowd guide (04 §8.8). Boundary: checklist text and
+ * Harmonised Guidelines and the NDMA crowd guide. Boundary: checklist text and
  * triggers only; the engine turns ticked needs into tasks and vendor questions.
  */
 import type { RuleId } from './rule-ids.js';

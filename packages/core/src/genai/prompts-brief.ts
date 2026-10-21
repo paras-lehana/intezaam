@@ -1,5 +1,5 @@
 /**
- * Prompt for GenAI job 1, the brief reader (synthesis §5): an English, Hindi or Hinglish
+ * Prompt for GenAI job 1, the brief reader (GENAI_ARCHITECTURE.md): an English, Hindi or Hinglish
  * brief becomes a structured draft the user confirms.
  *
  * Responsibility: give the model today's date, every closed vocabulary the reply may use,

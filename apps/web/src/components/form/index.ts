@@ -7,6 +7,7 @@
  */
 export { DEFAULT_SUBMIT_LABEL, PlannerForm, type PlannerFormProps } from './PlannerForm';
 export { contextInputFromState, parseTypedNumber } from './form-context';
+export { BRIEF_INPUT_ID, focusBriefInput, focusPlannerField } from './focus-field';
 export { EMPTY_FORM_STATE, fillState, type PlannerFormState } from './form-state';
 export { validatePlannerForm, type ValidationResult } from './form-validation';
 export { type PlannerFormFill } from './use-planner-form';

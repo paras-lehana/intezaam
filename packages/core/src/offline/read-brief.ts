@@ -20,10 +20,10 @@ import { readBriefFields, type BriefFieldReadings, type Span } from './brief-fie
 import { describeBrief } from './describe-brief.js';
 import { quoteOf, tokenise, type TokenisedText } from './tokens.js';
 
-/** The five questions the form must ask when the brief does not answer them (synthesis #3). */
+/** The five questions the form must ask when the brief does not answer them (feature #3). */
 export const CORE_BRIEF_FIELDS = ['family', 'date', 'city', 'guests', 'budget'] as const;
 
-/** Evidence quotes are phrases: 2–120 characters (research note 09 §5.3 rule 1). */
+/** Evidence quotes are phrases: 2–120 characters. */
 export const MIN_EVIDENCE_QUOTE_CHARS = 2;
 export const MAX_EVIDENCE_QUOTE_CHARS = 120;
 /** The guest and budget phrases are short (schema MAX_NUMBER_TEXT_CHARS). */

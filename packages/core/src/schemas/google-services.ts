@@ -1,5 +1,5 @@
 /**
- * Google services catalog contract (synthesis §6).
+ * Google services catalog contract (README.md, "Google services").
  *
  * Responsibility: the shape of one honest catalog entry — exact service name, status
  * (`implemented` or `declined`, the only two words used anywhere), purpose, code paths and

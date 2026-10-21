@@ -1,6 +1,5 @@
 /**
- * Plan contracts, part 2: timeline, date notes, functions and the run sheet
- * (synthesis §3 D, §4.6).
+ * Plan contracts, part 2: timeline, date notes, functions and the run sheet.
  *
  * Responsibility: the wire shapes of the back-planned checklist (dated, undated or past
  * mode; compressed when time is short), date intelligence notes, per-function cards and
@@ -98,7 +97,7 @@ export const timelineSchema = z.strictObject({
 
 export type PlanTimeline = z.infer<typeof timelineSchema>;
 
-/** The longest tradition sequence in 04 §4 has 14 rites. */
+/** The longest tradition sequence in domain/ceremonies.ts has 14 rites. */
 const MAX_CEREMONIES = 20;
 
 /** A function card: when it runs, who comes, what it costs, which rites it holds. */

@@ -11,7 +11,7 @@ import { NE_MONSOON_MONTHS, NE_MONSOON_STATES, WET_PATTERN_INFO } from '../domai
 
 /** The gazetteer should cover about sixty cities (task contract). */
 const MIN_CITIES = 60;
-/** Cities the per-plate source lists by tier (04 §1.3): their tiers are grade C. */
+/** Cities the per-plate source lists by tier: their tiers are grade C. */
 const SOURCED = [
   'mumbai',
   'delhi',

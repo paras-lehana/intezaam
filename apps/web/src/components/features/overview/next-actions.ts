@@ -17,7 +17,7 @@ export interface NextAction {
   readonly fromNarration: boolean;
 }
 
-/** Synthesis feature #8: the narrative ends with the three best next actions. */
+/** Feature #8: the narrative ends with the three best next actions. */
 export const NEXT_ACTION_COUNT = 3;
 
 /** Which tasks come first when the planner picks; after-event wrap-up is never "next". */

@@ -1,5 +1,5 @@
 /**
- * Number vocabulary for the offline brief reader (research note 09 §5.2.1).
+ * Number vocabulary for the offline brief reader.
  *
  * Responsibility: the words a brief uses for numbers and for what a number counts — Hindi,
  * Hinglish and English cardinals, the sau/hazaar/lakh/crore multipliers (with lac, L, k, cr),
@@ -11,7 +11,7 @@
  */
 import { phrases, words, type WordGroups } from './word-list.js';
 
-/** Cardinals; a word number counts only before a multiplier or a unit noun (09 §5.2.1). */
+/** Cardinals; a word number counts only before a multiplier or a unit noun. */
 export const CARDINAL_WORDS: WordGroups<number> = [
   [1, 'ek एक one'],
   [2, 'do दो two'],

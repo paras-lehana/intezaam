@@ -1,6 +1,6 @@
 /**
  * Google and WhatsApp deep links that need no API key, no script and no billing
- * (synthesis §6: Calendar templates, Maps URLs, Gmail compose, YouTube search, wa.me).
+ * (README.md, "Google services": Calendar templates, Maps URLs, Gmail compose, YouTube search, wa.me).
  *
  * Responsibility: build share-free URLs so a family can save a milestone to Google
  * Calendar, search vendors or get directions in Google Maps, open a pre-filled Gmail draft

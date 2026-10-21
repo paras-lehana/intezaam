@@ -1,7 +1,7 @@
 /**
- * Timeline phases and lead-time arithmetic (TL-02, TL-03, TL-05).
+ * Timeline phases and lead-time arithmetic (TL-02, TL-03).
  *
- * Responsibility: the eight planning phases with each family's typical window (03 §4),
+ * Responsibility: the eight planning phases with each family's typical window,
  * month-to-day conversion, the compression step for late tasks and the peak-season
  * warning window. Boundary: vocabulary and constants; the timeline engine schedules.
  */
@@ -23,7 +23,7 @@ export type TimelinePhase = (typeof TIMELINE_PHASES)[number];
 export interface PhaseLabel {
   readonly label: string;
   readonly labelHi: string;
-  /** Typical window per family, shown under the phase heading (03 §4). */
+  /** Typical window per family, shown under the phase heading. */
   readonly windowByFamily: Readonly<Record<EventFamily, string>>;
 }
 
@@ -110,19 +110,16 @@ export const PHASE_LABELS: Readonly<Record<TimelinePhase, PhaseLabel>> = {
   },
 };
 
-/** TL-02 / CTX-05: a month is 365.25 ÷ 12 = 30.4375 days (owner's planner, 01 §3.3). */
+/** TL-02 / CTX-05: a month is 365.25 ÷ 12 = 30.4375 days (owner's planner). */
 export const DAYS_PER_MONTH = 30.4375;
 
 export const DAYS_PER_WEEK = 7;
 
-/** TL-03: late tasks are packed into the days left in 1–3-day steps (01 §2). */
+/** TL-03: late tasks are packed into the days left in 1–3-day steps. */
 export const COMPRESSION_STEP_DAYS = { min: 1, max: 3 } as const;
 
 /** VER-T: warn when the venue or priest is unbooked with under 3 months left in peak season. */
 export const PEAK_UNBOOKED_WARNING_DAYS = 90;
-
-/** TL-05: "Choose your date" outranks every other task while the date is open (01 §3.3). */
-export const CHOOSE_DATE_PRIORITY = 9;
 
 /**
  * TL-02: lead months to whole days.

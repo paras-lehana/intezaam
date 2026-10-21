@@ -40,7 +40,7 @@
   color: var(--color-ink);
 }
 
-/* Selected (addendum 9): #F7F2E8 fill, gold-text ink, a border and an underline bar. */
+/* Selected: #F7F2E8 fill, gold-text ink, a border and an underline bar. */
 .tabs__tab[aria-selected='true'] {
   border-color: var(--color-border);
   background: var(--color-surface-selected);

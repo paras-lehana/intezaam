@@ -56,7 +56,17 @@ function smuggle(ascii: string): string {
 
 describe('sanitizeUserText', () => {
   it('removes bidi embeddings, overrides and isolates U+2066–U+2069', () => {
-    const hidden = ['‪', '‫', '‬', '‭', '‮', '⁦', '⁧', '⁨', '⁩'];
+    const hidden = [
+      '\u{202A}',
+      '\u{202B}',
+      '\u{202C}',
+      '\u{202D}',
+      '\u{202E}',
+      '\u{2066}',
+      '\u{2067}',
+      '\u{2068}',
+      '\u{2069}',
+    ];
     for (const mark of hidden) {
       expect(sanitizeUserText(`shaadi${mark} 200 log`, CAP)).toBe('shaadi 200 log');
     }
@@ -68,7 +78,8 @@ describe('sanitizeUserText', () => {
   });
 
   it('removes zero-width characters, marks and the byte-order mark', () => {
-    const invisible = '​‌‍‎‏⁠﻿­؜᠎';
+    const invisible =
+      '\u{200B}\u{200C}\u{200D}\u{200E}\u{200F}\u{2060}\u{FEFF}\u{00AD}\u{061C}\u{180E}';
     expect(sanitizeUserText(`2${invisible} lakh`, CAP)).toBe('2 lakh');
   });
 
@@ -113,7 +124,7 @@ describe('sanitizeUserText', () => {
   });
 
   it('normalises CR, CRLF and Unicode line separators to newlines', () => {
-    expect(sanitizeUserText('a\r\nb\rc d e', CAP)).toBe('a\nb\nc\nd\ne');
+    expect(sanitizeUserText('a\r\nb\rc\u{2028}d\u{2029}e', CAP)).toBe('a\nb\nc\nd\ne');
   });
 
   it('collapses runs of spaces and more than one blank line', () => {

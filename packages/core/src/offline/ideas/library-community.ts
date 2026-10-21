@@ -4,7 +4,8 @@
  *
  * Responsibility: low-cost, volunteer-friendly decor, activities, food service and music
  * for housing societies and committees, with eco options (natural-clay idols, steel plates)
- * and quiet-hours-friendly music (Noise Rules 2000, 04 §6.1). No prices: code attaches the
+ * and quiet-hours-friendly music (Noise Rules 2000). Festival-specific ideas carry
+ * their occasions; Onam and Garba live with the regional ideas. No prices: code attaches the
  * cost band. Boundary: data only.
  */
 import type { LibraryIdea } from './idea-types.js';
@@ -20,7 +21,12 @@ export const COMMUNITY_IDEAS: readonly LibraryIdea[] = [
     eco: true,
     costBand: 'within',
     youtubeQuery: 'eco friendly ganesh idol clay',
-    fit: { families: ['community'], styles: ['traditional'] },
+    fit: {
+      families: ['community'],
+      occasions: ['ganesh-utsav', 'durga-puja'],
+      traditions: ['marathi', 'bengali'],
+      styles: ['traditional'],
+    },
   },
   {
     category: 'decor',
@@ -96,18 +102,6 @@ export const COMMUNITY_IDEAS: readonly LibraryIdea[] = [
   },
   {
     category: 'activity',
-    title: 'Garba workshop before the big night',
-    description:
-      'A short evening class teaches the basic steps so first-timers and children join the circle on the main night.',
-    why: ['tradition', 'Helps every resident take part in Navratri.'],
-    effort: 'low',
-    eco: true,
-    costBand: 'saves',
-    youtubeQuery: 'garba basic steps tutorial',
-    fit: { families: ['community'], styles: ['traditional', 'colourful'] },
-  },
-  {
-    category: 'activity',
     title: 'Sports-day relays and tug of war',
     description:
       'Relays by wing, sack races for children and a tug of war between residents and the committee; first aid on standby.',
@@ -128,7 +122,7 @@ export const COMMUNITY_IDEAS: readonly LibraryIdea[] = [
     eco: true,
     costBand: 'saves',
     youtubeQuery: 'independence day society celebration ideas',
-    fit: { families: ['community'] },
+    fit: { families: ['community'], occasions: ['national-day'] },
   },
   {
     category: 'activity',
@@ -153,18 +147,6 @@ export const COMMUNITY_IDEAS: readonly LibraryIdea[] = [
     costBand: 'saves',
     youtubeQuery: 'langar style food serving',
     fit: { families: ['community'], contains: ['root-veg'] },
-  },
-  {
-    category: 'menu',
-    title: 'Onam sadya on plantain leaves',
-    description:
-      "A vegetarian sadya served on plantain leaves with residents' families cooking the dishes together.",
-    why: ['tradition', 'The way Onam is shared in Kerala.'],
-    effort: 'high',
-    eco: true,
-    costBand: 'within',
-    youtubeQuery: 'onam sadya serving order',
-    fit: { families: ['community'], styles: ['regional', 'traditional'], contains: ['root-veg'] },
   },
   {
     category: 'menu',

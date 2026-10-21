@@ -1,5 +1,5 @@
 /**
- * Tests for engine/money-bands.ts — the wedding money bands (09 Gap 2 §2.4).
+ * Tests for engine/money-bands.ts — the wedding money bands.
  *
  * Responsibility: guard the stored velvetknot rows against drift (mid rows equal the domain
  * anchors), prove the generic row scales by the tier multiplier, the stretch floor uses an

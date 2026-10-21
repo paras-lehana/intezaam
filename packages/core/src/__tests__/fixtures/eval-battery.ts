@@ -1,5 +1,5 @@
 /**
- * The labelled AI evaluation battery (synthesis §5 "AI evaluation harness"): scripted model
+ * The labelled AI evaluation battery (GENAI_ARCHITECTURE.md, "Evaluation harness"): scripted model
  * outputs with the verdict a careful human reviewer gives each one.
  *
  * Responsibility: six labelled sets — faithfulness of narration text, validity of cited

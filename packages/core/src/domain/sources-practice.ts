@@ -2,8 +2,8 @@
  * Source register, part 5: practical rules of thumb and our own stated assumptions.
  *
  * Responsibility: the sources behind headcount, food quantities, space per guest, vendor
- * payment terms, plus the two in-house entries that grade-D assumptions cite (research
- * note 04 §2.4, §8.3–8.4; synthesis VEN-04). Boundary: metadata only; merged in sources.ts.
+ * payment terms, plus the two in-house entries that grade-D assumptions cite
+ * (VEN-04). Boundary: metadata only; merged in sources.ts.
  */
 import type { SourceEntry } from './source-types.js';
 
@@ -81,7 +81,7 @@ export const PRACTICE_SOURCES = {
     year: 'n.d.',
     confidence: 'C',
   },
-  // Community occasions (09 §5.5): RWA practice, Onam and the flag code.
+  // Community occasions: RWA practice, Onam and the flag code.
   'S-ADDA-2024': {
     title: 'What is RWA (Resident Welfare Association)? Roles and responsibilities',
     publisher: 'ADDA blog (Kasturi Gulhane)',

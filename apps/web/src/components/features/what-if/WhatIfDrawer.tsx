@@ -6,19 +6,24 @@
  * instant in-browser re-plan with core's engine and its diff (verdict, numbers, risks,
  * tasks, cheapest fix), "Apply this change" (the typed patch, through the page's re-plan),
  * an optional "Explain this change" (one model call, only when asked) and the vendor
- * cancellation check; Escape closes the tool and returns focus to its button. Boundary:
+ * cancellation check; Escape closes the tool and returns focus to its button. A settled
+ * change is announced as one sentence (diff-summary.ts), and Reset hands focus to the first
+ * control because it removes itself. Boundary:
  * nothing changes in the plan until Apply is pressed; the workspace owns the button that
  * shows or hides this tool.
  */
 import { type ReactElement, useMemo, useState } from 'react';
+import { LiveRegion } from '../../ui/LiveRegion';
+import { useSettledValue } from '../../ui/use-settled-value';
 import type { PanelProps } from '../panel-props';
 import { describePatch } from './describe-patch';
+import { diffSummary } from './diff-summary';
 import { ExplainChange } from './ExplainChange';
 import { PlanDiffView } from './PlanDiffView';
 import { simulatePatch } from './simulate';
 import { useCloseOnEscape } from './use-close-on-escape';
 import { VendorCancelNote } from './VendorCancelNote';
-import { WhatIfControls } from './WhatIfControls';
+import { FIRST_CONTROL_ID, WhatIfControls } from './WhatIfControls';
 import { scenarioPatch, startScenario } from './what-if-scenario';
 import './what-if.css';
 
@@ -38,6 +43,17 @@ export function WhatIfDrawer({ plan, context, todayIso, onApplyPatch }: PanelPro
     () => (patch === null ? null : simulatePatch(context, plan, patch, todayIso)),
     [patch, context, plan, todayIso],
   );
+  // One polite sentence once the controls settle, not every table cell on every step.
+  const spoken = useSettledValue(
+    patch !== null && outcome?.ok === true ? diffSummary(patch, outcome.value.diff) : '',
+  );
+
+  function reset(): void {
+    setScenario(startScenario(context));
+    // Reset removes itself with the compare actions; the first control keeps the reader here.
+    document.getElementById(FIRST_CONTROL_ID)?.focus();
+  }
+
   return (
     <div className="tool" ref={rootRef}>
       <div className="tool-head">
@@ -49,7 +65,8 @@ export function WhatIfDrawer({ plan, context, todayIso, onApplyPatch }: PanelPro
       </div>
       <div className="tool-body">
         <WhatIfControls plan={plan} context={context} scenario={scenario} onChange={setScenario} />
-        <div aria-live="polite">
+        <LiveRegion message={spoken} />
+        <div>
           {patch === null || outcome === null ? (
             <p className="muted">Move any control above to compare.</p>
           ) : outcome.ok ? (
@@ -74,11 +91,7 @@ export function WhatIfDrawer({ plan, context, todayIso, onApplyPatch }: PanelPro
             >
               Apply this change
             </button>
-            <button
-              type="button"
-              className="button button--ghost"
-              onClick={() => setScenario(startScenario(context))}
-            >
+            <button type="button" className="button button--ghost" onClick={reset}>
               Reset
             </button>
             <ExplainChange

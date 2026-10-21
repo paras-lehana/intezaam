@@ -11,14 +11,14 @@ import { z } from 'zod';
 
 /**
  * The only places the server may send prompts: the owner's public gateway and the same
- * service on the shared Docker network (09 Gap 4 §4.6 row 7).
+ * service on the shared Docker network.
  */
 export const ALLOWED_LLM_SERVICE_ORIGINS: readonly string[] = [
   'https://llm.lehana.in',
   'http://llm-service:8095',
 ];
 
-/** Google's OpenAI-compatible Gemini API endpoint, free tier (SPEC-MVP addendum item 13). */
+/** Google's OpenAI-compatible Gemini API endpoint, free tier (GENAI_ARCHITECTURE.md). */
 export const DEFAULT_LLM_UPSTREAM_URL = 'https://generativelanguage.googleapis.com/v1beta/openai';
 
 /** The upstream must stay the official Gemini API, because another relay could bill or breach terms. */
@@ -27,7 +27,7 @@ const ALLOWED_LLM_UPSTREAM_URLS: readonly string[] = [DEFAULT_LLM_UPSTREAM_URL];
 /**
  * Free-tier models, fastest first: gemini-3.5-flash-lite answered in 2.8 s and
  * gemini-3.1-flash-lite in 25.8 s through the gateway (live probe, 2026-10-20 18:03);
- * gemini-2.5-flash-lite answers 404 for new keys (addendum item 13).
+ * gemini-2.5-flash-lite answers 404 for new keys.
  */
 export const DEFAULT_LLM_MODELS: readonly string[] = [
   'gemini-3.5-flash-lite',

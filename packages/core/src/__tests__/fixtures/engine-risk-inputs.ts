@@ -31,6 +31,7 @@ export function riskInputsOf(context: EventContext): RiskInputs {
     verdict: assembleVerdict(ctx, core.money, time, core.funding),
     permissions: buildPermissions(ctx, trace),
     costCheck: core.costCheck,
+    budget: core.budget,
     space: buildSpaceCheck(ctx, trace),
     food: buildFoodPlan(ctx, trace),
     timeline,

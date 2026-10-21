@@ -1,6 +1,5 @@
 /**
- * Festival anchors for reading dates such as "Diwali ke baad" or "Gurpurab par"
- * (research note 09 §5.2.2 and Gap 3 §3.5).
+ * Festival anchors for reading dates such as "Diwali ke baad" or "Gurpurab par".
  *
  * Responsibility: the festival names a brief may use, the occasion's community kind, and
  * every candidate date per year (more than one date means published sources disagree, so a
@@ -14,7 +13,7 @@
  * Boundary: data only; a festival with no curated future date resolves to "no curated
  * date — ask", never a guess.
  */
-import { occasionKind } from '../../domain/community-occasions.js';
+import { occasionKind, type CommunityOccasion } from '../../domain/community-occasions.js';
 import type { EventKind } from '../../domain/events.js';
 import { FESTIVAL_DATES, type FestivalId } from '../../domain/festivals.js';
 
@@ -48,19 +47,24 @@ export interface FestivalAnchor {
   readonly dates: Readonly<Record<number, readonly string[]>>;
   /** The community kind a society celebration of this festival maps to. */
   readonly communityKind: EventKind;
+  /** The community occasion this festival is, when it is one (it picks regional ideas). */
+  readonly occasion?: CommunityOccasion;
   /** True when the name alone is ambiguous (plain "Eid"): the form asks instead of guessing. */
   readonly ambiguous: boolean;
 }
 
-interface AnchorRow {
+interface AnchorBase {
   readonly names: string;
   /** Rows of the domain festival table this name refers to; their dates are used as they are. */
   readonly festivalIds: readonly FestivalId[];
   /** Dates the domain table does not curate (see the header for their sources). */
   readonly otherDates?: readonly string[];
-  readonly communityKind: EventKind;
   readonly ambiguous?: boolean;
 }
+
+/** A row names its occasion (the kind then comes from the occasion table) or, failing that, a kind. */
+type AnchorRow = AnchorBase &
+  ({ readonly occasion: CommunityOccasion } | { readonly communityKind: EventKind });
 
 /** An ISO date starts with its four-digit year. */
 const YEAR_DIGITS = 4;
@@ -79,7 +83,9 @@ function anchor(row: AnchorRow): FestivalAnchor {
   return {
     names: row.names,
     dates,
-    communityKind: row.communityKind,
+    ...('occasion' in row
+      ? { communityKind: occasionKind(row.occasion), occasion: row.occasion }
+      : { communityKind: row.communityKind }),
     ambiguous: row.ambiguous === true,
   };
 }
@@ -87,14 +93,12 @@ function anchor(row: AnchorRow): FestivalAnchor {
 /** Festivals that are not one of the thirteen community occasions plan as these kinds. */
 const SOCIETY: EventKind = 'society-festival';
 const GATHERING: EventKind = 'religious-gathering';
-/** A society's Eid celebration is an Eid Milan, whichever Eid it follows (09 §5.5). */
-const EID_MILAN = occasionKind('eid-milan');
 
 export const FESTIVAL_ANCHORS: Readonly<Record<FestivalKey, FestivalAnchor>> = {
   diwali: anchor({
     names: 'diwali | deepavali | divali | दिवाली | दीपावली | diwali mela',
     festivalIds: ['diwali-2026', 'diwali-2027'],
-    communityKind: occasionKind('diwali-mela'),
+    occasion: 'diwali-mela',
   }),
   dussehra: anchor({
     names: 'dussehra | dasara | dussera | vijayadashami | दशहरा',
@@ -105,42 +109,43 @@ export const FESTIVAL_ANCHORS: Readonly<Record<FestivalKey, FestivalAnchor>> = {
     names: 'holi | होली | holi milan',
     festivalIds: ['holi-2027'],
     otherDates: ['2026-03-04'],
-    communityKind: occasionKind('holi-milan'),
+    occasion: 'holi-milan',
   }),
+  // A society's Eid celebration is an Eid Milan, whichever Eid it follows.
   'eid-ul-fitr': anchor({
     names: 'eid ul fitr | eid-ul-fitr | id ul fitr | ramzan eid | meethi eid',
     festivalIds: ['eid-al-fitr-2027'],
     otherDates: ['2026-03-21'],
-    communityKind: EID_MILAN,
+    occasion: 'eid-milan',
   }),
   'eid-ul-adha': anchor({
     names: 'bakrid | bakri eid | eid ul adha | eid-ul-adha | id ul zuha | बकरीद',
     festivalIds: ['eid-al-adha-2027'],
     otherDates: ['2026-05-27'],
-    communityKind: EID_MILAN,
+    occasion: 'eid-milan',
   }),
   eid: anchor({
     names: 'eid | ईद',
     festivalIds: ['eid-al-fitr-2027', 'eid-al-adha-2027'],
     otherDates: ['2026-03-21', '2026-05-27'],
-    communityKind: EID_MILAN,
+    occasion: 'eid-milan',
     ambiguous: true,
   }),
   // An Eid Milan can follow either Eid and depends on moon sighting: the society picks the day.
   'eid-milan': anchor({
     names: 'eid milan | ईद मिलन',
     festivalIds: [],
-    communityKind: occasionKind('eid-milan'),
+    occasion: 'eid-milan',
   }),
   gurpurab: anchor({
     names: 'gurpurab | gurpurb | guru nanak jayanti | prakash purab | गुरुपर्व',
     festivalIds: ['gurpurab-2026', 'gurpurab-2027'],
-    communityKind: occasionKind('gurpurab'),
+    occasion: 'gurpurab',
   }),
   christmas: anchor({
     names: 'christmas | xmas | क्रिसमस',
     festivalIds: ['christmas-2026', 'christmas-2027'],
-    communityKind: occasionKind('christmas'),
+    occasion: 'christmas',
   }),
   janmashtami: anchor({
     names: 'janmashtami | जन्माष्टमी',
@@ -152,36 +157,36 @@ export const FESTIVAL_ANCHORS: Readonly<Record<FestivalKey, FestivalAnchor>> = {
     names: 'independence day | 15 august | स्वतंत्रता दिवस | flag hoisting',
     festivalIds: [],
     otherDates: ['2026-08-15', '2027-08-15'],
-    communityKind: occasionKind('national-day'),
+    occasion: 'national-day',
   }),
   'republic-day': anchor({
     names: 'republic day | 26 january | गणतंत्र दिवस',
     festivalIds: [],
     otherDates: ['2026-01-26', '2027-01-26'],
-    communityKind: occasionKind('national-day'),
+    occasion: 'national-day',
   }),
   'ganesh-chaturthi': anchor({
     names:
       'ganesh chaturthi | ganesh utsav | ganesh puja | ganesh pooja | ganpati | ganapati | vinayaka chaturthi | गणेश चतुर्थी | गणपति',
     festivalIds: ['ganesh-chaturthi-2027'],
-    communityKind: occasionKind('ganesh-utsav'),
+    occasion: 'ganesh-utsav',
   }),
   navratri: anchor({
     names: 'navratri | navaratri | garba | dandiya | नवरात्रि | गरबा',
     festivalIds: [],
     otherDates: ['2027-09-30'],
-    communityKind: occasionKind('navratri-garba'),
+    occasion: 'navratri-garba',
   }),
   'durga-puja': anchor({
     names: 'durga puja | durga pujo | pujo | दुर्गा पूजा',
     festivalIds: [],
     otherDates: ['2027-10-06'],
-    communityKind: occasionKind('durga-puja'),
+    occasion: 'durga-puja',
   }),
   onam: anchor({
     names: 'onam | thiruvonam | sadya | ओणम',
     festivalIds: ['onam-2027'],
-    communityKind: occasionKind('onam'),
+    occasion: 'onam',
   }),
   'makar-sankranti': anchor({
     names: 'makar sankranti | sankranti | pongal | मकर संक्रांति | पोंगल',

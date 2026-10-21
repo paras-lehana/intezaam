@@ -26,7 +26,7 @@ export const LAST_CONTEXT_STORAGE_KEY = 'intezaam:last-context';
 /** A share link carries the whole context after `#plan=` (no server storage). */
 export const PLAN_FRAGMENT_PREFIX = 'plan=';
 
-/** The plan's heading: focus moves here after a plan is built (synthesis §7.4). */
+/** The plan's heading: focus moves here after a plan is built. */
 export const PLAN_HEADING_ID = 'plan-heading';
 
 /** What last changed the plan: the form, a typed change, a share link or "continue". */
@@ -104,10 +104,18 @@ const ORIGIN_WORDS: Readonly<Record<PlanOrigin, string>> = {
 };
 
 /**
- * One sentence for the live region after a plan is built or rebuilt.
+ * One sentence for the live region after a plan is built or rebuilt. `change` names what a
+ * typed change did (describePatch lines), so a recalculation that leaves the verdict and
+ * readiness as they were still says what moved.
  * @example
  * planAnnouncement(plan, 'submit'); // 'Plan ready: Balanced budget · On track timeline. Readiness 50 out of 100.'
+ * planAnnouncement(plan, 'patch', ['Guests: 250']); // 'Plan updated (Guests: 250): Balanced budget · …'
  */
-export function planAnnouncement(plan: Plan, origin: PlanOrigin): string {
-  return `${ORIGIN_WORDS[origin]}: ${plan.verdict.headline}. Readiness ${plan.readiness.score} out of ${READINESS_MAX}.`;
+export function planAnnouncement(
+  plan: Plan,
+  origin: PlanOrigin,
+  change: readonly string[] = [],
+): string {
+  const what = change.length === 0 ? '' : ` (${change.join('; ')})`;
+  return `${ORIGIN_WORDS[origin]}${what}: ${plan.verdict.headline}. Readiness ${plan.readiness.score} out of ${READINESS_MAX}.`;
 }

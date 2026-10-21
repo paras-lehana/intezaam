@@ -3,19 +3,29 @@
  *
  * Responsibility: replace Aadhaar, PAN, phone, email, IFSC, UPI, card and bank
  * account numbers with typed placeholders before any text is analysed, cached or
- * sent to a model. Boundary: pattern-based and deliberately conservative. Every decimal
- * digit is folded to ASCII first, so the redacted text (what every quote and span refers
- * to afterwards) carries ASCII digits; the evidence guards fold both sides the same way.
+ * sent to a model. Boundary: pattern-based and deliberately conservative. Every Unicode
+ * decimal digit is folded to ASCII first, so the redacted text (what every quote and span
+ * refers to afterwards) carries ASCII digits; the evidence guards fold both sides the same way.
  */
 import { REDACTION_TYPES, type RedactionCount, type RedactionType } from '../schemas/privacy.js';
-import { foldForMatch } from '../security/normalise.js';
 
 /**
- * A decimal digit outside ASCII: Devanagari ९, Bengali ৯, Tamil ௯, full-width ９ and the rest
- * of `\p{Nd}`. Every pattern below uses `\d`, which without the `u` flag is only [0-9], so a
- * phone typed as "९८७६५४३२१०" would otherwise reach the model untouched.
+ * A decimal digit outside ASCII: Devanagari ९, Bengali ৯, Tamil ௯, Thai ๙, full-width ９,
+ * mathematical bold 𝟗 and the rest of `\p{Nd}`. Every pattern below uses `\d`, which without
+ * the `u` flag is only [0-9], so a phone typed as "९८७६५४३२१०" or "𝟗𝟖𝟕𝟔𝟓𝟒𝟑𝟐𝟏𝟎" would otherwise
+ * reach the model untouched.
  */
 const NON_ASCII_DIGIT = /(?![0-9])\p{Nd}/gu;
+const ONE_DIGIT = /^\p{Nd}$/u;
+
+/**
+ * Unicode encodes every decimal digit in contiguous runs of ten, 0 to 9 in order (a Unicode
+ * stability policy), so a digit's value is its distance from the start of its run, modulo
+ * ten. Runs can sit back to back: the longest is the five mathematical digit sets,
+ * U+1D7CE–U+1D7FF, fifty code points long, which bounds the walk back.
+ */
+const DIGITS_PER_RUN = 10;
+const LONGEST_DIGIT_RUN = 50;
 
 /** Card numbers are 13–19 digits (ISO/IEC 7812); spaces or dashes may separate groups. */
 const CARD_PATTERN = /\b\d(?:[ -]?\d){12,18}\b/g;
@@ -87,17 +97,32 @@ function isCardNumber(match: string): boolean {
 }
 
 /**
- * Spells digits in ASCII so one set of patterns covers every script a family types in.
- * `foldForMatch` stays the single owner of digit folding (ASCII, Arabic-Indic, the Indic
- * scripts of the supported languages and full width); on a lone digit its other steps
- * (nukta, accents, case, whitespace) change nothing, so only the digit itself moves, and a
- * digit from any other block stays as typed. The lambda passes the digit alone, never
- * `replace`'s offset and input arguments.
+ * The ASCII spelling of one decimal digit from any script.
+ * @example
+ * asciiDigit('९'); // '9'
+ * asciiDigit('𝟗'); // '9'
+ */
+function asciiDigit(digit: string): string {
+  const codePoint = digit.codePointAt(0) ?? 0;
+  let offset = 0;
+  while (
+    offset < LONGEST_DIGIT_RUN &&
+    ONE_DIGIT.test(String.fromCodePoint(codePoint - offset - 1))
+  ) {
+    offset += 1;
+  }
+  return String(offset % DIGITS_PER_RUN);
+}
+
+/**
+ * Spells every decimal digit in ASCII so one set of patterns covers every script a family
+ * types in, and every look-alike digit set a person might use to slip a number past them.
+ * The lambda passes the digit alone, never `replace`'s offset and input arguments.
  */
 function asciiDigits(text: string): string {
-  // Efficiency: one linear scan; the fold runs once per non-ASCII digit, so an all-ASCII
-  // brief pays for that scan only.
-  return text.replace(NON_ASCII_DIGIT, (digit) => foldForMatch(digit));
+  // Efficiency: one linear scan; the run walk (at most fifty steps) happens once per
+  // non-ASCII digit, so an all-ASCII brief pays for that scan only.
+  return text.replace(NON_ASCII_DIGIT, (digit) => asciiDigit(digit));
 }
 
 export interface RedactionResult {
@@ -107,7 +132,7 @@ export interface RedactionResult {
 
 /**
  * Replaces Indian PII with typed placeholders and counts what was removed.
- * Indic and full-width digits are folded to ASCII first; then order matters: cards and Aadhaar go
+ * Digits from every script are folded to ASCII first; then order matters: cards and Aadhaar go
  * before accounts, emails before UPI handles.
  * @example
  * redactPii('Call 9876543210').text; // 'Call [PHONE]'

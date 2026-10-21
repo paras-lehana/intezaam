@@ -101,10 +101,15 @@ An `AbortController` tied to the response's `close` event cancels pending model 
 | Self-hosted fonts, plain CSS tokens, no UI framework runtime                                                                                                    | [`styles/fonts.css`](apps/web/src/styles/fonts.css), [`styles/tokens.css`](apps/web/src/styles/tokens.css)                                                                                   | No third-party round trips; CSP stays `'self'`                                                                             |
 | Stateless server, no database; plans live in the browser and in share-link fragments                                                                            | whole server, [`export/context-url.ts`](packages/core/src/export/context-url.ts)                                                                                                             | Nothing to scale or secure at rest                                                                                         |
 
-**Measured bundle (`npm run build`, 2026-10-21, gzip sizes as reported by Vite):** the home route loads the entry chunk
-(89.36 kB), the shared domain tables (38.78 kB), the runtime (0.42 kB) and the stylesheet (7.85 kB). The workspace
-(18.01 kB), the engine (27.55 kB) and the schemas (40.17 kB) load only when `/plan` opens, and each tab after Overview
-is its own chunk of 1.94–8.77 kB. All 30 JavaScript chunks total 793,983 bytes raw.
+**Measured bundle (`vite build` of `apps/web`, 2026-10-21, gzip sizes as Vite reports them, chunk names as Vite
+writes them):** the home route loads `index` (14.46 kB), `react-vendor` (81.82 kB: React, React DOM and the router, split
+in [`vite.config.ts`](apps/web/vite.config.ts) so an app release does not re-download them), `rolldown-runtime`
+(0.42 kB) and the stylesheet (7.01 kB); no engine, rule table or zod code. Opening `/plan` adds about 127 kB:
+`PlanPage` (56.97 kB: the workspace, the Overview tab and most of the engine), a shared chunk Vite names `base64`
+(44.34 kB: zod and the core schemas), `plan` (12.40 kB: more of the engine and its rule and source tables), `what-if`
+(8.47 kB: engine code shared with the What if drawer), `api` (2.77 kB) and five helpers under 1.1 kB each. Every other
+tab, drawer and page is its own chunk of 2.08–8.89 kB, fetched on first open. All 32 JavaScript chunks total 809,486
+bytes raw. Re-measure in the same change as any edit to `vite.config.ts` or to what a route imports.
 
 ## Error handling contract
 

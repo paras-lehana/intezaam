@@ -1,5 +1,5 @@
 /**
- * Timeline scheduling (TL-02…05, TL-07, TL-11) — ported from bio-bandish `checklist.plan()`.
+ * Timeline scheduling (TL-02…05, TL-07, TL-11) — ported from the owner's earlier planner.
  *
  * Responsibility: date each selected template at its lead time before the event; squeeze
  * late tasks into the days left, longest lead first, in 1–3-day steps; swap tasks that
@@ -14,7 +14,7 @@ import { COMPRESSION_STEP_DAYS, DAYS_PER_WEEK } from '../domain/timeline.js';
 import type { TaskStatus } from '../schemas/plan-time.js';
 import type { ClassifiedContext } from './types.js';
 
-/** A task due within a week is "do now" (01 §2 planner convention). */
+/** A task due within a week is "do now" (S-OWNER-DEFAULTS). */
 const DO_NOW_WINDOW_DAYS = DAYS_PER_WEEK;
 
 /** One scheduled template: its due date (null when undated) and how it was placed. */

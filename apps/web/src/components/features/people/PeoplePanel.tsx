@@ -1,5 +1,5 @@
 /**
- * The People tab (synthesis §7.3): headcount, food, space, the guest list, and the community
+ * The People tab: headcount, food, space, the guest list, and the community
  * toolkit for community events.
  *
  * Responsibility: compose the People features in reading order — how many will come, what

@@ -61,7 +61,7 @@ export function HeadcountForecast({ plan }: HeadcountForecastProps): ReactElemen
           )}
         </tbody>
       </table>
-      {/* HC-02: 10–20% of wedding food is wasted (research 04 §2.4, sources E31 and E33). */}
+      {/* HC-02: 10–20% of wedding food is wasted (S-DTE-2018, S-HASSANCHEF-2026). */}
       <p className="callout people-warning">
         <span aria-hidden="true">⚠</span> Guaranteeing more than {count.wasteWarningAbove} plates is
         likely waste — Indian weddings waste 10–20% of the food cooked.

@@ -1,5 +1,5 @@
 /**
- * Response schemas — what every API route returns (SPEC-API "Server routes").
+ * Response schemas — what every API route returns.
  *
  * Responsibility: one schema per route response, used by the server's tests and by the
  * web client to validate what it receives, plus the health and error envelopes.

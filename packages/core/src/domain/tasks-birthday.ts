@@ -1,13 +1,16 @@
 /**
  * Birthday task templates (TL-01 for birthdays).
  *
- * Responsibility: the birthday checklist in weeks, from the Giftlist 6-4-2-week scheme
- * (03 §1.9), venue and return-gift lead times (04 §5.2, §8.2) and kind-specific tasks for
+ * Responsibility: the birthday checklist in weeks, from the Giftlist 6-4-2-week scheme,
+ * venue and return-gift lead times and kind-specific tasks for
  * first, teen, milestone and 60th birthdays. Boundary: templates only.
  */
+import { KIDS_PARTY_ITEMS_INR, LATE_RETURN_GIFT_MARKUP_PCT } from './costs.js';
+import { RETURN_GIFT_BUFFER_PCT } from './headcount.js';
 import type { TaskTemplate } from './task-types.js';
 import { taskFactory } from './task-types.js';
 import { monthsToDays, weeksToDays } from './timeline.js';
+import { rangeText } from './units.js';
 
 const birthdayTask = taskFactory(['birthday']);
 
@@ -122,7 +125,7 @@ export const BIRTHDAY_TASKS: readonly TaskTemplate[] = [
     leadDays: weeksToDays(4),
     vendorType: 'photographer',
     title: 'Book a photographer (optional)',
-    why: 'Party photographers cost ₹2,000–8,000 and book a few weeks out.',
+    why: `Party photographers cost ₹${rangeText(KIDS_PARTY_ITEMS_INR.photographer)} and book a few weeks out.`,
     sourceId: 'S-CHARMBOX-2026',
   }),
   birthdayTask({
@@ -131,10 +134,10 @@ export const BIRTHDAY_TASKS: readonly TaskTemplate[] = [
     kinds: CHILD_KINDS,
     leadDays: 20,
     minLeftDays: 10,
-    fallbackTitle: 'Buy ready-made return gifts locally (expect 30–40% higher prices)',
+    fallbackTitle: `Buy ready-made return gifts locally (expect ${rangeText(LATE_RETURN_GIFT_MARKUP_PCT)}% higher prices)`,
     vendorType: 'return_gifts',
-    title: 'Order return gifts (10–15% more than confirmed children)',
-    why: 'Custom gifts need 15–20 days; late buying costs 30–40% more per piece.',
+    title: `Order return gifts (${rangeText(RETURN_GIFT_BUFFER_PCT)}% more than confirmed children)`,
+    why: `Custom gifts need 15–20 days; late buying costs ${rangeText(LATE_RETURN_GIFT_MARKUP_PCT)}% more per piece.`,
     ruleId: 'HC-03',
     sourceId: 'S-CHARMBOX-2026',
   }),

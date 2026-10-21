@@ -1,7 +1,7 @@
 /**
- * Message templates for the offline drafts (synthesis §5 job 4 fallback): six kinds in
- * English, Hindi and Hinglish, including the owner's Hinglish RSVP reminder (bio-bandish
- * guest manager, 01 §3.8).
+ * Message templates for the offline drafts (GENAI_ARCHITECTURE.md, job 4 fallback): six kinds in
+ * English, Hindi and Hinglish, including the owner's Hinglish RSVP reminder (from the
+ * owner's earlier guest manager).
  *
  * Responsibility: one function per kind and register that fills a message from the draft
  * facts only — event kind, date, city, guest count, functions, the vendor's questions, the

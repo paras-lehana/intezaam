@@ -1,5 +1,5 @@
 /**
- * Brief battery, Hinglish briefs (research note 09 §5.4: B09–B24; the date cases B41–B49 are in
+ * Brief battery, Hinglish briefs (B09–B24; the date cases B41–B49 are in
  * brief-cases-hinglish-dates.ts).
  *
  * Responsibility: the fraction grammar (dedh, dhai, sava, paune, saade), multipliers, ranges,
@@ -16,7 +16,7 @@ export const HINGLISH_BRIEFS: readonly BriefCase[] = [
     expect: { budgetInr: 200_000, guests: 200, city: 'Jaipur', month: 11, dateFlexible: true },
     missing: ['family'],
     absent: ['family'],
-    tests: 'The synthesis example: the event type is asked, never guessed',
+    tests: 'The worked example: the event type is asked, never guessed',
   },
   {
     id: 'B10',

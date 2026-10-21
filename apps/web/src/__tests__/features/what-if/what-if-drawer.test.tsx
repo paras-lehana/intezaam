@@ -1,8 +1,9 @@
 /**
  * Responsibility: the What-if tool — moving a control re-plans in the browser and shows the
- * engine's diff, "Apply this change" sends exactly the typed patch, Reset and a new plan
- * start again from "no change", and "Explain this change" asks the planner only when pressed
- * (the vendor-cancellation check is in vendor-cancel-note.test.tsx). Boundary: expected
+ * engine's diff, "Apply this change" sends exactly the typed patch, Reset (focus back on the
+ * first control) and a new plan start again from "no change", and "Explain this change" asks
+ * the planner only when pressed (the vendor-cancellation check is in vendor-cancel-note.test.tsx
+ * and the settled-move announcement in what-if-announce.test.tsx). Boundary: expected
  * numbers come from `simulatePatch` on the same sample plan; only the server reply is stubbed.
  */
 import { fireEvent, render, screen, within } from '@testing-library/react';
@@ -106,6 +107,8 @@ describe('WhatIfDrawer', () => {
     );
     await user.click(screen.getByRole('button', { name: 'Reset' }));
     expect(screen.getByText('Move any control above to compare.')).toBeInTheDocument();
+    // Reset removed itself; focus stays in the tool on the first control.
+    expect(screen.getByLabelText('Guests')).toHaveFocus();
   });
 
   it('starts again from no change when the plan itself changes', () => {

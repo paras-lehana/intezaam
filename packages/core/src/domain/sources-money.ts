@@ -2,7 +2,7 @@
  * Source register, part 1: budgets, catering, birthdays and GST.
  *
  * Responsibility: the published sources behind budget splits, cost bands, per-plate
- * prices and tax rates (research note 04 §1, §2, §5, §7 and §10). Boundary: metadata
+ * prices and tax rates. Boundary: metadata
  * only; merged with the other parts in sources.ts.
  */
 import type { SourceEntry } from './source-types.js';

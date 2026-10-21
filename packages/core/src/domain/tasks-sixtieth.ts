@@ -2,7 +2,7 @@
  * 60th-birthday (Shashtiabdapurti) task templates (TL-01, TL-09 for the 60th).
  *
  * Responsibility: the checklist a family needs for the two-day rite with homam and the
- * couple's ceremonial re-wedding, from research note 04 §5.2 (priests, homam materials,
+ * couple's ceremonial re-wedding (priests, homam materials,
  * kalasha setup, hall or temple, traditional meal, photographer, return gifts, the couple's
  * outfits, seating for elders). The rites are sourced (Wikipedia, grade B); the lead times
  * are our assumptions (grade D). The priest task itself lives with the other birthday

@@ -1,5 +1,5 @@
 /**
- * Date vocabulary for the offline brief reader (research note 09 §5.2.2).
+ * Date vocabulary for the offline brief reader.
  *
  * Responsibility: month names in English, Hinglish and Devanagari; relative words (aaj, kal,
  * agle hafte, agle mahine, agle saal, "N din/hafte/mahine baad"); seasons; and the words that place an
@@ -11,7 +11,7 @@ import { words, type PhraseGroups, type WordGroups } from './word-list.js';
 
 /**
  * Month spellings. Romanised "mai" is also the common misspelling of "mein" (in), so it is
- * a month only next to a day number or a year (09 §5.2.2 "the mai rule").
+ * a month only next to a day number or a year ("the mai rule").
  */
 export const MONTH_WORDS: WordGroups<number> = [
   [1, 'jan january janvari जनवरी'],
@@ -44,7 +44,7 @@ export const RELATIVE_MONTH_PHRASES: PhraseGroups<number> = [
   [1, 'agle mahine | next month | अगले महीने'],
 ];
 
-/** Week offsets: "is hafte" = the rest of this week, "agle hafte" = next Monday–Sunday (09 §5.2.2). */
+/** Week offsets: "is hafte" = the rest of this week, "agle hafte" = next Monday–Sunday. */
 export const RELATIVE_WEEK_PHRASES: PhraseGroups<number> = [
   [0, 'is hafte | this week | इस हफ्ते'],
   [1, 'agle hafte | next week | अगले हफ्ते'],
@@ -52,7 +52,7 @@ export const RELATIVE_WEEK_PHRASES: PhraseGroups<number> = [
 /** isoWeekday numbers Sunday 0 … Saturday 6; a planning week runs Monday to Sunday. */
 export const WEEK_START_WEEKDAY = 1;
 
-/** "agle saal" only hints the year; it never becomes dates (09 §5.2.2). */
+/** "agle saal" only hints the year; it never becomes dates. */
 export const NEXT_YEAR_PHRASES: PhraseGroups<number> = [[1, 'agle saal | next year | अगले साल']];
 
 /** "N din/hafte/mahine baad" (or "in N weeks"): the unit word and its length in days. */
@@ -64,7 +64,7 @@ export const DURATION_UNITS: WordGroups<'day' | 'week' | 'month'> = [
 export const DAYS_PER_WEEK = 7;
 export const AFTER_DURATION_WORDS = words('baad बाद later');
 
-/** Seasons only hint the date; they never become a window (09 §5.2.2, battery B49). */
+/** Seasons only hint the date; they never become a window (battery B49). */
 export const SEASON_WORDS = words(
   'sardi sardiyon sardiyo winter winters garmi garmiyon summer baarish monsoon सर्दी सर्दियों गर्मी बारिश',
 );
@@ -79,6 +79,6 @@ export const FESTIVAL_RELATION_PHRASES: PhraseGroups<FestivalRelation> = [
   ['on', 'par | pe | on | ko | पर | को'],
 ];
 
-/** Window lengths around a festival (grade D, 09 §5.2.2): FESTIVAL_AFTER_DAYS, FESTIVAL_AROUND_DAYS. */
+/** Window lengths around a festival (grade D): FESTIVAL_AFTER_DAYS, FESTIVAL_AROUND_DAYS. */
 export const FESTIVAL_AFTER_DAYS = 30;
 export const FESTIVAL_AROUND_DAYS = 7;

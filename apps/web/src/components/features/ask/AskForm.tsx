@@ -3,8 +3,8 @@
  *
  * Responsibility: a labelled text area (English, Hindi or Hinglish; capped at the request
  * schema's length), a submit button that is never disabled (aria-disabled while busy), an
- * inline error, and example chips that ask straight away. Boundary: controlled by the tool;
- * it only reports what the reader asked.
+ * inline error, and example chips that ask straight away (the Hindi one tagged `lang="hi"`).
+ * Boundary: controlled by the tool; it only reports what the reader asked.
  */
 import { type FormEvent, type ReactElement, useState } from 'react';
 import { MAX_QUESTION_CHARS } from '@intezaam/core/schemas';
@@ -54,13 +54,14 @@ export function AskForm({ busy, error, onAsk }: AskFormProps): ReactElement {
       )}
       <ul className="plain-list ask-examples" role="list" aria-label="Example questions">
         {ASK_EXAMPLES.map((example) => (
-          <li key={example}>
+          <li key={example.text}>
             <button
               type="button"
               className="chip ask-examples__chip"
-              onClick={() => void submit(example)}
+              lang={example.lang}
+              onClick={() => void submit(example.text)}
             >
-              {example}
+              {example.text}
             </button>
           </li>
         ))}

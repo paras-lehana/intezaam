@@ -2,7 +2,7 @@
  * Style tags and the 8-pair style quiz (feature #30).
  *
  * Responsibility: the closed vocabulary of style chips the user, the brief reader and the
- * idea generator share, built from the owner's 8 A/B quiz pairs (01 §3.5).
+ * idea generator share, built from the owner's 8 A/B quiz pairs.
  * Boundary: vocabulary only; ideas are filtered by these tags elsewhere.
  */
 
@@ -46,7 +46,7 @@ export interface StylePair {
   readonly b: StyleTag;
 }
 
-/** One A/B question per axis; each answer adds one tag (owner's quiz, 01 §3.5). */
+/** One A/B question per axis; each answer adds one tag (owner's quiz). */
 export const STYLE_QUIZ: Readonly<Record<StyleAxis, StylePair>> = {
   tradition: { question: 'Traditional or modern?', a: 'traditional', b: 'modern' },
   scale: { question: 'Grand or intimate?', a: 'grand', b: 'intimate' },

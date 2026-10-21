@@ -62,7 +62,7 @@ export function splitText(text: string, limit: number = MAX_MESSAGE_CHARS): [str
   return [text.slice(0, cut), ...splitText(text.slice(cut), limit)];
 }
 
-/** PDFs and photos travel as data URLs; Gemini read both through the gateway (09 Gap 4 §4.2). */
+/** PDFs and photos travel as data URLs; Gemini read both through the gateway. */
 function filePart(file: InlineFile): ContentPart {
   return {
     type: 'image_url',

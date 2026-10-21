@@ -1,5 +1,5 @@
 /**
- * Brief battery, Hinglish date briefs (research note 09 §5.4: B41–B49).
+ * Brief battery, Hinglish date briefs (B41–B49).
  *
  * Responsibility: dates a family types loosely — short lead times, Hindu-month windows that are
  * not curated, "kal", "mai" meaning May or "in", and seasons that must stay open rather than be
@@ -24,7 +24,7 @@ export const HINGLISH_DATE_BRIEFS: readonly BriefCase[] = [
     expect: { family: 'wedding', guests: 200, city: 'Varanasi' },
     missing: ['date', 'budget'],
     absent: ['dateIso', 'month'],
-    tests: 'Hindu-month windows are not curated yet (09 §5.7): the date stays open',
+    tests: 'Hindu-month windows are not curated yet: the date stays open',
   },
   {
     id: 'B43',
@@ -85,7 +85,7 @@ export const HINGLISH_DATE_BRIEFS: readonly BriefCase[] = [
     expect: { family: 'community', kind: 'religious-gathering', guests: 500 },
     missing: ['date', 'city', 'budget'],
     absent: ['dateIso', 'month'],
-    tests: 'Hindu-month windows are not curated yet (09 §5.7)',
+    tests: 'Hindu-month windows are not curated yet',
   },
   {
     id: 'B49',

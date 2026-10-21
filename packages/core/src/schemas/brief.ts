@@ -4,7 +4,7 @@
  *
  * Responsibility: the LEAN model output — closed enums only, numbers as the quoted text
  * ("2 lakh", "200 log") so code parses them, and an evidence quote per field that must be
- * a substring of the brief — and the BriefDraft with parsed numbers (synthesis §5 job 1).
+ * a substring of the brief — and the BriefDraft with parsed numbers (GENAI_ARCHITECTURE.md, job 1).
  * Boundary: shapes only; the server validates evidence and parses numbers.
  */
 import { z } from 'zod';
@@ -92,7 +92,7 @@ const sharedBriefFields = {
   tradition: z.enum(TRADITIONS).optional(),
   /**
    * Punjabi or Sikh weddings: true only when the brief says Sikh, Anand Karaj or gurdwara,
-   * false when it says Punjabi alone (09 §5.2: only true triggers the gurdwara-only rule).
+   * false when it says Punjabi alone (only true triggers the gurdwara-only rule).
    */
   anandKaraj: z.boolean().optional(),
   city: z.string().trim().min(1).max(MAX_CITY_CHARS).optional(),

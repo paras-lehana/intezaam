@@ -1,17 +1,17 @@
 /**
- * The labelled brief battery's case shape (research note 09 §5.4): one brief, the fields the
+ * The labelled brief battery's case shape: one brief, the fields the
  * reader must fill, the core fields it must leave for the form, and the fields it must never set.
  *
  * Responsibility: the type shared by the four battery files and the helpers that turn a case's
  * language group into the expected language. Boundary: test support only; the expected values
- * are the battery's labels (the research note is the oracle), not numbers the reader computes.
+ * are the battery's labels (hand-written, so they are the oracle), not numbers the reader computes.
  */
 import type { LanguageCode } from '../../domain/languages.js';
 import type { BriefDraft } from '../../schemas/brief.js';
 import type { CORE_BRIEF_FIELDS } from '../../offline/read-brief.js';
 import type { FestivalKey } from '../../offline/vocab/festivals.js';
 
-/** Every battery row is read on this day (a Tuesday), as in the research note. */
+/** Every battery row is read on this day (a Tuesday), so relative dates are fixed. */
 export const BATTERY_TODAY = '2026-10-20';
 
 export type BriefLang = 'EN' | 'HI' | 'HG' | 'MX';
@@ -34,7 +34,7 @@ export interface BriefCase {
   readonly tests: string;
 }
 
-/** Devanagari or mixed briefs answer in Hindi; English and Hinglish briefs in English (09 §5.2.7). */
+/** Devanagari or mixed briefs answer in Hindi; English and Hinglish briefs in English. */
 export const LANGUAGE_OF: Readonly<Record<BriefLang, LanguageCode>> = {
   EN: 'en',
   HG: 'en',

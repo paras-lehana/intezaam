@@ -62,7 +62,8 @@ function people(count: number): string {
 
 function crowdEffect(ctx: ClassifiedContext): string {
   const { small, medium, large } = CROWD_CLASS_MAX;
-  if (ctx.footfall <= small) return `Up to ${people(small)} people: basic exits and first-aid checks apply.`;
+  if (ctx.footfall <= small)
+    return `Up to ${people(small)} people: basic exits and first-aid checks apply.`;
   if (ctx.footfall <= medium)
     return `Over ${people(small)} people: visible crowd-control staff are needed.`;
   if (ctx.footfall <= large)

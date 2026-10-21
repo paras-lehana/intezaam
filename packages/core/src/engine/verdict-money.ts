@@ -24,7 +24,6 @@ import { weddingMoney } from './verdict-wedding.js';
 export { MONEY_LABELS, type MoneyVerdict } from './verdict-labels.js';
 export { eventSpendInr } from './verdict-wedding.js';
 
-
 /** Addendum 1 (grade D): below 60% of a band's minimum the money axis reads Stretch. */
 const LEAN_FLOOR_PCT = 60;
 

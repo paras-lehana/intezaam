@@ -2,7 +2,7 @@
  * Essential 4 of 5: how many guests are invited.
  *
  * Responsibility: the guest count, with the occasion's typical range as a hint where a
- * source publishes one (e.g. kids' birthdays, 04 §5.2). Boundary: the engine turns
+ * source publishes one (e.g. kids' birthdays). Boundary: the engine turns
  * invited guests into expected guests and plates; this field takes the invited number.
  */
 import type { ReactElement } from 'react';

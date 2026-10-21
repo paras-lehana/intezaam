@@ -26,6 +26,9 @@ import {
   shiftedBudget,
 } from './what-if-scenario';
 
+/** The guests slider: the first control, where focus returns after Reset. */
+export const FIRST_CONTROL_ID = 'whatif-guests';
+
 export interface WhatIfControlsProps {
   readonly plan: Plan;
   readonly context: EventContext;
@@ -59,7 +62,7 @@ export function WhatIfControls({
   return (
     <div className="whatif-controls">
       <RangeControl
-        id="whatif-guests"
+        id={FIRST_CONTROL_ID}
         label="Guests"
         range={guestRange(context.guests)}
         value={scenario.guests}

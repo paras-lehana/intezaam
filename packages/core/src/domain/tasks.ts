@@ -2,7 +2,7 @@
  * TASK_TEMPLATES — every checklist template, for every event family (TL-01).
  *
  * Responsibility: concatenate the per-family template lists in a stable order and offer
- * the lookups the timeline engine needs. Boundary: lookups only; scheduling, compression
+ * the per-family lookup the timeline engine needs. Boundary: lookups only; scheduling, compression
  * and conditions are evaluated by the timeline engine.
  */
 import type { EventFamily } from './events.js';
@@ -34,18 +34,4 @@ export const TASK_TEMPLATES: readonly TaskTemplate[] = [
  */
 export function templatesForFamily(family: EventFamily): TaskTemplate[] {
   return TASK_TEMPLATES.filter((template) => template.families.includes(family));
-}
-
-// Efficiency: one Map built at load makes dependency lookups O(1) while scheduling.
-const TEMPLATE_INDEX: ReadonlyMap<string, TaskTemplate> = new Map(
-  TASK_TEMPLATES.map((template) => [template.id, template] as const),
-);
-
-/**
- * A template by id, or undefined.
- * @example
- * findTaskTemplate('w-book-venue')?.vendorType; // 'venue'
- */
-export function findTaskTemplate(id: string): TaskTemplate | undefined {
-  return TEMPLATE_INDEX.get(id);
 }

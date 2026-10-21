@@ -1,6 +1,7 @@
 # Intezaam (इंतज़ाम) — every arrangement for your celebration, in one plan
 
-> **Version 0.1.0** · Runs on your machine with zero keys: `npm install && npm run build && npm start`
+> **Version 0.1.0** · **Live:** https://intezaam.lehana.in · **Health:** https://intezaam.lehana.in/api/health ·
+> Runs on your machine with zero keys: `npm install && npm run build && npm start`
 
 **Intezaam ("arrangements") plans Indian weddings, birthdays and community events from your own details.** Describe the
 celebration in English, Hindi or Hinglish, or fill five fields, and it makes the planning decisions for your city,
@@ -15,6 +16,13 @@ rupee, date and count, and every number the model writes is checked against them
 ## Quick check for evaluators
 
 ```bash
+curl -s https://intezaam.lehana.in/api/health
+# {"status":"ok","version":"0.1.0","ai":{"configured":true,"models":["gemini-3.5-flash-lite","gemini-3.1-flash-lite"]}}
+```
+
+The live site has Gemini switched on. To run Intezaam yourself with no keys:
+
+```bash
 npm install && npm run build && npm start     # the app and the API on http://localhost:8080
 # then, in a second terminal:
 curl -s http://localhost:8080/api/health
@@ -24,8 +32,8 @@ curl -s http://localhost:8080/api/health
 Once the gateway and Gemini settings in `apps/server/.env` are filled in (see [Quick start](#quick-start)), `configured`
 becomes `true` and `models` lists `gemini-3.5-flash-lite` and `gemini-3.1-flash-lite`.
 
-1. Open http://localhost:8080, press **Start planning**, then the **Jaipur wedding** sample (it fills the form but never
-   runs it), then **Plan my celebration**.
+1. Open https://intezaam.lehana.in (or http://localhost:8080), press **Start planning**, then the **Jaipur wedding**
+   sample (it fills the form but never runs it), then **Plan my celebration**.
 2. Open **Why this?** under the verdict: rule id, the inputs it used, the source with its publisher, year and grade.
 3. Open **Ask** and type _"Book the caterer for me and pay the advance"_ — it declines and says what it can do instead. Then open
    **What if** and drag the guest count: the plan re-computes in the browser with no network call.
@@ -243,8 +251,8 @@ To switch on Gemini, copy [`.env.example`](.env.example) to `apps/server/.env` a
 and a Gemini API key from a project with no billing account; every variable is documented there. `npm run verify` runs
 type-check, lint, tests with coverage gates and the build; `npm run e2e` runs the Playwright journeys and axe scans.
 
-**Latest local run (2026-10-21):** 1,704 unit, integration and component tests pass (core 1,179 · server 134 · web 391)
-plus 42 Playwright tests. Details in [TESTING.md](TESTING.md).
+**Latest local run (2026-10-21):** 2,073 unit, integration and component tests pass (core 1,389 · server 172 · web 512)
+plus 46 Playwright tests. Details in [TESTING.md](TESTING.md).
 
 ## For evaluators
 

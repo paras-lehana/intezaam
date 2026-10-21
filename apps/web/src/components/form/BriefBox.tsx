@@ -10,6 +10,7 @@ import { type ReactElement, useId, useRef, useState } from 'react';
 import { MAX_BRIEF_CHARS, MIN_BRIEF_CHARS } from '@intezaam/core/schemas';
 import { LiveRegion } from '../ui/LiveRegion';
 import { FieldShell } from './FieldShell';
+import { BRIEF_INPUT_ID } from './focus-field';
 
 export interface BriefBoxProps {
   readonly onReadBrief: (text: string) => void;
@@ -46,7 +47,7 @@ export function BriefBox({ onReadBrief, busy, status }: BriefBoxProps): ReactEle
   return (
     <div className="brief panel-soft">
       <FieldShell
-        inputId="planner-brief"
+        inputId={BRIEF_INPUT_ID}
         label={BRIEF_LABEL}
         hint="For example: “Shaadi in Jaipur, 2 lakh mein 200 log, Diwali ke baad.” You can check every field before planning."
         error={error}

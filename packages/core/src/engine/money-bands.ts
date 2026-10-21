@@ -1,5 +1,5 @@
 /**
- * Wedding money bands (VER-M, 09 Gap 2 §2.4) — the published rows a wedding is compared with.
+ * Wedding money bands (VER-M) — the published rows a wedding is compared with.
  *
  * Responsibility: velvetknot's 300-guest rows (generic tier-1 and eight cities), the tier
  * multipliers for cities without a row, the event-spend basis (rows exclude jewellery,
@@ -16,7 +16,6 @@ import type { MoneyStatus } from '../schemas/plan-money.js';
 import { PERCENT } from './percent.js';
 import type { ClassifiedContext, ShareTable } from './types.js';
 
-
 /** A velvetknot row: budget, mid-range and luxury totals for 300 guests and three events. */
 export type VkRow = Readonly<Record<WeddingBand, NumberRange>>;
 
@@ -24,14 +23,14 @@ function row(budget: NumberRange, mid: NumberRange, luxury: NumberRange): VkRow 
   return { budget, mid, luxury };
 }
 
-/** Gap 2 §2.2 (S-VK-2026, grade C): the generic tier-1 row at 300 guests, in lakh. */
+/** S-VK-2026 (grade C): the generic tier-1 row at 300 guests, in lakh. */
 export const VK_GENERIC_ROW_300: VkRow = row(
   lakhRange(14, 22),
   lakhRange(28, 50),
   lakhRange(65, 120),
 );
 
-/** Gap 2 §2.2 (S-VK-2026, grade C): the eight city rows at 300 guests; mid rows = CITY_ANCHORS. */
+/** S-VK-2026 (grade C): the eight city rows at 300 guests; mid rows = CITY_ANCHORS. */
 export const VK_CITY_ROWS_300: Readonly<Record<AnchorCity, VkRow>> = {
   mumbai: row(lakhRange(18, 25), lakhRange(35, 55), lakhRange(80, 150)),
   'delhi-ncr': row(lakhRange(17, 24), lakhRange(32, 52), lakhRange(75, 140)),
@@ -50,7 +49,7 @@ export const BAND_BASIS_GUESTS = CITY_ANCHORS.jaipur.referenceGuests;
 export const MIN_BILLABLE_GUESTS = 100;
 
 /**
- * Gap 2 §2.4 (grade D): cost relative to the generic tier-1 row for cities without a row —
+ * Grade D: cost relative to the generic tier-1 row for cities without a row —
  * tier-2 0.75 (VK Kolkata and Ahmedabad sit at 0.71–0.86), tier-3 0.60 (metro plates run
  * 40–60% above tier-3, S-RSA-2026), each rounded down to stay lenient.
  */
@@ -136,7 +135,7 @@ export interface BandInput {
 }
 
 export interface BandResult {
-  /** All five money statuses are wedding bands (addendum 14). */
+  /** All five money statuses are wedding bands. */
   readonly band: MoneyStatus;
   /** The band on the other side of a boundary within 7%, if any. */
   readonly near: MoneyStatus | null;
@@ -154,7 +153,7 @@ const BOUNDARIES: readonly {
 ];
 
 /**
- * Gap 2 §2.4 rules 3–7: the stretch floor first, then contiguous bands by per-guest event
+ * The stretch floor first, then contiguous bands by per-guest event
  * spend, compared as `eventSpend × 300 ≥ billable × rowMin` so no float drift decides a band.
  * @example
  * classifyWeddingSpend({ eventSpendInr: 2_250_000, billable: 300, floorInr: 343_613 }, jaipurRow).band; // 'lean'

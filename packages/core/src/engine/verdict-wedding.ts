@@ -1,10 +1,10 @@
 /**
- * Wedding-rows money verdict (VER-M, 09 Gap 2 §2.4) — weddings, and the 60th priced like one.
+ * Wedding-rows money verdict (VER-M) — weddings, and the 60th priced like one.
  *
  * Responsibility: compare event spend per billable guest with the city's published rows after
  * the catering-floor stretch test, and say it in plain copy: Needs changes, Simple &
  * home-style, Lean, Balanced or Premium, with a "close to" note near a boundary. A 60th uses
- * the same rows (04 §5.2) and says so, at grade D. Copy never says "not feasible".
+ * the same rows and says so, at grade D. Copy never says "not feasible".
  * Boundary: judges the budget; the levers say what would change it.
  */
 import type { CateringLevel } from '../domain/catering.js';
@@ -25,8 +25,7 @@ import type { TraceLog } from './trace.js';
 import type { NormalisedContext } from './types.js';
 import { MONEY_LABELS, type MoneyVerdict } from './verdict-labels.js';
 
-
-/** Gap 2 §2.5: the caterer class follows the band (the user can still choose another). */
+/** The caterer class follows the band (the user can still choose another). */
 const LEVEL_BY_BAND: Readonly<Record<MoneyStatus, CateringLevel>> = {
   stretch: 'community',
   'home-style': 'community',

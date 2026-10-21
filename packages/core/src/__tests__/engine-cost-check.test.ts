@@ -2,37 +2,21 @@
  * Tests for engine/cost-check.ts — bottom-up catering against the catering line, plus rooms.
  *
  * Responsibility: prove the cost check reuses the catering range, compares it with the line
- * (covered or short), prices rooms with the right GST slab, and explains every adjustment
- * in a note. Boundary: expected values come from the engine's own pricing functions.
+ * (covered or short), compares the priced rooms with the guest-rooms line (either one short
+ * makes the check short) and explains every adjustment in a note. Boundary: expected values
+ * come from the engine's own pricing functions; rooms.test prices the rooms themselves.
  */
 import { describe, expect, it } from 'vitest';
-import { DEFAULT_ROOM_NIGHTS, ROOM_RATE_PER_NIGHT_INR } from '../domain/catering.js';
-import { GST_SERVICES } from '../domain/gst.js';
 import { allInFactor, cateringRange } from '../engine/catering.js';
-import { buildCostCheck, roomGstPct, roomsCostInr } from '../engine/cost-check.js';
+import { buildCostCheck } from '../engine/cost-check.js';
+import { PERCENT } from '../engine/percent.js';
+import { roomsCostInr } from '../engine/rooms.js';
 import { createTraceLog } from '../engine/trace.js';
+import { formatInr } from '../format.js';
 import { costCheckSchema } from '../schemas/plan-money.js';
 import { birthday, community, normalised, wedding } from './fixtures/engine-contexts.js';
 
-describe('roomGstPct and roomsCostInr (CST-05)', () => {
-  it('uses the low slab up to ₹7,500 a night and the high slab above it', () => {
-    expect(roomGstPct(7_500)).toBe(GST_SERVICES['hotel-rooms-low'].ratePct);
-    expect(roomGstPct(7_501)).toBe(GST_SERVICES['hotel-rooms-high'].ratePct);
-  });
-
-  it('prices rooms at the tier rate, or the destination rate for destination weddings', () => {
-    const local = normalised(wedding());
-    const rate = ROOM_RATE_PER_NIGHT_INR[local.tier];
-    expect(roomsCostInr(local, 10)).toBe(
-      Math.round(10 * DEFAULT_ROOM_NIGHTS * rate * (1 + roomGstPct(rate) / 100)),
-    );
-    const away = normalised(wedding({ destination: true }));
-    expect(roomsCostInr(away, 10)).toBeGreaterThan(roomsCostInr(local, 10));
-    expect(roomsCostInr(local, 0)).toBe(0);
-  });
-});
-
-const balanced = { level: 'standard', rooms: 0, money: 'balanced' } as const;
+const balanced = { level: 'standard', rooms: 0, roomsLineInr: 0, money: 'balanced' } as const;
 
 describe('buildCostCheck', () => {
   it('compares the bottom-up mid with the catering line', () => {
@@ -61,7 +45,7 @@ describe('buildCostCheck', () => {
       { ...balanced, cateringLineInr: 1, rooms: 3 },
       trace,
     );
-    expect(check.taxesServicePct).toBeCloseTo((allInFactor(balanced.level) - 1) * 100);
+    expect(check.taxesServicePct).toBeCloseTo((allInFactor(balanced.level) - 1) * PERCENT);
     expect(check.roomsInr).toBeGreaterThan(0);
     expect(trace.items().map((item) => item.ruleId)).toEqual([
       'CST-01',
@@ -107,7 +91,7 @@ describe('buildCostCheck', () => {
     const ctx = normalised(community());
     const check = buildCostCheck(
       ctx,
-      { level: 'community', rooms: 0, money: 'lean', cateringLineInr: 1 },
+      { ...balanced, level: 'community', money: 'lean', cateringLineInr: 1 },
       createTraceLog(),
     );
     expect([check.status, check.gapInr, check.plates]).toEqual(['covered', 0, ctx.footfall]);
@@ -119,5 +103,27 @@ describe('buildCostCheck', () => {
     const check = buildCostCheck(ctx, { ...balanced, cateringLineInr: 0 }, createTraceLog());
     expect(check.plates).toBeGreaterThan(0);
     expect(check.notes.some((note) => note.includes('Jain'))).toBe(false);
+  });
+
+  it('reads short when the priced rooms exceed the guest-rooms line, even with food covered', () => {
+    const ctx = normalised(wedding());
+    const rooms = 10;
+    const roomsInr = roomsCostInr(ctx, rooms);
+    const fed = { ...balanced, cateringLineInr: cateringRange(ctx, 'standard').high, rooms };
+    const short = buildCostCheck(ctx, { ...fed, roomsLineInr: roomsInr - 1 }, createTraceLog());
+    expect([short.status, short.roomsInr, short.gapInr >= 0]).toEqual(['short', roomsInr, true]);
+    expect(short.notes.at(-1)).toContain(`about ${formatInr(1)} more than the guest-rooms line`);
+    const covered = buildCostCheck(ctx, { ...fed, roomsLineInr: roomsInr }, createTraceLog());
+    expect(covered.status).toBe('covered');
+    expect(covered.notes.at(-1)).toContain('within the guest-rooms line');
+  });
+
+  it('words a rooms gap as moving money only when the verdict has room for it', () => {
+    const ctx = normalised(wedding());
+    const input = { ...balanced, cateringLineInr: 1, rooms: 10, roomsLineInr: 1 };
+    const noteAt = (money: 'balanced' | 'lean'): string | undefined =>
+      buildCostCheck(ctx, { ...input, money }, createTraceLog()).notes.at(-1);
+    expect(noteAt('balanced')).toContain('move money in from lower-priority lines');
+    expect(noteAt('lean')).toContain('ask fewer guests to stay');
   });
 });

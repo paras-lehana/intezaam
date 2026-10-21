@@ -1,6 +1,6 @@
 /**
  * Evidence guard for GenAI job 1 (brief reader): the trust layer between the model's
- * reply and the planner form (synthesis §5 job 1; research note 09 §5.3).
+ * reply and the planner form (GENAI_ARCHITECTURE.md, job 1).
  *
  * Responsibility: run every claimed field through the evidence checks (quote in the brief,
  * same value when code re-reads the quote, numbers and dates parsed by code), then apply
@@ -192,7 +192,7 @@ export function validateBriefDraft(
   const devanagari = DEVANAGARI.test(seen);
   guard.draft.language = devanagari ? 'hi' : 'en';
   if (!devanagari && isHinglish(tokenise(seen).tokens)) guard.draft.hinglish = true;
-  // Code reads the brief itself: only "Sikh", "Anand Karaj" or "gurdwara" make it one (09 §5.2).
+  // Code reads the brief itself: only "Sikh", "Anand Karaj" or "gurdwara" make it one.
   if (guard.draft.tradition === 'punjabi-sikh') {
     guard.draft.anandKaraj = readAnandKaraj(tokenise(seen).tokens) !== undefined;
   }

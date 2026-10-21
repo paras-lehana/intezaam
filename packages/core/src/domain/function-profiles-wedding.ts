@@ -1,14 +1,14 @@
 /**
  * Function profiles, part 1: the wedding functions (roka to reception).
  *
- * Responsibility: defaults for each wedding function — start time (01 §3.2), day offset
- * from the main day (04 §4), cost weight and guest share (grade D), vendors, meal and
+ * Responsibility: defaults for each wedding function — start time, day offset
+ * from the main day, cost weight and guest share (grade D), vendors, meal and
  * layout. Boundary: data only; merged into FUNCTION_PROFILES in functions.ts.
  */
 import type { FunctionProfile, WeddingFunctionKind } from './functions.js';
 import type { SourceId } from './sources.js';
 
-/** Start times come from the owner's planner; day offsets and vendors from 04 §4. */
+/** Start times come from the owner's planner; day offsets and vendors from the ceremony sources. */
 const WEDDING_SOURCES: readonly SourceId[] = ['S-OWNER-DEFAULTS', 'S-WIKI-PUNJABI'];
 
 export const WEDDING_FUNCTION_PROFILES: Readonly<Record<WeddingFunctionKind, FunctionProfile>> = {

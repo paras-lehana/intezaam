@@ -8,8 +8,6 @@ import { describe, expect, it } from 'vitest';
 import {
   CRACKER_OCCASIONS,
   CRACKER_SLOTS,
-  CRACKER_WINDOW,
-  FESTIVE_EXEMPTION_END_HHMM,
   FESTIVE_EXEMPTION_MAX_DAYS,
   NOISE_CURFEW_END_HHMM,
   NOISE_CURFEW_START_HHMM,
@@ -17,6 +15,7 @@ import {
   NOISE_ZONES,
   PERMISSION_IDS,
   PERMISSIONS,
+  SILENCE_ZONE_RADIUS_M,
 } from '../domain/permissions.js';
 import { isSourceId } from '../domain/sources.js';
 import { hhmmSchema } from '../schemas/common.js';
@@ -45,17 +44,18 @@ describe('permissions (PERM-01…08)', () => {
 });
 
 describe('noise rules', () => {
-  it('curfew, exemption and cracker times are valid clock times', () => {
-    const times = [
-      NOISE_CURFEW_START_HHMM,
-      NOISE_CURFEW_END_HHMM,
-      FESTIVE_EXEMPTION_END_HHMM,
-      CRACKER_WINDOW.startHhmm,
-      CRACKER_WINDOW.endHhmm,
-    ];
-    for (const time of times) expect(hhmmSchema.safeParse(time).success).toBe(true);
-    expect(CRACKER_WINDOW.endHhmm <= NOISE_CURFEW_START_HHMM).toBe(true);
+  it('the curfew times are valid clock times and the exemption is capped', () => {
+    for (const time of [NOISE_CURFEW_START_HHMM, NOISE_CURFEW_END_HHMM]) {
+      expect(hhmmSchema.safeParse(time).success).toBe(true);
+    }
     expect(FESTIVE_EXEMPTION_MAX_DAYS).toBe(15);
+  });
+
+  it('the silence-zone permission quotes the radius and the silence limits from the table', () => {
+    const silence = PERMISSIONS['silence-zone'];
+    expect(silence.appliesWhen).toContain(`${SILENCE_ZONE_RADIUS_M} m`);
+    expect(silence.timing).toContain(`${NOISE_LIMITS_DBA.silence.day} dB(A) by day`);
+    expect(silence.timing).toContain(`${NOISE_LIMITS_DBA.silence.night} dB(A) at night`);
   });
 
   it('night limits are below day limits and silence zones are the quietest', () => {

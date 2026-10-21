@@ -28,7 +28,7 @@ import {
   fromCache,
 } from './service-kit.js';
 
-/** 15 s per attempt: reads took 3.4–5.2 s live (09 Gap 4 §4.2.2), so this is three times that. */
+/** 15 s per attempt: reads took 3.4–5.2 s live, so this is three times that. */
 const QUOTE_READ_TIMEOUT_MS = 15_000;
 
 /** A transcript is at most 4,000 characters (the quote box limit); measured ones were 356–993. */

@@ -1,12 +1,12 @@
 /**
- * Puja and festival briefs beyond the research battery: short, real-world phrasings that sit on
+ * Puja and festival briefs beyond the B battery: short, real-world phrasings that sit on
  * the line between a family function and a community event.
  *
  * Responsibility: a festival puja at home stays a family function, while the same festival at a
  * pandal or in a housing society is a community event; "pooja" and "ganesh puja" spellings; a
  * relative week ("agle hafte", "is hafte") as a flexible month, never a single day; flats as
  * households, never guests. Boundary: labelled test data only, in the battery's case shape; the
- * ids start with P so they never collide with the research note's B rows.
+ * ids start with P so they never collide with the battery's B rows.
  */
 import type { BriefCase } from './brief-case.js';
 

@@ -19,7 +19,7 @@
   --color-bg: #faf8f3;
   --color-bg-alt: #f4efe4;
   --color-surface: #ffffff;
-  /* Selected fills (addendum 9): active tab and a ticked multi-select chip. */
+  /* Selected fills (ACCESSIBILITY.md, "Token contrast"): active tab and a ticked multi-select chip. */
   --color-surface-selected: #f7f2e8;
   --color-chip-selected: #f4ecdd;
   --color-danger-soft: #fbe9e6;
@@ -62,7 +62,7 @@
   --cover-card: #221a0a;
   --cover-raised: #3a2810;
   --on-cover: #f3e9d8;
-  /* 72% alpha (addendum 9 floor is 60%); measured blended over the cover. */
+  /* 72% alpha (the floor is 60%, ACCESSIBILITY.md); measured blended over the cover. */
   --on-cover-dim: rgb(243 233 216 / 72%);
   --on-cover-gold: #e8b85a;
   --cover-line: rgb(201 148 60 / 28%);

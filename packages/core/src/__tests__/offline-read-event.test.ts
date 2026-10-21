@@ -1,5 +1,5 @@
 /**
- * Tests for the event reader (research note 09 §5.2.3–5.2.4).
+ * Tests for the event reader.
  *
  * Responsibility: family and kind from explicit words — 60th first, community occasions,
  * weddings, family functions, birthdays by age, get-togethers, functions alone — plus
@@ -53,7 +53,7 @@ describe('readEvent', () => {
       family: 'community',
       kind: FESTIVAL_ANCHORS['ganesh-chaturthi'].communityKind,
     });
-    // A housing society or RWA makes a pandal festival a society festival (09 §5.5).
+    // A housing society or RWA makes a pandal festival a society festival.
     expect(event('Ganesh utsav in our society')).toEqual({
       family: 'community',
       kind: 'society-festival',

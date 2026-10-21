@@ -1,5 +1,5 @@
 /**
- * Brief battery, English briefs (research note 09 §5.4: B01–B08, B53, B55, B58).
+ * Brief battery, English briefs (B01–B08, B53, B55, B58).
  *
  * Responsibility: the four personas in English plus stated traditions, sparse briefs and
  * numbers that are not guests. Boundary: labelled test data only.

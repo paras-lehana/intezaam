@@ -1,5 +1,5 @@
 /**
- * The labelled 60-brief battery (research note 09 §5.4) run through the offline brief reader
+ * The labelled 60-brief battery run through the offline brief reader
  * and the evidence guard, exactly as the server runs an offline reply.
  *
  * Responsibility: for every English, Hindi, Hinglish and mixed brief — the fields filled, the
@@ -32,7 +32,7 @@ const BATTERY: readonly BriefCase[] = [
   ...MIXED_GUARDRAIL_BRIEFS,
 ];
 
-/** The research note's battery has sixty rows (09 §5.4). */
+/** The battery has sixty rows (B01–B60). */
 const BATTERY_SIZE = 60;
 
 /** Every labelled case: the battery plus the puja and festival briefs beyond it. */
@@ -83,7 +83,7 @@ describe('the labelled brief battery', () => {
   );
 
   it.each(CASES.map((brief) => [brief.id, brief] as const))(
-    '%s marks the Hinglish register only for romanised Hindi (09 §5.2.7)',
+    '%s marks the Hinglish register only for romanised Hindi',
     (_id, brief) => {
       const hinglish = brief.lang === 'HG' && !ONE_HINDI_WORD_ROWS.has(brief.id);
       expect(read(brief).draft.hinglish === true).toBe(hinglish);

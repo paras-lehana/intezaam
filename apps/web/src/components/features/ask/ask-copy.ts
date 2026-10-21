@@ -61,12 +61,22 @@ export const REFUSAL_COPY: Readonly<Record<RefusalReason, string>> = {
 };
 
 /**
- * Starter questions: core's rules answer every one of these without a model call (synthesis
- * §5, job 5) — two questions, a Hinglish change request and a Hindi question.
+ * One starter question. A question in Devanagari carries `lang: 'hi'`, so a screen reader
+ * voices it in Hindi and the `:lang(hi)` font rules apply (WCAG 3.1.2); English and
+ * Hinglish (Latin script) inherit the page's en-IN and keep the Latin face.
  */
-export const ASK_EXAMPLES: readonly string[] = [
-  'What should I do first?',
-  'Kitne plates order karein?',
-  '50 log kam karo',
-  'बजट में सबसे बड़ा खर्च क्या है?',
+export interface AskExample {
+  readonly text: string;
+  readonly lang?: 'hi';
+}
+
+/**
+ * Starter questions: core's rules answer every one of these without a model call
+ * (GENAI_ARCHITECTURE.md, job 5) — two questions, a Hinglish change request and a Hindi question.
+ */
+export const ASK_EXAMPLES: readonly AskExample[] = [
+  { text: 'What should I do first?' },
+  { text: 'Kitne plates order karein?' },
+  { text: '50 log kam karo' },
+  { text: 'बजट में सबसे बड़ा खर्च क्या है?', lang: 'hi' },
 ];

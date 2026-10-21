@@ -3,8 +3,8 @@
  *
  * Responsibility: every table the catering engine prices from — per-plate bands by tier
  * (veg sourced, non-veg derived), the non-veg multiplier, the veg bands by caterer class and
- * the class factors derived from them (09 Gap 2 §2.5), the service charge by class (CST-02),
- * the cheapest credible plate (Gap 2 §2.4), the anchor cities that price like a metro, snack
+ * the class factors derived from them, the service charge by class (CST-02),
+ * the cheapest credible plate, the anchor cities that price like a metro, snack
  * meal prices and meal weights (CST-04), the reception discount, the royalty and staffing
  * figures the caterer and venue questions quote (VEN-03) and the assumed room rates (CST-05).
  * Boundary: published ranges are estimates, never quotes; grade-D values are labelled.
@@ -37,7 +37,7 @@ export const PER_PLATE_INR: Readonly<Record<CityTier, PlateBand>> = {
 export const NONVEG_MULTIPLIER = 1.35;
 
 /**
- * Caterer classes the plan prices at: three of velvetknot's five service levels (Gap 2 §2.5).
+ * Caterer classes the plan prices at: three of velvetknot's five service levels.
  * Five-star in-house and ultra-luxury are left out because no plan input selects them.
  */
 export const CATERING_LEVELS = ['community', 'standard', 'premium'] as const;
@@ -62,7 +62,7 @@ function relativeToStandard(band: NumberRange): number {
 }
 
 /**
- * Gap 2 §2.5 (grade D): price relative to the tier's standard band — each class's veg
+ * Grade D: price relative to the tier's standard band — each class's veg
  * midpoint ÷ the standard midpoint (community 0.515 → 0.5, premium 1.97 → 2).
  */
 export const LEVEL_FACTOR: Readonly<Record<CateringLevel, number>> = {
@@ -72,7 +72,7 @@ export const LEVEL_FACTOR: Readonly<Record<CateringLevel, number>> = {
 };
 
 /**
- * CST-02 (Gap 2 §2.6, grade C): the service charge alone — "often 5 to 10 percent"
+ * CST-02 (grade C): the service charge alone — "often 5 to 10 percent"
  * (S-VKPLATE-2026), none at a community caterer. GST is CST-06 and is never added here.
  */
 export const SERVICE_CHARGE_PCT: Readonly<Record<CateringLevel, number>> = {
@@ -82,7 +82,7 @@ export const SERVICE_CHARGE_PCT: Readonly<Record<CateringLevel, number>> = {
 };
 
 /**
- * The cheapest credible veg plate by tier (Gap 2 §2.4, grade C/D): metro = the all-India
+ * The cheapest credible veg plate by tier (grade C/D): metro = the all-India
  * community minimum; tier-2 and tier-3 = the tier's standard low × the community factor,
  * which matches halwai listings of ₹450–500 in Jaipur and Udaipur.
  */
@@ -93,7 +93,7 @@ export const FLOOR_PLATE_VEG_INR: Readonly<Record<CityTier, number>> = {
 };
 
 /**
- * Anchor cities whose caterers price like a metro (Gap 2 §2.4): Jaipur's standard quote of
+ * Anchor cities whose caterers price like a metro: Jaipur's standard quote of
  * ₹1,200–2,000 sits in the metro cell; Chennai by convention (grade D).
  */
 export const CATERING_TIER_BY_ANCHOR: Readonly<Partial<Record<AnchorCity, CityTier>>> = {
@@ -108,7 +108,7 @@ export const SNACK_MEAL_PER_HEAD_INR: Readonly<Record<'hi-tea' | 'snacks', Numbe
 };
 
 /**
- * Gap 2 §2.4 rule 2 (grade D): a meal's weight against a full plate — each snack band's
+ * Grade D: a meal's weight against a full plate — each snack band's
  * midpoint ÷ the standard plate midpoint (hi-tea 0.48 → 0.5, late snacks 0.24 → 0.25).
  */
 export const MEAL_WEIGHT: Readonly<Record<MealType, number>> = {

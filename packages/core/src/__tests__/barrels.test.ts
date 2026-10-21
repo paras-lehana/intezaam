@@ -12,7 +12,7 @@ import * as exportsBarrel from '../export/index.js';
 import * as integrations from '../integrations/index.js';
 import * as schemas from '../schemas/index.js';
 
-/** Names other packages code against (SPEC-API "Core public API"). */
+/** Names other packages code against. */
 const SCHEMA_NAMES = [
   'eventContextSchema',
   'contextPatchSchema',
@@ -64,7 +64,7 @@ const DOMAIN_NAMES = [
   'SAMPLE_CONTEXTS',
 ];
 
-/** The planner API the web and the server call (SPEC-API "[engine]"). */
+/** The planner API the web and the server call. */
 const ENGINE_NAMES = [
   'buildPlan',
   'normaliseContext',
@@ -73,7 +73,7 @@ const ENGINE_NAMES = [
   'summarisePlanFacts',
 ];
 
-/** Browser-side export builders (SPEC-API "[export]"). */
+/** Browser-side export builders. */
 const EXPORT_NAMES = [
   'buildIcs',
   'planToCsv',

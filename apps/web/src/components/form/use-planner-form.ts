@@ -17,8 +17,8 @@ import {
   sampleContext,
 } from '@intezaam/core/domain';
 import type { EventContext } from '@intezaam/core/schemas';
-import { prefersReducedMotion } from '../ui/use-media-query';
-import { DETAIL_FIELDS, type FieldErrors, type FieldKey, plannerFieldId } from './form-fields';
+import { focusPlannerField } from './focus-field';
+import { DETAIL_FIELDS, type FieldErrors, type FieldKey } from './form-fields';
 import { EMPTY_FORM_STATE, fillState, type PlannerFormState } from './form-state';
 import { firstInvalidField, validatePlannerForm } from './form-validation';
 
@@ -45,7 +45,6 @@ interface Attention {
 /** The glow lasts as long as its CSS animation (tokens.css --duration-glow). */
 export const ATTENTION_MS = 3000;
 
-const FOCUSABLE = 'input, select, textarea, button, [tabindex]';
 const NO_ERRORS: FieldErrors = {};
 
 export interface PlannerFormApi {
@@ -59,20 +58,6 @@ export interface PlannerFormApi {
   readonly applySample: (id: SampleId) => void;
   readonly setDetailsOpen: (open: boolean) => void;
   readonly handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
-}
-
-function focusField(field: FieldKey): void {
-  const container = document.getElementById(plannerFieldId(field));
-  const target = container?.querySelector<HTMLElement>(FOCUSABLE) ?? container;
-  if (target === null) return;
-  // scrollIntoView is missing in some engines (and in jsdom); focus still works without it.
-  if (typeof target.scrollIntoView === 'function') {
-    target.scrollIntoView({
-      block: 'center',
-      behavior: prefersReducedMotion() ? 'auto' : 'smooth',
-    });
-  }
-  target.focus({ preventScroll: true });
 }
 
 /**
@@ -106,7 +91,7 @@ export function usePlannerForm({
 
   useEffect(() => {
     if (attention === null) return undefined;
-    focusField(attention.field);
+    focusPlannerField(attention.field);
     const timer = window.setTimeout(() => setAttention(null), ATTENTION_MS);
     return () => window.clearTimeout(timer);
   }, [attention]);

@@ -2,7 +2,7 @@
  * Ceremony sequences by tradition (FN-01, VEN-01) — the rites inside the functions.
  *
  * Responsibility: for each tradition, its rites in order with the day offset from the
- * main day, the function card that shows them and the vendors they need (04 §4.1–4.8).
+ * main day, the function card that shows them and the vendors they need.
  * Steps marked as assumed come from common practice rather than the cited page (grade D);
  * the rest take the tradition's grade. Boundary: indicative; families vary.
  */

@@ -1,8 +1,8 @@
 /**
  * Source register, part 3: monsoon, muhurat, calendar pauses and festival dates.
  *
- * Responsibility: the sources behind date intelligence (research note 04 §8.5–8.6 and the
- * festival searches in the synthesis, DATE-01…05). Boundary: metadata only; merged with
+ * Responsibility: the sources behind date intelligence (monsoon, muhurat,
+ * calendar pauses and festival dates, DATE-01…05). Boundary: metadata only; merged with
  * the other parts in sources.ts.
  */
 import type { SourceEntry } from './source-types.js';
@@ -93,7 +93,7 @@ export const CALENDAR_SOURCES = {
     confidence: 'C',
   },
   // Muhurat 2026–27: Drik Panchang is the primary computed panchang; the others were diffed
-  // against it date by date (research 09, Gap 3 §3.1).
+  // against it date by date.
   'S-DRIK-MUHURAT-2026': {
     title: 'Hindu marriage dates with muhurat 2026, New Delhi',
     publisher: 'Drik Panchang',

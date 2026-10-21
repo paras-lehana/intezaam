@@ -2,16 +2,24 @@
  * Vendor playbook, part 1: venue, food, decor and photo/video (VEN-03).
  *
  * Responsibility: the questions, written commitments and red flags for each vendor,
- * drawn from published catering and venue guides (04 §2.3), the noise rules (04 §6.1),
- * accessibility guidance (04 §8.8) and the owner's venue checklist (01 §3.4).
+ * drawn from published catering and venue guides, the noise rules,
+ * accessibility guidance and the owner's venue checklist. Figures the
+ * questions quote (royalty, servers, service charge, GST) are read from their domain tables.
  * Boundary: a "planner checklist", not legal advice; merged in vendor-playbook.ts.
  */
+import { GUESTS_PER_SERVER, OUTSIDE_CATERER_ROYALTY_INR, SERVICE_CHARGE_PCT } from './catering.js';
+import { GST_SERVICES } from './gst.js';
+import { rangeText } from './units.js';
 import type { PlaybookEntry, VenueFoodVendor } from './vendor-playbook-types.js';
+
+/** CST-02 + CST-06 as a caterer quotes them: service from the standard to the premium class. */
+const SERVICE_CHARGE_TEXT = `${SERVICE_CHARGE_PCT.standard}–${SERVICE_CHARGE_PCT.premium}%`;
+const CATERING_GST_TEXT = `${GST_SERVICES['outdoor-catering'].ratePct}%`;
 
 export const VENUE_FOOD_PLAYBOOK: Readonly<Record<VenueFoodVendor, PlaybookEntry>> = {
   venue: {
     questions: [
-      'Is an outside caterer allowed, and is there a royalty per plate (₹300–1,000 at hotels)?',
+      `Is an outside caterer allowed, and is there a royalty per plate (₹${rangeText(OUTSIDE_CATERER_ROYALTY_INR)} at hotels)?`,
       'What is the minimum plate guarantee, and what is billed if fewer guests come?',
       'Until what time may amplified music play, and is the hall a closed premises after 10 pm?',
       'Is alcohol allowed, and who holds the licence?',
@@ -42,8 +50,8 @@ export const VENUE_FOOD_PLAYBOOK: Readonly<Record<VenueFoodVendor, PlaybookEntry
   },
   caterer: {
     questions: [
-      'Is the price per plate, and does it include GST and service (often 15–25% extra)?',
-      'How many servers: about 1 per 40–50 guests at a buffet, 1 per 10–15 when plated?',
+      `Is the price per plate, and does it include ${CATERING_GST_TEXT} GST and the service charge (often ${SERVICE_CHARGE_TEXT})?`,
+      `How many servers: about 1 per ${rangeText(GUESTS_PER_SERVER.buffet)} guests at a buffet, 1 per ${rangeText(GUESTS_PER_SERVER.plated)} when plated?`,
       'Can you run separate Jain, veg and non-veg (or halal) counters with separate utensils?',
       'When can we do a tasting?',
     ],

@@ -86,8 +86,8 @@ interface KindRites {
 }
 
 /**
- * Non-wedding occasions with published rites. The 60th is a two-day rite (04 §5.2,
- * S-WIKI-SHASHTHIPURTI, grade B); regional order of days is unverified, so the puja card
+ * Non-wedding occasions with published rites. The 60th is a two-day rite
+ * (S-WIKI-SHASHTHIPURTI, grade B); regional order of days is unverified, so the puja card
  * lists the rites and the priest task fixes which day holds which.
  */
 const KIND_RITES: Readonly<Partial<Record<EventKind, KindRites>>> = {

@@ -1,7 +1,7 @@
 /**
  * Cash needed per month: every vendor's advance, second payment and balance, added up.
  *
- * Responsibility: the payment-milestone calendar (synthesis feature #15, VEN-04) — the
+ * Responsibility: the payment-milestone calendar (feature #15, VEN-04) — the
  * month-by-month cash table with the vendors paid in each month, the "get it in writing"
  * checklist, and an "Assumption" label, because no industry standard schedule exists and
  * the default split is ours (grade D). Boundary: display only; each vendor's own

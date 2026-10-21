@@ -1,6 +1,5 @@
 /**
- * Plan contracts, part 4: permissions, crowd safety, risks and the accessibility plan
- * (synthesis §3 H–I, §4.7–4.8).
+ * Plan contracts, part 4: permissions, crowd safety, risks and the accessibility plan.
  *
  * Responsibility: the wire shapes of the permissions checklist, the NDMA crowd checks,
  * the risk radar (severity always as text) and the accessibility and elders plan.

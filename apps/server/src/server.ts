@@ -37,7 +37,7 @@ import { registerStaticWeb } from './static-web.js';
 export const AI_REQUESTS_PER_MINUTE = 30;
 
 /**
- * A quote-file read is the costliest call (about 1.6k input tokens per photo, 09 Gap 4 §4.2.3);
+ * A quote-file read is the costliest call (about 1.6k input tokens per photo);
  * a family compares at most three quotes, so six a minute allows two full comparisons.
  */
 export const FILE_READS_PER_MINUTE = 6;
@@ -51,7 +51,7 @@ export const MAX_IN_FLIGHT_AI = 4;
 /** Every JSON route except the file read: a context plus three 4,000-character quotes fits. */
 const DEFAULT_BODY_LIMIT = '64kb';
 
-/** 3 MiB: one 2 MiB file grows to about 2.67 MiB as base64, plus the JSON wrapper (09 Gap 4). */
+/** 3 MiB: one 2 MiB file grows to about 2.67 MiB as base64, plus the JSON wrapper. */
 const FILE_BODY_LIMIT_BYTES = 3 * 1024 * 1024;
 
 export interface AppDeps {

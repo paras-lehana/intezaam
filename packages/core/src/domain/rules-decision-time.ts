@@ -2,8 +2,8 @@
  * Rule documentation, part 2: verdict (VER), levers (LEV), timeline (TL), dates (DATE)
  * and functions (FN).
  *
- * Responsibility: the title, summary, grade and sources of each rule in synthesis
- * §4.5–4.6. Summaries that quote a number read it from its domain table, so the text and
+ * Responsibility: the title, summary, grade and sources of each VER, LEV, TL, DATE
+ * and FN rule. Summaries that quote a number read it from its domain table, so the text and
  * the engines cannot drift apart. Boundary: documentation only; the logic lives in the engines.
  */
 import type { RuleInfo } from './rule-info.js';

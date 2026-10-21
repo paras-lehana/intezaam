@@ -1,6 +1,6 @@
 /**
  * GenAI barrel (server-only, re-exported from the package root): prompt builders, reply
- * guards and the contracts between them for the five jobs (synthesis §5).
+ * guards and the contracts between them for the five jobs (GENAI_ARCHITECTURE.md).
  *
  * Responsibility: one entry point for `buildBriefPrompt`, `buildNarrationPrompt`,
  * `buildQuotePrompt`, `buildDraftPrompt`, `buildAskPrompt`, `toModelSchema` and the

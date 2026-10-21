@@ -1,7 +1,7 @@
 /**
  * Event families and kinds — what the user is celebrating.
  *
- * Responsibility: the closed list of four families and their kinds (synthesis §3 row 1)
+ * Responsibility: the closed list of four families and their kinds
  * and each family's planning limits (minimum workable lead time, contingency floor,
  * typical overrun). Boundary: data only; each kind's defaults are in event-kinds.ts.
  */
@@ -37,7 +37,7 @@ export const EVENT_KINDS = [
 
 export type EventKind = (typeof EVENT_KINDS)[number];
 
-/** Age bands drive idea filters and safety checks for birthdays (04 §5.2). */
+/** Age bands drive idea filters and safety checks for birthdays. */
 export const AGE_BANDS = ['baby', 'kid', 'teen', 'adult', 'elder'] as const;
 
 export type AgeBand = (typeof AGE_BANDS)[number];
@@ -46,7 +46,7 @@ export interface FamilyProfile {
   readonly label: string;
   readonly labelHi: string;
   /**
-   * VER-T: below this many days the time verdict is Critical. Grade D (synthesis §4.5):
+   * VER-T: below this many days the time verdict is Critical (grade D):
    * wedding 45, family function 21, birthday 7, community with permissions 30 (Mumbai's
    * pandal window opens about a month before the festival, S-BMC-2026).
    */
@@ -63,7 +63,7 @@ export const FAMILY_PROFILES: Readonly<Record<EventFamily, FamilyProfile>> = {
     label: 'Wedding',
     labelHi: 'शादी',
     minWorkableLeadDays: 45,
-    // Wedding guides keep 8–10% aside and call it non-negotiable (04 §8.1).
+    // Wedding guides keep 8–10% aside and call it non-negotiable.
     contingencyFloorBp: 800,
     overrunPct: range(15, 20),
     sourceIds: ['S-WP-2026', 'S-VK-2026', 'S-INTEZAAM-D'],
@@ -72,7 +72,7 @@ export const FAMILY_PROFILES: Readonly<Record<EventFamily, FamilyProfile>> = {
     label: 'Birthday',
     labelHi: 'जन्मदिन',
     minWorkableLeadDays: 7,
-    // Kids' parties run 40–60% over the first estimate, so a 10% buffer is kept (04 §5.1).
+    // Kids' parties run 40–60% over the first estimate, so a 10% buffer is kept.
     contingencyFloorBp: 1_000,
     overrunPct: range(40, 60),
     sourceIds: ['S-CHARMBOX-2026', 'S-INTEZAAM-D'],
@@ -81,7 +81,7 @@ export const FAMILY_PROFILES: Readonly<Record<EventFamily, FamilyProfile>> = {
     label: 'Community event',
     labelHi: 'सामुदायिक आयोजन',
     minWorkableLeadDays: 30,
-    // Community default buffer matches the wedding guidance (04 §8.1, grade D).
+    // Community default buffer matches the wedding guidance (grade D).
     contingencyFloorBp: 1_000,
     overrunPct: null,
     sourceIds: ['S-BMC-2026', 'S-INTEZAAM-D'],

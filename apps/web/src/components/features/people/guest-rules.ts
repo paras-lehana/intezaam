@@ -2,8 +2,8 @@
  * Guest-list rules: statuses, diets and sides understood in English, Hindi and Hinglish, and
  * the headcount that counts people, not rows.
  *
- * Responsibility: a typed port of the owner's earlier guest manager (bio-bandish
- * `gm-core.js`): "haan" means confirmed, "NV" means non-veg, "ladkiwale" means the bride's
+ * Responsibility: a typed port of the owner's earlier guest manager:
+ * "haan" means confirmed, "NV" means non-veg, "ladkiwale" means the bride's
  * side; a declined party is never counted; plates are the adults and children of confirmed
  * parties. Boundary: pure functions over in-memory rows — the list lives only in this
  * browser tab and is never sent to the server or to the AI.
@@ -50,7 +50,7 @@ export interface Guest {
   readonly status: GuestStatus;
 }
 
-/** Free-text RSVP words → status (gm-core STATUS_SYN; blank means not replied yet). */
+/** Free-text RSVP words → status (blank means not replied yet). */
 const STATUS_WORDS: Readonly<Record<string, GuestStatus>> = {
   '': 'invited',
   invited: 'invited',
@@ -87,7 +87,7 @@ const STATUS_WORDS: Readonly<Record<string, GuestStatus>> = {
 };
 
 /**
- * Diet words in priority order (gm-core). "No onion / no garlic" goes to the Jain counter
+ * Diet words in priority order. "No onion / no garlic" goes to the Jain counter
  * before "veg" can match: Jain food has neither, while ordinary veg dishes usually have both,
  * so it is the counter that guest can eat from safely.
  */
@@ -98,7 +98,7 @@ const DIET_PATTERNS: readonly (readonly [RegExp, GuestDiet])[] = [
   [/veg|shakahari|शाकाहारी|satvik|sattvic|vegan/, 'veg'],
 ];
 
-/** Side words: ladkiwale / vadhu = bride's family; ladkewale / var = groom's (gm-core). */
+/** Side words: ladkiwale / vadhu = bride's family; ladkewale / var = groom's. */
 const SIDE_PATTERNS: readonly (readonly [RegExp, GuestSide])[] = [
   [/bride|ladki|girl|vadhu|वधू/, 'bride'],
   [/groom|ladke|boy|\bvar\b|वर/, 'groom'],
@@ -157,7 +157,7 @@ export function pickOption<T extends string>(options: readonly T[], value: strin
   return options.find((option) => option === value) ?? fallback;
 }
 
-/** Counts for the list: people, not rows (gm-core `headcount`). */
+/** Counts for the list: people, not rows. */
 export interface GuestCounts {
   readonly parties: number;
   readonly people: number;

@@ -51,9 +51,7 @@ describe('HelpLanguageFields', () => {
       attention: 'help',
     });
     expect(document.getElementById(plannerFieldId('help'))).toHaveClass('field--attention');
-    expect(document.getElementById(plannerFieldId('language'))).not.toHaveClass(
-      'field--attention',
-    );
+    expect(document.getElementById(plannerFieldId('language'))).not.toHaveClass('field--attention');
     const select = screen.getByRole('combobox', { name: LANGUAGE_NAME });
     expect(select).toHaveAttribute('aria-invalid', 'true');
     expect(select).toHaveAccessibleDescription(FIELD_MESSAGES.language);

@@ -3,12 +3,17 @@
  * priorities are recorded in the order ticked; at MAX_PRIORITIES every unticked chip says so
  * with aria-disabled and a tick on it changes nothing, while unticking one frees the rest; a
  * category ticked as a priority stops being the one to cut (the cut resets to "Nothing in
- * particular") and is never offered as a cut while it is a priority. Boundary: rendered alone
+ * particular") and is never offered as a cut while it is a priority, while ticking a different
+ * category leaves the cut alone. Boundary: rendered alone
  * in the section harness; categories and the cap come from core, the tick order from the test.
  */
 import { screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { CATEGORY_PROFILES, type RankableCategory, RANKABLE_CATEGORIES } from '@intezaam/core/domain';
+import {
+  CATEGORY_PROFILES,
+  type RankableCategory,
+  RANKABLE_CATEGORIES,
+} from '@intezaam/core/domain';
 import { MAX_PRIORITIES } from '@intezaam/core/schemas';
 import { PriorityFields } from '../../components/form/PriorityFields';
 import { renderSection } from './section-harness';
@@ -72,6 +77,17 @@ describe('PriorityFields', () => {
     expect(
       within(cutSelect()).queryByRole('option', { name: CATEGORY_PROFILES[category].label }),
     ).not.toBeInTheDocument();
+  });
+
+  it('keeps the cut when a different category becomes a priority, and clears it on request', async () => {
+    const [priority, cut] = TICKED;
+    if (priority === undefined || cut === undefined) throw new Error('the cap is at least two');
+    const { user, latest } = renderSection(PriorityFields);
+    await user.selectOptions(cutSelect(), cut);
+    await user.click(priorityChip(priority));
+    expect(latest().cut).toBe(cut);
+    await user.selectOptions(cutSelect(), NO_CUT);
+    expect(latest().cut).toBe('');
   });
 
   it('never offers a current priority as the cut', () => {

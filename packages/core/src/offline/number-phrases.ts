@@ -1,5 +1,5 @@
 /**
- * Number-phrase grammar for briefs and quotes (research note 09 §5.2.1).
+ * Number-phrase grammar for briefs and quotes.
  *
  * Responsibility: read one number phrase at a token position —
  * `[FRACTION] [DIGITS | CARDINAL] MULTIPLIER*` — so "dedh sau" is 150, "sava do lakh"
@@ -63,7 +63,7 @@ interface Applied {
   readonly consumesNext: boolean;
 }
 
-/** How each fraction word combines with the number after it (09 §5.2.1 grammar). */
+/** How each fraction word combines with the number after it. */
 const FRACTION_APPLY: Readonly<
   Record<FractionKind, (fraction: number, following: number | undefined) => Applied | undefined>
 > = {

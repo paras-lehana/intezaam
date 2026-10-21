@@ -1,5 +1,5 @@
 /**
- * Tests for the couple hashtag blends (ported from bio-bandish `hashtag_blends`).
+ * Tests for the couple hashtag blends (ported from the owner's earlier planner).
  *
  * Responsibility: the documented example, deduplication, the 3–30 letter bound and the
  * Latin-only rule. Boundary: string checks only.

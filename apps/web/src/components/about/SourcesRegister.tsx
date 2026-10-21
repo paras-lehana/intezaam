@@ -3,7 +3,8 @@
  *
  * Responsibility: render core's source register (listSources) under the four confidence
  * grades — law or official guidance, survey, industry estimate, our assumption — with a
- * link, publisher and year for each. Boundary: data comes from core, so a new source
+ * link, publisher and year for each; the section takes focus when a link names it
+ * (`/about#sources`, layout/RouteFocus). Boundary: data comes from core, so a new source
  * appears here without touching the page; grade D is always called an assumption.
  */
 import type { ReactElement } from 'react';
@@ -21,7 +22,7 @@ const SOURCES_BY_GRADE: ReadonlyMap<Confidence, ReturnType<typeof listSources>> 
 
 export function SourcesRegister(): ReactElement {
   return (
-    <section id="sources" className="card" aria-labelledby="sources-heading">
+    <section id="sources" className="card" aria-labelledby="sources-heading" tabIndex={-1}>
       <h2 id="sources-heading">Method and sources</h2>
       <p>
         Every number in a plan carries a confidence grade. Grade A is law or official guidance;

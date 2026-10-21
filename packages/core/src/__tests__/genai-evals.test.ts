@@ -1,5 +1,5 @@
 /**
- * AI evaluation harness (synthesis §5): the labelled battery run through the code guards
+ * AI evaluation harness (GENAI_ARCHITECTURE.md): the labelled battery run through the code guards
  * with scripted model outputs, offline and deterministic.
  *
  * Responsibility: score each guard against the reviewer's labels — faithfulness (every

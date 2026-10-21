@@ -1,9 +1,9 @@
 /**
  * Hinglish message templates for the offline drafts, for families who type Hindi in the
- * Latin script (research note 09 §5.2.7: Hinglish input gets Hinglish drafts).
+ * Latin script (Hinglish input gets Hinglish drafts).
  *
  * Responsibility: the six kinds in romanised Hindi, with the RSVP reminder adapted from the
- * owner's guest-manager WhatsApp template (bio-bandish, 01 §3.8) — no guest names, only the
+ * owner's guest-manager WhatsApp template — no guest names, only the
  * draft facts. Boundary: text only.
  */
 import type { DraftKind } from '../genai/draft-facts.js';

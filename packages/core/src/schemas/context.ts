@@ -2,7 +2,7 @@
  * EventContext — everything the user tells us about the celebration.
  *
  * Responsibility: the strict input contract the form, the brief reader, the API and the
- * engines share (SPEC-MVP "SCHEMAS", synthesis §3 A): family and kind, date or "not
+ * engines share: family and kind, date or "not
  * fixed", city, guests, budget or "estimate it for me", functions, setting, diet,
  * priorities, style, accessibility, help level, sound plan and the birthday and community
  * extras. Cross-field rules (kind belongs to family, functions allowed for the family,

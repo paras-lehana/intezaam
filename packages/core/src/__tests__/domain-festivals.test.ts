@@ -18,7 +18,7 @@ import {
 import { CALENDAR_PAUSE_IDS, CALENDAR_PAUSES, pausesOn } from '../domain/seasons.js';
 import { isSourceId, SOURCES } from '../domain/sources.js';
 
-/** Dates every 2026 source lists (research 09, Gap 3 §3.0 row 7). */
+/** Dates every 2026 source lists. */
 const AGREED_2026 = ['2026-11-21', '2026-11-24', '2026-11-25', '2026-11-26'];
 
 /** Months the research found empty in 2027 (Chaturmas, the Sun in Simha and Kanya, combust planets). */

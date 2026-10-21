@@ -2,17 +2,23 @@
  * Expected plan facts, built by the same engine the browser runs.
  *
  * Responsibility: the plan a built-in sample gives on the pinned day, and the few items the
- * specs look for in it — a risk, an access item, a date note, and the rule and source behind
+ * specs look for in it — a risk, a permission, an access item, a date note, and the rule and source behind
  * a "Why this?" — so a spec asserts the exact decision instead of a loose word that a panel's
  * fixed copy may also contain. Boundary: derivation only; the specs pin the browser to the
  * same day (helpers.pinToday) and own every assertion.
  */
-import { type AccessItemId, type SampleId, sampleContext } from '@intezaam/core/domain';
+import {
+  type AccessItemId,
+  type PermissionId,
+  type SampleId,
+  sampleContext,
+} from '@intezaam/core/domain';
 import { buildPlan } from '@intezaam/core/engine';
 import type {
   AccessibilityPlan,
   DateNote,
   DateNoteKind,
+  Permission,
   Plan,
   Risk,
   SourceRef,
@@ -57,6 +63,18 @@ export function riskIn(plan: Plan, id: string): Risk {
   return found(
     plan.risks.find((risk) => risk.id === id),
     `risk ${id}`,
+  );
+}
+
+/**
+ * One permission on a plan's checklist, by id.
+ * @example
+ * permissionIn(expectedPlan('society-ganesh'), 'procession').required; // true
+ */
+export function permissionIn(plan: Plan, id: PermissionId): Permission {
+  return found(
+    plan.permissions.find((permission) => permission.id === id),
+    `permission ${id}`,
   );
 }
 

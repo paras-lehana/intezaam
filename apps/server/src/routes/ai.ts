@@ -1,5 +1,5 @@
 /**
- * The model-backed routes: the five GenAI jobs (synthesis §5) and the quote-file read.
+ * The model-backed routes: the five GenAI jobs (GENAI_ARCHITECTURE.md) and the quote-file read.
  *
  * Responsibility: wire every route the same thin way — per-client limiter → body parser with
  * the route's size limit → server-clock check of `todayIso` → schema validation → service →

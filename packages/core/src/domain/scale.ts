@@ -2,7 +2,7 @@
  * Scale bands (CTX-03) — intimate, mid-size or large by guest count.
  *
  * Responsibility: the band thresholds the budget shift (BUD-02) and the wedding cost
- * matrix (04 §1.3) are keyed by, and the classifier that applies them.
+ * matrix are keyed by, and the classifier that applies them.
  * Boundary: classification only.
  */
 
@@ -10,10 +10,10 @@ export const SCALE_BANDS = ['intimate', 'mid', 'large'] as const;
 
 export type ScaleBand = (typeof SCALE_BANDS)[number];
 
-/** Under 100 guests is intimate (04 §1.2; the VK 100-guest row anchors the band). */
+/** Under 100 guests is intimate (the VK 100-guest row anchors the band). */
 export const INTIMATE_BELOW_GUESTS = 100;
 
-/** Over 300 guests is large (04 §1.2; the VK 300 and 400+ rows anchor the band). */
+/** Over 300 guests is large (the VK 300 and 400+ rows anchor the band). */
 export const LARGE_ABOVE_GUESTS = 300;
 
 export const SCALE_LABELS: Readonly<Record<ScaleBand, string>> = {

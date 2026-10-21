@@ -25,7 +25,7 @@ export interface DraftOfflineInput {
   readonly kind: DraftKind;
   readonly language: LanguageCode;
   readonly tone: DraftTone;
-  /** "hinglish" when the brief was Hindi typed in the Latin script (research note 09 §5.2.7). */
+  /** "hinglish" when the brief was Hindi typed in the Latin script. */
   readonly register?: 'hinglish';
 }
 

@@ -1,6 +1,6 @@
 /**
  * Idea guard for GenAI job 2: code-enforced limits on every idea, from the model or the
- * offline library (synthesis §5 job 2 guardrails).
+ * offline library (GENAI_ARCHITECTURE.md, job 2 guardrails).
  *
  * Responsibility: drop an idea that breaks the diet (Jain: no meat, fish, egg, onion,
  * garlic, potato or other root vegetables; vegetarian: no meat, fish or egg; satvik: no

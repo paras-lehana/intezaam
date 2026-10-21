@@ -1,6 +1,6 @@
 /**
  * Tests for the quote-file contract: magic bytes decide the type, never the file name or
- * the declared MIME type (09-gap-fills Gap 4 §4.2).
+ * the declared MIME type.
  *
  * Responsibility: each published signature is recognised, a mismatch or a disguised file
  * (SVG, HTML, EXE) is refused with a fixed message that never echoes input, and size and

@@ -2,7 +2,7 @@
  * One decision rule behind a number: what rule, which of your details it read, what it
  * did, how sure we are and where the fact comes from.
  *
- * Responsibility: render a trace item (synthesis §4.1) — rule id and title, the inputs
+ * Responsibility: render a trace item — rule id and title, the inputs
  * used as a description list, the effect sentence, the confidence grade with the
  * assumption badge, and the source links. Boundary: display only; TraceDisclosure decides
  * when it shows.

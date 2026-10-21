@@ -1,5 +1,5 @@
 /**
- * Extra city spellings for the offline brief reader (research note 09 §5.2.6).
+ * Extra city spellings for the offline brief reader.
  *
  * Responsibility: Devanagari and colloquial spellings ("बेंगलुरु", "Blr", "Dilli") mapped to
  * the gazetteer id, plus the words that mark an origin city ("family Jaipur se aa rahi hai":

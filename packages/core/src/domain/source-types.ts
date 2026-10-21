@@ -9,7 +9,7 @@
 /**
  * A = statute, regulator, court, IMD or NDMA · B = industry body, large survey or Wikipedia ·
  * C = vendor or planner blog (ranges, never quotes) · D = derived by us (an editable assumption).
- * The scale is defined in research note 04 §0 and is shown to users next to every number.
+ * The scale is shown to users next to every number.
  */
 export const CONFIDENCE_GRADES = ['A', 'B', 'C', 'D'] as const;
 

@@ -1,6 +1,6 @@
 /**
  * Quote normaliser for GenAI job 3: code, not the model, turns read quotes into comparable
- * totals (synthesis §5 job 3; GST rates CST-06, 04 §7; playbook flags 04 §2.3).
+ * totals (GENAI_ARCHITECTURE.md, job 3; GST rates CST-06; playbook flags).
  *
  * Responsibility: map reply ids back to the request's quotes, keep only amounts whose
  * evidence is in that quote's text, parse each amount by code, total it for the plan's
@@ -28,7 +28,7 @@ export interface QuoteComparison {
   readonly questions: QuoteModelOutput['questions'];
 }
 
-/** Recommendation and ranking language the comparison must never carry (QUOTE_DIFFERENCES@1). */
+/** Recommendation and ranking language the comparison must never carry. */
 const RECOMMENDATION =
   /\b(?:recommend\w*|best|better|go with|choose|pick|opt for|book (?:it|this|them|quote)|avoid|value for money|worth it|cheapest option|we suggest|should (?:go|choose|book|pick|prefer)|prefer(?:able|red)?)\b/u;
 const PERCENT = /%/u;

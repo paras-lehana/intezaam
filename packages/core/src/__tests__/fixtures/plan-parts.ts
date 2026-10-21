@@ -1,8 +1,8 @@
 /**
  * Plan fixture parts: the trace, budget lines, payments, context echo and safety items.
  *
- * Responsibility: build each plan section from the domain tables and a sample context so
- * schema tests never pin numbers an engine would compute. Boundary: test support only.
+ * Responsibility: build each plan section from the domain tables, the engine's trace log and
+ * a sample context so schema tests never pin numbers an engine would compute. Boundary: test support only.
  */
 import { ACCESSIBILITY_ITEMS, accessItemsFor } from '../../domain/accessibility.js';
 import { BUDGET_CATEGORIES, CATEGORY_PROFILES } from '../../domain/budget-categories.js';
@@ -12,10 +12,11 @@ import { CROWD_CHECKS, crowdClassFor } from '../../domain/crowd.js';
 import { gstRateForCategory } from '../../domain/gst.js';
 import { PERMISSIONS, VERIFY_LOCALLY_NOTE } from '../../domain/permissions.js';
 import type { RuleId } from '../../domain/rule-ids.js';
-import { isAssumptionRule, RULES } from '../../domain/rules.js';
+import { RULES } from '../../domain/rules.js';
 import { sampleContext } from '../../domain/samples.js';
 import { type SourceId, sourceRef } from '../../domain/sources.js';
 import { DEFAULT_PAYMENT_SCHEDULE } from '../../domain/vendor-playbook.js';
+import { createTraceLog } from '../../engine/trace.js';
 import type { EventContext } from '../../schemas/context.js';
 import type { BudgetLine, PaymentMilestone } from '../../schemas/plan-money.js';
 import type { Plan } from '../../schemas/plan.js';
@@ -29,17 +30,13 @@ export function fixtureContext(): EventContext {
   return sampleContext('jaipur-wedding', FIXTURE_TODAY);
 }
 
+/** One item per fixture rule, written by the engine's own trace log (ids, grade, assumption). */
 export function fixtureTrace(): TraceItem[] {
-  return FIXTURE_RULES.map((ruleId, index) => ({
-    id: `t${index + 1}`,
-    ruleId,
-    title: RULES[ruleId].title,
-    inputs: [{ key: 'rule', value: ruleId }],
-    effect: RULES[ruleId].summary,
-    sourceIds: [...RULES[ruleId].sourceIds],
-    confidence: RULES[ruleId].confidence,
-    assumption: isAssumptionRule(ruleId),
-  }));
+  const log = createTraceLog();
+  for (const ruleId of FIXTURE_RULES) {
+    log.add({ ruleId, inputs: [['rule', ruleId]], effect: RULES[ruleId].summary });
+  }
+  return log.items();
 }
 
 /** Every source the fixture's rules cite, once each. */

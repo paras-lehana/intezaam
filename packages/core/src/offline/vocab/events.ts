@@ -1,6 +1,6 @@
 /**
- * Event vocabulary for the offline brief reader (research note 09 §5.2.3, bio-bandish
- * `_FAMILY_WORDS` and `_TYPE_WORDS`, research note 01 §3.1 and §3.11).
+ * Event vocabulary for the offline brief reader (word lists
+ * from the owner's earlier planner).
  *
  * Responsibility: the explicit words that name an event family and kind ("shaadi", "mundan",
  * "griha pravesh", "satsang"), the functions of a wedding ("mehendi", "pheras"), the words
@@ -17,7 +17,7 @@ export const WEDDING_WORDS = phrases(
   'shaadi | shadi | शादी | vivah | विवाह | byah | biyah | marriage | wedding | nikah | निकाह | anand karaj | church wedding | court marriage | registered marriage | biye | lagna | lagan | kalyanam | pelli | viah | baraat | pheras | walima',
 );
 
-/** Family-function kinds (bio-bandish `_FAMILY_WORDS`, 01 §3.1). */
+/** Family-function kinds (the owner's earlier planner). */
 export const FAMILY_FUNCTION_WORDS: PhraseGroups<EventKind> = [
   ['engagement', 'roka | sagai | सगाई | engagement | ring ceremony | tilak | mangni'],
   ['naming-mundan', 'mundan | मुंडन | namkaran | नामकरण | naming ceremony | naming'],
@@ -48,7 +48,7 @@ export const COMMUNITY_WORDS = phrases('mandal | sabha | committee');
 
 /**
  * Residential markers: also community markers, and they make a festival a society festival
- * (inside a housing society) rather than a public pandal (09 §5.5).
+ * (inside a housing society) rather than a public pandal.
  */
 export const RESIDENTIAL_WORDS = phrases(
   'society | सोसाइटी | rwa | apartment | flat association | colony | housing society | our building | residents',
@@ -62,7 +62,7 @@ export const PUBLIC_PREMISES_WORDS = phrases(
   'public ground | public park | maidan | मैदान | main road | on the road | street | chowk | सड़क',
 );
 
-/** Only these make a Punjabi or Sikh wedding an Anand Karaj; "Punjabi" alone does not (09 §5.2). */
+/** Only these make a Punjabi or Sikh wedding an Anand Karaj; "Punjabi" alone does not. */
 export const ANAND_KARAJ_WORDS = phrases(
   'sikh | सिख | anand karaj | anand kaaraj | gurdwara | gurudwara | गुरुद्वारा | laavan | lavan',
 );
@@ -81,10 +81,10 @@ export const COMMUNITY_KIND_WORDS: PhraseGroups<EventKind> = [
   ['festival-pandal', 'pandal | पंडाल'],
 ];
 
-/** A "get-together" or "milan" is a family function without a fixed kind (01 §3.1). */
+/** A "get-together" or "milan" is a family function without a fixed kind. */
 export const GET_TOGETHER_WORDS = phrases('get together | get-together | milan | reunion');
 
-/** Wedding functions in the order a brief lists them (01 §3.11 `_TYPE_WORDS`). */
+/** Wedding functions in the order a brief lists them. */
 export const FUNCTION_WORDS: PhraseGroups<FunctionKind> = [
   ['roka', 'roka | रोका'],
   ['engagement', 'engagement | sagai | ring ceremony | सगाई'],

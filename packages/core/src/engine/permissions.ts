@@ -29,6 +29,10 @@ import type { ClassifiedContext } from './types.js';
 /** TL-10: BMC opened 2026 pandal applications 31 days before the festival, closing the day before. */
 export const PANDAL_WINDOW_OPENS_DAYS = 31;
 export const PANDAL_WINDOW_CLOSES_DAYS = 1;
+/** Without a dated window, apply as early as the BMC window opens before it closes (30 days). */
+const PANDAL_APPLY_LEAD_DAYS = PANDAL_WINDOW_OPENS_DAYS - PANDAL_WINDOW_CLOSES_DAYS;
+/** The lead as copy reads it, so the text and the window constants cannot drift apart. */
+const APPLY_LEAD = `at least ${PANDAL_APPLY_LEAD_DAYS} days before`;
 
 /**
  * PERM-07: the Supreme Court let Tamil Nadu, Puducherry and the other southern states choose
@@ -95,13 +99,12 @@ function isBlocker(id: PermissionId, ctx: ClassifiedContext): boolean {
 /** TL-10: the pandal window for this date, when the date is fixed. */
 function pandalTiming(ctx: ClassifiedContext): string {
   const base = PERMISSIONS.pandal.timing;
-  if (ctx.dateMode !== 'dated' || ctx.dateIso === null)
-    return `${base}. Apply at least 30 days before.`;
+  if (ctx.dateMode !== 'dated' || ctx.dateIso === null) return `${base}. Apply ${APPLY_LEAD}.`;
   const opens = addDaysIso(ctx.dateIso, -PANDAL_WINDOW_OPENS_DAYS) ?? ctx.dateIso;
   const closes = addDaysIso(ctx.dateIso, -PANDAL_WINDOW_CLOSES_DAYS) ?? ctx.dateIso;
   // The festival's last day is day `days`; the permission runs to the day after it ends.
   const validUntil = addDaysIso(ctx.dateIso, ctx.input.community?.days ?? 1) ?? ctx.dateIso;
-  return `${base}. On that pattern, expect applications about ${opens} to ${closes}, valid until ${validUntil} (the day after it ends); elsewhere apply at least 30 days before.`;
+  return `${base}. On that pattern, expect applications about ${opens} to ${closes}, valid until ${validUntil} (the day after it ends); elsewhere apply ${APPLY_LEAD}.`;
 }
 
 /**

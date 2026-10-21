@@ -1,5 +1,5 @@
 /**
- * Tests for domain/community-occasions.ts: the thirteen community occasion rows (09 §5.5).
+ * Tests for domain/community-occasions.ts: the thirteen community occasion rows.
  *
  * Responsibility: pin the behaviour other packages rely on. Boundary: expected values come
  * from inputs the test owns or are derived from the tables under test, never hand-computed.
@@ -18,7 +18,7 @@ import { isSourceId } from '../domain/sources.js';
 
 const COMMUNITY_KINDS = kindsOfFamily('community');
 
-/** The research note settles v1 on thirteen occasion rows (09 §5.5, SPEC-MVP item 17). */
+/** v1 ships thirteen community occasion rows. */
 const OCCASION_COUNT = 13;
 const MONTH_DAY = /^(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 

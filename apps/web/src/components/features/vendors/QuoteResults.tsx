@@ -100,7 +100,8 @@ export function QuoteResults({ result, names, language }: QuoteResultsProps): Re
           <ul>
             {result.questions.map((question) => (
               <li key={`${question.quoteId}-${question.text}`}>
-                <strong>{nameOf(question.quoteId)}:</strong> <span lang={lang}>{question.text}</span>
+                <strong>{nameOf(question.quoteId)}:</strong>{' '}
+                <span lang={lang}>{question.text}</span>
               </li>
             ))}
           </ul>

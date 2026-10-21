@@ -1,6 +1,6 @@
 /**
  * Reply check for GenAI job 5 (Ask and change): the model's answer passes through the
- * same rules the offline assistant follows (synthesis §5 job 5 guardrails).
+ * same rules the offline assistant follows (GENAI_ARCHITECTURE.md, job 5 guardrails).
  *
  * Responsibility: a question code must refuse is refused whatever the model said; an
  * answer with a number that is not in the plan facts is replaced by the rule-based answer;

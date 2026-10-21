@@ -1,6 +1,6 @@
 /**
  * Model-output contracts for GenAI jobs 2–5: plan narration with ideas, quote reading,
- * message drafts and Ask (synthesis §5).
+ * message drafts and Ask (GENAI_ARCHITECTURE.md).
  *
  * Responsibility: LEAN shapes the model must return, validated after every call; plus
  * the narration shape the API returns once code has attached cost bands and YouTube

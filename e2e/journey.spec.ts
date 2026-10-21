@@ -8,7 +8,7 @@
  */
 import { expect, test } from '@playwright/test';
 import { z } from 'zod';
-import { citedRuleFor, expectedPlan, NIGHT_SOUND_RISK_ID, riskIn } from './expected';
+import { citedRuleFor, expectedPlan, NIGHT_SOUND_RISK_ID, permissionIn, riskIn } from './expected';
 import { MEENA_BRIEF, PLAN_TIMEOUT_MS, SECTIONS } from './fixtures';
 import {
   inActiveTab,
@@ -16,6 +16,7 @@ import {
   openTab,
   pinToday,
   planSample,
+  sectionIn,
   sectionItem,
   SUBMIT,
 } from './helpers';
@@ -129,12 +130,25 @@ test.describe("Meena's wedding", () => {
 
 test.describe("Kavita's society Ganesh utsav", () => {
   test('community events get a per-household contribution and permissions', async ({ page }) => {
+    const utsav = expectedPlan('society-ganesh');
+    // What a society utsav must apply for: sound, the immersion route and the RWA's approval.
+    const communityPermissions = [
+      permissionIn(utsav, 'loudspeaker'),
+      permissionIn(utsav, 'procession'),
+      permissionIn(utsav, 'society'),
+    ];
+    await pinToday(page);
     await planSample(page, /ganesh/i);
     await openTab(page, /^people/i);
     // The contribution reads "₹1,000 from each of 240 households" (or per flat by size).
     await expect(inActiveTab(page, /(per|each of [\d,]+) (household|flat)/i)).toBeVisible();
     await openTab(page, /^safety/i);
-    await expect(inActiveTab(page, /loudspeaker|pandal|police/i)).toBeVisible();
+    // Each one as its own tickable item on the checklist — not the checklist's standing
+    // "verify with your local police station" line, which every plan shows.
+    const checklist = sectionIn(page, SECTIONS.permissions);
+    for (const permission of communityPermissions) {
+      await expect(checklist.getByLabel(permission.title, { exact: true })).toBeVisible();
+    }
   });
 });
 

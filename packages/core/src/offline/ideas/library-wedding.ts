@@ -3,7 +3,7 @@
  *
  * Responsibility: wedding decor, themes, menus, activities and music that a family can
  * actually arrange in India, each tagged so code can filter it by style, season, setting
- * and diet (the owner's style quiz, 01 §3.5; diet rules, 04 §8.7). No prices: code attaches
+ * and diet (the owner's style quiz; diet rules). No prices: code attaches
  * the cost band. Boundary: data only; selection is in offline/ideas/select-ideas.ts.
  */
 import type { LibraryIdea } from './idea-types.js';
@@ -79,7 +79,11 @@ export const WEDDING_IDEAS: readonly LibraryIdea[] = [
     eco: true,
     costBand: 'saves',
     youtubeQuery: 'kolam wedding entrance decoration',
-    fit: { families: ['wedding'], styles: ['traditional', 'regional', 'minimal'] },
+    fit: {
+      families: ['wedding'],
+      traditions: ['tamil', 'telugu'],
+      styles: ['traditional', 'regional', 'minimal'],
+    },
   },
   {
     category: 'theme',
@@ -191,7 +195,12 @@ export const WEDDING_IDEAS: readonly LibraryIdea[] = [
     eco: true,
     costBand: 'within',
     youtubeQuery: 'shehnai wedding music live',
-    fit: { families: ['wedding'], styles: ['traditional', 'classic'] },
+    fit: {
+      families: ['wedding'],
+      // No pheras in these ceremonies: nadaswaram, laavan, nikah or a church service instead.
+      avoidTraditions: ['tamil', 'telugu', 'punjabi-sikh', 'muslim', 'christian'],
+      styles: ['traditional', 'classic'],
+    },
   },
   {
     category: 'favours',

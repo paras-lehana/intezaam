@@ -4,7 +4,7 @@
  * Responsibility: convert a model-output contract into the JSON Schema dialect Gemini's
  * OpenAI-compatible endpoint accepts, minus the keys it rejects or mishandles: `$schema`,
  * `additionalProperties`, `minItems` and `maxItems` (array bounds are enforced by zod after
- * the call, synthesis §5 "shared transport"). Boundary: pure; the same zod schema validates
+ * the call, GENAI_ARCHITECTURE.md, "Model and transport"). Boundary: pure; the same zod schema validates
  * the reply, so the contract is written once.
  */
 import { z } from 'zod';

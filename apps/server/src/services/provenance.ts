@@ -3,7 +3,7 @@
  *
  * Responsibility: record which engine handled each pipeline step (a named model, the rules,
  * or the cache) and how long it took, plus why the offline twin answered when it did (the
- * core `reason` field, addendum 13), so every AI response can show exactly how it was produced.
+ * core `reason` field), so every AI response can show exactly how it was produced.
  * Boundary: timing and engine names only — no request content is recorded.
  */
 import type { EngineMode, OfflineReason, Provenance } from '@intezaam/core';

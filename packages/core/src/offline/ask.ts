@@ -1,11 +1,13 @@
 /**
  * Offline twin of GenAI job 5 (Ask and change): the same `AskModelOutput` the model
- * returns, from code rules only (synthesis §5 job 5).
+ * returns, from code rules only (GENAI_ARCHITECTURE.md, job 5).
  *
  * Responsibility: in order — refuse booking, payment, legal and off-scope questions; turn a
  * change request into a validated patch the user can apply; answer common intents from the
- * plan; otherwise point to the What-if panel. `askByRules` stops before the last step, so
- * the server calls the model only when no rule answered. Boundary: pure.
+ * plan; otherwise point to the What-if panel. `askByRules` covers only the first two steps,
+ * the ones a model must never override, so a configured model still answers every planning
+ * question (with `answerByIntent` available as a code-computed hint) and `askOffline` is
+ * the full no-model twin. Boundary: pure.
  */
 import { applyAskPatch, detectRefusal, type RefusalReason } from '../genai/ask-guard.js';
 import type { EventContext } from '../schemas/context.js';
@@ -31,13 +33,15 @@ const FALLBACK_ANSWER =
   'I can answer questions about your budget, timeline, vendors, guests, food, permissions and risks. To test a change, use the What-if panel or ask, for example, "add 50 guests".';
 
 /**
- * Answers by rule (refusal, change request or intent); undefined when the model is needed.
+ * Answers by rule only when code must decide (a refusal or a valid change request);
+ * undefined when the question is for the model, or offline for the intents. It takes the
+ * same arguments as `askOffline`, but these two rules never depend on the plan.
  * @example
  * askByRules('pay the caterer advance', plan, context, '2026-10-20')?.refusal?.reason; // 'booking-or-payment'
  */
 export function askByRules(
   question: string,
-  plan: Plan,
+  _plan: Plan,
   context: EventContext,
   todayIso: string,
 ): AskModelOutput | undefined {
@@ -50,13 +54,11 @@ export function askByRules(
     context,
     todayIso,
   );
-  if (patch !== undefined) return { answer: PATCH_ANSWER, sources: ['verdict'], patch };
-  const intent = answerByIntent(question, plan);
-  return intent === undefined ? undefined : { answer: intent.answer, sources: intent.sources };
+  return patch === undefined ? undefined : { answer: PATCH_ANSWER, sources: ['verdict'], patch };
 }
 
 /**
- * Answers with no model: the rules, then a pointer to the What-if panel.
+ * Answers with no model: the rules, the intent answer, then a pointer to the What-if panel.
  * @example
  * askOffline('add 50 guests', plan, context, '2026-10-20').patch?.ops[0]?.op; // 'setGuests'
  */
@@ -66,5 +68,10 @@ export function askOffline(
   context: EventContext,
   todayIso: string,
 ): AskModelOutput {
-  return askByRules(question, plan, context, todayIso) ?? { answer: FALLBACK_ANSWER, sources: [] };
+  const ruled = askByRules(question, plan, context, todayIso);
+  if (ruled !== undefined) return ruled;
+  const intent = answerByIntent(question, plan);
+  return intent === undefined
+    ? { answer: FALLBACK_ANSWER, sources: [] }
+    : { answer: intent.answer, sources: intent.sources };
 }

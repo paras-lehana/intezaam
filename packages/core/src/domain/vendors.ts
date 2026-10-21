@@ -1,8 +1,9 @@
 /**
  * Vendor types — who a celebration needs to book.
  *
- * Responsibility: the merged, India-first vendor taxonomy (03 §5, 04 §4 vendor keys), the
- * group each vendor sits in, and the budget category its cost lands in. Boundary:
+ * Responsibility: the merged, India-first vendor taxonomy (ceremony vendor keys), the
+ * group each vendor sits in, the budget category its cost lands in, and the officiants a
+ * tradition can name. Boundary:
  * taxonomy only; lead times are in vendor-timing.ts and checklists in vendor-playbook-*.ts.
  * No vendor names: discovery is a map search the user runs (VEN-05).
  */
@@ -47,7 +48,7 @@ export const VENDOR_TYPES = [
 
 export type VendorType = (typeof VENDOR_TYPES)[number];
 
-/** Groups from the merged taxonomy (03 §5), used to order and fold the vendor list. */
+/** Groups from the merged taxonomy, used to order and fold the vendor list. */
 export const VENDOR_GROUPS = [
   'venue',
   'food',
@@ -62,19 +63,6 @@ export const VENDOR_GROUPS = [
 ] as const;
 
 export type VendorGroup = (typeof VENDOR_GROUPS)[number];
-
-export const VENDOR_GROUP_LABELS: Readonly<Record<VendorGroup, string>> = {
-  venue: 'Venue',
-  food: 'Food',
-  decor: 'Decor, light and sound',
-  capture: 'Photo and video',
-  look: 'Outfits and looks',
-  experience: 'Music and entertainment',
-  ritual: 'Rituals',
-  'paper-gifts': 'Invitations and gifts',
-  logistics: 'Travel, stay and planning',
-  community: 'Safety and services',
-};
 
 export interface VendorProfile {
   readonly label: string;
@@ -216,10 +204,15 @@ export const VENDOR_PROFILES: Readonly<Record<VendorType, VendorProfile>> = {
   },
 };
 
-/** The officiant each faith's ceremony needs (VEN-01: ceremony vendors by tradition). */
-export const OFFICIANT_VENDORS: readonly VendorType[] = [
+/**
+ * The officiant each faith's ceremony needs (VEN-01: ceremony vendors by tradition); a
+ * tradition profile can name only one of these (traditions.ts).
+ */
+export const OFFICIANT_VENDORS = [
   'pandit',
   'granthi',
   'qazi',
   'church_minister',
-];
+] as const satisfies readonly VendorType[];
+
+export type OfficiantVendor = (typeof OFFICIANT_VENDORS)[number];

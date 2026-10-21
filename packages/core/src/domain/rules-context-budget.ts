@@ -1,16 +1,22 @@
 /**
  * Rule documentation, part 1: classifiers (CTX), budget split (BUD) and cost (CST).
  *
- * Responsibility: the title, summary, grade and sources of each rule in synthesis
- * §4.3–4.4, shown in every "Why this?" disclosure. Summaries that quote a number read it
+ * Responsibility: the title, summary, grade and sources of each CTX, BUD and CST
+ * rule, shown in every "Why this?" disclosure. Summaries that quote a number read it
  * from its domain table, so the text cannot drift from what the engine prices with.
  * Boundary: documentation only; the logic lives in the engines that cite these ids.
  */
+import {
+  JEWELLERY_SHARE_OF_TOTAL,
+  OUTSTATION_ACCOMMODATION_BP,
+  PLANNER_SHARE_BP,
+} from './budget-shifts.js';
 import { SERVICE_CHARGE_PCT } from './catering.js';
 import type { RuleInfo } from './rule-info.js';
 import { ruleInfo } from './rule-info.js';
 import type { ContextBudgetRuleId } from './rule-ids.js';
 import { OFF_PEAK_SAVING_PCT } from './seasons.js';
+import { bpAsPercent, factorAsPercent, rangeText } from './units.js';
 
 export const CONTEXT_BUDGET_RULES: Readonly<Record<ContextBudgetRuleId, RuleInfo>> = {
   'CTX-01': ruleInfo(
@@ -81,7 +87,7 @@ export const CONTEXT_BUDGET_RULES: Readonly<Record<ContextBudgetRuleId, RuleInfo
   ),
   'BUD-04': ruleInfo(
     'Outstation guests',
-    'When most guests travel in, guest rooms rise to 8–10% of the budget.',
+    `When most guests travel in, guest rooms rise to ${rangeText(bpAsPercent(OUTSTATION_ACCOMMODATION_BP))}% of the budget.`,
     'C',
     ['S-WP-2026'],
   ),
@@ -93,7 +99,7 @@ export const CONTEXT_BUDGET_RULES: Readonly<Record<ContextBudgetRuleId, RuleInfo
   ),
   'BUD-06': ruleInfo(
     'Optional lines',
-    'Switched-off categories are spread pro rata; jewellery takes 15% of the total and a planner 5–10%.',
+    `Switched-off categories are spread pro rata; jewellery takes ${factorAsPercent(JEWELLERY_SHARE_OF_TOTAL)}% of the total and a planner ${rangeText(bpAsPercent(PLANNER_SHARE_BP))}%.`,
     'B',
     ['S-CAIT-2025', 'S-VK-2026'],
   ),

@@ -3,7 +3,7 @@
  *
  * Responsibility: the invited count each money model aims for when a guest cut is offered —
  * wedding rows escape Needs changes (food floor at 60% of event spend) or reach the next
- * published band (09 Gap 2 §2.7); a bottom-up plan meets the low end of its estimate; any
+ * published band; a bottom-up plan meets the low end of its estimate; any
  * plan whose food line is short fits catering into that line. Party bands use the party cap
  * (LEV-06) and a committee never cuts visitors. Boundary: targets only;
  * lever-candidates.ts prices the change and levers.ts judges it.
@@ -36,7 +36,7 @@ function foodTarget(core: CorePlan): number | null {
   return Math.floor((ctx.guests * costCheck.cateringLineInr) / costCheck.cateringInr.mid);
 }
 
-/** LEV-01 for wedding rows (09 Gap 2 §2.7): guests that escape Stretch or reach the next band. */
+/** LEV-01 for wedding rows: guests that escape Stretch or reach the next band. */
 function rowsTarget(core: CorePlan): number | null {
   const ctx = core.ctx;
   const spend = eventSpendInr(core.budget.lines);

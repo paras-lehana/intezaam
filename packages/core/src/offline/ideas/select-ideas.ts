@@ -1,11 +1,13 @@
 /**
  * Idea selection for the offline narrator: the curated library filtered and ranked by the
- * code-computed constraints (feature #29; synthesis §5 job 2 fallback).
+ * code-computed constraints (feature #29; GENAI_ARCHITECTURE.md, job 2 fallback).
  *
- * Responsibility: keep the ideas that suit the event family, age band, season, setting,
- * diet and alcohol rule (the same forbidden food flags the idea guard uses), drop splurges
- * when money is tight, rank by how many of the user's signals an idea matches (style chips,
- * season, setting, eco) and pick across categories so the board is varied.
+ * Responsibility: keep the ideas that suit the event family and kind, its tradition and
+ * occasion (regional ideas only for their own), the diet and alcohol rule (the same
+ * forbidden food flags the idea guard uses) and the user's cut line, drop splurges when
+ * money is tight, prefer the age band, season and setting, rank the family's own tradition
+ * first and then by how many of the user's signals an idea matches (style chips, season,
+ * setting, eco) and pick across categories so the board is varied.
  * Boundary: pure; returns library ideas — the narrator turns them into model-shaped ideas.
  */
 import { IDEA_CATEGORIES, type IdeaCategory } from '../../domain/ideas.js';
@@ -15,35 +17,45 @@ import { forbiddenFoodFlags } from '../../genai/idea-guard.js';
 import { BIRTHDAY_IDEAS } from './library-birthday.js';
 import { COMMUNITY_IDEAS } from './library-community.js';
 import { FAMILY_IDEAS } from './library-family.js';
+import { REGIONAL_IDEAS } from './library-regional.js';
 import { SHARED_IDEAS } from './library-shared.js';
 import { WEDDING_IDEAS } from './library-wedding.js';
+import { matchesTradition, suitsEvent, type IdeaScope } from './idea-scope.js';
 import type { LibraryIdea } from './idea-types.js';
 
-/** The whole curated library (about 80 ideas). */
+/** The whole curated library (about 90 ideas). */
 export const IDEAS_LIBRARY: readonly LibraryIdea[] = [
   ...WEDDING_IDEAS,
   ...BIRTHDAY_IDEAS,
   ...COMMUNITY_IDEAS,
   ...FAMILY_IDEAS,
+  ...REGIONAL_IDEAS,
   ...SHARED_IDEAS,
 ];
 
 /** The board shows eight ideas: within the six-to-twelve the narration contract allows. */
 export const OFFLINE_IDEA_COUNT = 8;
+/** The family's own tradition or occasion is the strongest signal: it outranks a style chip. */
+const TRADITION_MATCH_POINTS = 3;
 /** A style chip is the strongest personal signal, so it weighs twice a season or setting match. */
 const STYLE_MATCH_POINTS = 2;
 const SIGNAL_MATCH_POINTS = 1;
 /** Weddings have no age band; their ideas are written for adults. */
 const DEFAULT_AGE_BAND = 'adult';
 
-/** Hard rules no idea may break: the family, the diet and alcohol rule, and tight money. */
+/**
+ * Hard rules no idea may break: the family, the kind, tradition, occasion and cut line, the
+ * diet and alcohol rule, and tight money.
+ */
 function allowed(
   idea: LibraryIdea,
   constraints: IdeaConstraints,
+  scope: IdeaScope,
   forbidden: ReadonlySet<string>,
 ): boolean {
   return (
     idea.fit.families.includes(constraints.family) &&
+    suitsEvent(idea, constraints, scope) &&
     !(idea.fit.contains ?? []).some((flag) => forbidden.has(flag)) &&
     !(constraints.tight && idea.costBand === 'splurge')
   );
@@ -61,7 +73,7 @@ function fits(idea: LibraryIdea, constraints: IdeaConstraints): boolean {
   );
 }
 
-function score(idea: LibraryIdea, constraints: IdeaConstraints): number {
+function score(idea: LibraryIdea, constraints: IdeaConstraints, scope: IdeaScope): number {
   const styles = (idea.fit.styles ?? []).filter((tag) =>
     constraints.styleTags.includes(tag),
   ).length;
@@ -71,24 +83,26 @@ function score(idea: LibraryIdea, constraints: IdeaConstraints): number {
     idea.eco,
     idea.fit.ages !== undefined,
   ].filter(Boolean).length;
-  return styles * STYLE_MATCH_POINTS + signals * SIGNAL_MATCH_POINTS;
+  const own = matchesTradition(idea, constraints, scope) ? TRADITION_MATCH_POINTS : 0;
+  return own + styles * STYLE_MATCH_POINTS + signals * SIGNAL_MATCH_POINTS;
 }
 
 /**
- * The best-fitting ideas for the constraints, varied across categories.
+ * The best-fitting ideas for the constraints and the event's scope, varied across categories.
  * @example
- * selectIdeas(constraints).length; // up to 8
+ * selectIdeas(constraints, 8, { occasion: 'ganesh-utsav' }).length; // up to 8
  */
 export function selectIdeas(
   constraints: IdeaConstraints,
   count = OFFLINE_IDEA_COUNT,
+  scope: IdeaScope = {},
 ): LibraryIdea[] {
   const forbidden: ReadonlySet<string> = new Set(forbiddenFoodFlags(constraints));
-  // Efficiency: one filter and one stable sort over about 80 rows.
-  const permitted = IDEAS_LIBRARY.filter((idea) => allowed(idea, constraints, forbidden));
+  // Efficiency: one filter and one stable sort over about 90 rows.
+  const permitted = IDEAS_LIBRARY.filter((idea) => allowed(idea, constraints, scope, forbidden));
   const ranked = permitted
     .filter((idea) => fits(idea, constraints))
-    .sort((a, b) => score(b, constraints) - score(a, constraints));
+    .sort((a, b) => score(b, constraints, scope) - score(a, constraints, scope));
   const queues = new Map<IdeaCategory, LibraryIdea[]>(
     IDEA_CATEGORIES.map((category) => [
       category,

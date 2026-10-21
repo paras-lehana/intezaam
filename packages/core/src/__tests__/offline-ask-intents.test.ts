@@ -18,6 +18,9 @@ describe('answerByIntent', () => {
 
   it('recognises each intent in English, Hinglish or Hindi', () => {
     const questions: Readonly<Record<(typeof ASK_INTENTS)[number], string>> = {
+      sound: 'DJ raat 11 baje tak chalega?',
+      space: 'is the hall big enough?',
+      weather: 'baarish hui to kya?',
       'next-steps': 'what next?',
       permissions: 'permission chahiye?',
       vendors: 'when to book the caterer',

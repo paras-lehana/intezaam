@@ -52,7 +52,7 @@ export const BRIEF_FIELD_LABELS: Readonly<Record<BriefField, string>> = {
   premises: 'Where',
 };
 
-/** The five essentials the form cannot plan without (synthesis feature #3). */
+/** The five essentials the form cannot plan without (feature #3). */
 export const ESSENTIAL_FIELDS = ['family', 'date', 'city', 'guests', 'budget'] as const;
 
 export type EssentialField = (typeof ESSENTIAL_FIELDS)[number];
@@ -75,6 +75,17 @@ export function missingPrompts(missing: readonly BriefField[]): readonly string[
   return ESSENTIAL_FIELDS.filter((field) => missing.includes(field)).map(
     (field) => MISSING_PROMPTS[field],
   );
+}
+
+/**
+ * Where the reader goes after confirming a brief: the first essential it left open, or the
+ * first of the five questions when it answered them all (to check them before planning).
+ * @example
+ * nextFieldAfterBrief(['budget', 'date']); // 'date' — form order, not the reader's order
+ * nextFieldAfterBrief([]); // 'family'
+ */
+export function nextFieldAfterBrief(missing: readonly BriefField[]): EssentialField {
+  return ESSENTIAL_FIELDS.find((field) => missing.includes(field)) ?? ESSENTIAL_FIELDS[0];
 }
 
 const GUESTS = new Intl.NumberFormat('en-IN');

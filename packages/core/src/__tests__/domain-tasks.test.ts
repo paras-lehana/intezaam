@@ -10,7 +10,7 @@ import { EVENT_FAMILIES } from '../domain/events.js';
 import { functionAllowedFor } from '../domain/functions.js';
 import { isSourceId } from '../domain/sources.js';
 import { taskFactory, TASK_CONDITIONS } from '../domain/task-types.js';
-import { findTaskTemplate, TASK_TEMPLATES, templatesForFamily } from '../domain/tasks.js';
+import { TASK_TEMPLATES, templatesForFamily } from '../domain/tasks.js';
 import { TIMELINE_PHASES } from '../domain/timeline.js';
 import { VENDOR_TYPES } from '../domain/vendors.js';
 
@@ -104,9 +104,7 @@ describe('task templates (TL-01)', () => {
 });
 
 describe('lookups and the factory', () => {
-  it('finds templates by id and filters by family', () => {
-    expect(findTaskTemplate('w-book-venue')?.vendorType).toBe('venue');
-    expect(findTaskTemplate('nope')).toBeUndefined();
+  it('filters templates by family', () => {
     expect(templatesForFamily('birthday').every((t) => t.families.includes('birthday'))).toBe(true);
   });
 

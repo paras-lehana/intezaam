@@ -2,7 +2,7 @@
  * Wedding task templates, part 1: decide, book the big things, book specialists.
  *
  * Responsibility: wedding tasks from 12 months out to about 5 months out, with booking
- * lead times from 04 §3 (itsmy.wedding 2026, Manyavar 2024). Tradition-specific tasks are
+ * lead times from S-IMW-2026 and S-MANYAVAR-2024. Tradition-specific tasks are
  * in tasks-wedding-tradition.ts. Boundary: templates only; the timeline engine dates them.
  */
 import type { TaskTemplate } from './task-types.js';

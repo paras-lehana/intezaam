@@ -1,8 +1,8 @@
 /**
- * Preference vocabulary for the offline brief reader (research note 09 §5.2.4–5.2.6;
- * bio-bandish guest-diet synonyms, research note 01 §3.8).
+ * Preference vocabulary for the offline brief reader (diet synonyms
+ * from the owner's earlier guest manager).
  *
- * Responsibility: explicit words for tradition, diet (with the change from bio-bandish:
+ * Responsibility: explicit words for tradition, diet (with one change from the owner's earlier guest manager:
  * "no onion garlic" is vegetarian, never Jain), halal, alcohol and its negation, venue
  * setting, accessibility needs, style chips and budget categories (for priorities and cuts).
  * Boundary: data only; a tradition is only ever read from these words, never from a
@@ -16,7 +16,7 @@ import type { StyleTag } from '../../domain/style.js';
 import type { Tradition } from '../../domain/traditions.js';
 import { phrases, type PhraseGroups } from './word-list.js';
 
-/** Stated traditions; "Punjabi" alone never implies Anand Karaj (09 §5.2.4, battery B52). */
+/** Stated traditions; "Punjabi" alone never implies Anand Karaj (battery B52). */
 export const TRADITION_WORDS: PhraseGroups<Tradition> = [
   ['punjabi-sikh', 'punjabi | sikh | anand karaj | gurdwara | gurudwara | सिख | पंजाबी'],
   ['muslim', 'muslim | nikah | walima | मुस्लिम | निकाह'],
@@ -54,7 +54,7 @@ export const ALCOHOL_YES_WORDS = phrases(
   'bar | drinks | daaru | daru | दारू | sharaab | sharab | शराब | beer | open bar | cocktails | cocktail | alcohol',
 );
 
-/** Venue setting words (09 §5.2.6). */
+/** Venue setting words. */
 export const SETTING_WORDS: PhraseGroups<VenueSetting> = [
   [
     'outdoor',
@@ -65,7 +65,7 @@ export const SETTING_WORDS: PhraseGroups<VenueSetting> = [
   ['mixed', 'farmhouse | farm house | resort'],
 ];
 
-/** Accessibility needs stated directly (09 §5.2.6). */
+/** Accessibility needs stated directly. */
 export const ACCESS_WORDS: PhraseGroups<AccessNeed> = [
   ['wheelchair', 'wheelchair | व्हीलचेयर'],
   [
@@ -80,7 +80,7 @@ export const ELDER_RELATIVE_WORDS = phrases(
   'dadi | nani | dada | nana | grandparents | दादी | नानी',
 );
 
-/** Style chips (the owner's quiz vocabulary, 01 §3.5). */
+/** Style chips (the owner's quiz vocabulary). */
 export const STYLE_WORDS: PhraseGroups<StyleTag> = [
   ['traditional', 'traditional | paramparik | पारंपरिक'],
   ['modern', 'modern | contemporary'],
@@ -123,9 +123,9 @@ export const CUT_WORDS = phrases('cut | skip | kam | less | no need | zarurat na
 
 /**
  * Hindi words typed in Latin script: function words plus the Hindi-only entries of the brief
- * vocabulary (09 §5.2.1–5.2.3: fraction words, sau, tak, relative-date words, shaadi, sagai,
+ * vocabulary (fraction words, sau, tak, relative-date words, shaadi, sagai,
  * mehmaan). Two different ones in a brief with no Devanagari make it Hinglish, so drafts
- * default to Hinglish templates (09 §5.2.7). Words Indian English also uses (lakh, crore,
+ * default to Hinglish templates. Words Indian English also uses (lakh, crore,
  * mehendi, sangeet) and English look-alikes (do, teen, din, pe) are left out, so an English
  * brief that names a lakh budget and a sangeet stays English.
  */

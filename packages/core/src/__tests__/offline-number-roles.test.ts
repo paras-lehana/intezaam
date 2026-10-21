@@ -1,9 +1,9 @@
 /**
- * Tests for number roles (research note 09 §5.2.1 rules 1–9).
+ * Tests for number roles.
  *
  * Responsibility: time, date, age, guests, households, days, per-plate, budget and ignored
  * numbers, the approximation and cap words, and the evidence span a role covers.
- * Boundary: the inputs are short phrases the tests write; roles follow the research rules.
+ * Boundary: the inputs are short phrases the tests write; roles follow the rules in offline/number-roles.ts.
  */
 import { describe, expect, it } from 'vitest';
 import { readNumberMentions } from '../offline/number-roles.js';

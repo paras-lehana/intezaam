@@ -1,5 +1,5 @@
 /**
- * Script check for GenAI jobs 2 and 4 (synthesis §5 guardrails "script check against the
+ * Script check for GenAI jobs 2 and 4 (GENAI_ARCHITECTURE.md guardrails "script check against the
  * chosen language"): a Hindi narration or message must be written in Devanagari, a Tamil
  * one in Tamil script, and so on.
  *

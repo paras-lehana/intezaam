@@ -2,7 +2,7 @@
  * Source register, part 2: noise rules, permissions, crowd safety and accessibility.
  *
  * Responsibility: the statutes, government guidance and press reports behind the
- * permissions, crowd and accessibility checklists (research note 04 §6, §8.8).
+ * permissions, crowd and accessibility checklists.
  * Boundary: metadata only; merged with the other parts in sources.ts.
  */
 import type { SourceEntry } from './source-types.js';

@@ -17,7 +17,7 @@ const MAX_MODELS = 6;
 /** Redact, sanitise, cache, model, faithfulness, fallback… ten steps is ample. */
 const MAX_STEPS = 10;
 
-/** Why an answer came from the offline planner (addendum 13): shown next to the badge. */
+/** Why an answer came from the offline planner: shown next to the badge. */
 export const OFFLINE_REASONS = ['daily_quota', 'upstream_error', 'not_configured'] as const;
 
 export type OfflineReason = (typeof OFFLINE_REASONS)[number];

@@ -3,7 +3,7 @@
  *
  * Responsibility: the menu profiles the user picks (and what each does to the per-plate
  * price) plus the checklist rules a caterer must follow for Jain, halal, satvik,
- * gurdwara, alcohol-free and kids/elderly guests (04 §8.7). Boundary: rules as text for
+ * gurdwara, alcohol-free and kids/elderly guests. Boundary: rules as text for
  * checklists; the engines decide when each applies.
  */
 import type { RuleId } from './rule-ids.js';

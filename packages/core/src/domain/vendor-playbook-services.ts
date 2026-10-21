@@ -3,10 +3,12 @@
  * services (VEN-03).
  *
  * Responsibility: the questions, written commitments and red flags for these vendors,
- * drawing on the kids'-party guide (04 §5.2), GST on rooms (04 §7), planner fee ranges
- * (04 §1.1) and the NDMA crowd guide (04 §6.3). Boundary: a "planner checklist";
+ * drawing on the kids'-party guide, GST on rooms, planner fee ranges
+ * and the NDMA crowd guide. Boundary: a "planner checklist";
  * merged in vendor-playbook.ts.
  */
+import { PLANNER_SHARE_BP } from './budget-shifts.js';
+import { bpAsPercent, rangeText } from './units.js';
 import type { PlaybookEntry, ServiceVendor } from './vendor-playbook-types.js';
 
 export const SERVICES_PLAYBOOK: Readonly<Record<ServiceVendor, PlaybookEntry>> = {
@@ -45,7 +47,7 @@ export const SERVICES_PLAYBOOK: Readonly<Record<ServiceVendor, PlaybookEntry>> =
   },
   planner: {
     questions: [
-      'Is the fee fixed or a share of the budget (planners charge 5–10%)?',
+      `Is the fee fixed or a share of the budget (planners charge ${rangeText(bpAsPercent(PLANNER_SHARE_BP))}%)?`,
       'Do vendors pay you a commission?',
     ],
     getInWriting: ['Scope, fee and payment schedule'],
