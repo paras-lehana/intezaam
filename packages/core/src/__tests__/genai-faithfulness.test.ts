@@ -17,7 +17,7 @@ import {
 } from '../genai/faithfulness.js';
 import { narrationPlanBlock } from '../genai/prompts-narration.js';
 import { actionTemplate, narrateOffline, reasonTemplate } from '../offline/narrate.js';
-import type { NarrationModelOutput } from '../schemas/model-outputs.js';
+import { PALETTE_WORDS, type NarrationModelOutput } from '../schemas/model-outputs.js';
 import { planned } from './fixtures/genai-plans.js';
 
 describe('numbersIn / numbersAllowedBy / isFaithful', () => {
@@ -123,5 +123,14 @@ describe('checkNarrationFaithfulness', () => {
     expect(result.narration.summary).toBe('यह योजना संतुलित है।');
     expect(result.replaced).toContain('headline');
     expect(result.narration.themes?.map((theme) => theme.name)).toEqual(['Gulabi Jaipur']);
+  });
+
+  it('keeps the first three palette words when a model lists more', () => {
+    const words = ['ivory', 'gold', 'rani pink', 'emerald', 'marigold'];
+    const result = check(
+      { ...fallback, themes: [{ name: 'Rajputana', paletteWords: words }] },
+      'en',
+    );
+    expect(result.narration.themes?.[0]?.paletteWords).toEqual(words.slice(0, PALETTE_WORDS));
   });
 });

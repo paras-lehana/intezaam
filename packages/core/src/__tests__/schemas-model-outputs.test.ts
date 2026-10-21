@@ -13,6 +13,7 @@ import {
   ideaSchema,
   narrationModelOutputSchema,
   narrationSchema,
+  PALETTE_WORDS,
   quoteModelOutputSchema,
 } from '../schemas/model-outputs.js';
 
@@ -60,12 +61,15 @@ describe('narration (job 2)', () => {
     expect(ideaSchema.safeParse({ ...idea, costBand: '₹50,000' }).success).toBe(false);
   });
 
-  it('themes, when given, have exactly three palette words', () => {
+  it('themes carry one to three palette words on the wire, while a model reply may list more', () => {
     const ideas = [{ ...modelIdea, costBand: 'saves', youtubeUrl: 'https://youtube.com' }];
     const theme = { name: 'Rajputana', paletteWords: ['ivory', 'gold', 'rani pink'] };
     expect(narrationSchema.safeParse({ ...narration, ideas, themes: [theme] }).success).toBe(true);
-    const short = { ...theme, paletteWords: ['ivory'] };
-    expect(narrationSchema.safeParse({ ...narration, ideas, themes: [short] }).success).toBe(false);
+    const long = { ...theme, paletteWords: ['ivory', 'gold', 'rani pink', 'emerald', 'marigold'] };
+    expect(narrationSchema.safeParse({ ...narration, ideas, themes: [long] }).success).toBe(false);
+    const none = { ...theme, paletteWords: [] };
+    expect(narrationSchema.safeParse({ ...narration, ideas, themes: [none] }).success).toBe(false);
+    expect(PALETTE_WORDS).toBe(theme.paletteWords.length);
   });
 });
 

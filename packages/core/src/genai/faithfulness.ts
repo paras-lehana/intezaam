@@ -16,7 +16,7 @@ import { readNumberPhrases } from '../offline/number-phrases.js';
 import { actionTemplate, reasonTemplate } from '../offline/narrate.js';
 import { tokenise } from '../offline/tokens.js';
 import type { PlanFact } from '../schemas/diff.js';
-import type { NarrationModelOutput } from '../schemas/model-outputs.js';
+import { PALETTE_WORDS, type NarrationModelOutput } from '../schemas/model-outputs.js';
 import type { Plan } from '../schemas/plan.js';
 import { narrationPlanBlock } from './prompts-narration.js';
 import { matchesLanguageScript } from './script-check.js';
@@ -121,7 +121,10 @@ export function checkNarrationFaithfulness(
     replaced.push(`action:${action.taskId}`);
     return [];
   });
-  const themes = output.themes?.filter((theme) => numbersIn(theme.name).length === 0);
+  // Code keeps the first three palette words the board shows; a theme name with a number is dropped.
+  const themes = output.themes
+    ?.filter((theme) => numbersIn(theme.name).length === 0)
+    .map((theme) => ({ ...theme, paletteWords: theme.paletteWords.slice(0, PALETTE_WORDS) }));
   return {
     narration: {
       headline: trusted('headline', output.headline, fallback.headline),

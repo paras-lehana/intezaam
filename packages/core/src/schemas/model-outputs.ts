@@ -35,8 +35,26 @@ import { contextPatchSchema } from './patch.js';
 const MAX_REASONS = 5;
 const MAX_ACTIONS = 3;
 const MAX_THEMES = 4;
-const PALETTE_WORDS = 3;
+/** The ideas board shows three palette words per theme. */
+export const PALETTE_WORDS = 3;
+/**
+ * Models sometimes list more than three (seen live on 21 Oct 2026, which failed the whole
+ * narration); the reply may carry up to eight and code keeps the first three.
+ */
+const MAX_MODEL_PALETTE_WORDS = 8;
 const MAX_PALETTE_WORD_CHARS = 30;
+
+function themesSchema(maxWords: number) {
+  return z
+    .array(
+      z.strictObject({
+        name: labelSchema,
+        paletteWords: z.array(z.string().min(1).max(MAX_PALETTE_WORD_CHARS)).min(1).max(maxWords),
+      }),
+    )
+    .max(MAX_THEMES)
+    .optional();
+}
 
 export const modelIdeaSchema = z.strictObject({
   category: z.enum(IDEA_CATEGORIES),
@@ -53,20 +71,12 @@ const narrationCore = {
   summary: z.string().trim().min(1).max(MAX_SUMMARY_CHARS),
   reasons: z.array(z.strictObject({ traceId: idSchema, text: lineSchema })).max(MAX_REASONS),
   actions: z.array(z.strictObject({ taskId: idSchema, text: lineSchema })).max(MAX_ACTIONS),
-  themes: z
-    .array(
-      z.strictObject({
-        name: labelSchema,
-        paletteWords: z.array(z.string().min(1).max(MAX_PALETTE_WORD_CHARS)).length(PALETTE_WORDS),
-      }),
-    )
-    .max(MAX_THEMES)
-    .optional(),
 };
 
 /** Job 2 output: ids must exist in the plan facts, or the server drops the item. */
 export const narrationModelOutputSchema = z.strictObject({
   ...narrationCore,
+  themes: themesSchema(MAX_MODEL_PALETTE_WORDS),
   ideas: z.array(modelIdeaSchema).min(MIN_IDEAS).max(MAX_IDEAS),
 });
 
@@ -83,6 +93,7 @@ export type Idea = z.infer<typeof ideaSchema>;
 /** Narration as returned; diet filtering may leave fewer than six ideas. */
 export const narrationSchema = z.strictObject({
   ...narrationCore,
+  themes: themesSchema(PALETTE_WORDS),
   ideas: z.array(ideaSchema).max(MAX_IDEAS),
 });
 
