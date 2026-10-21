@@ -69,8 +69,8 @@ todayIso)` returns a validated plan with a two-axis verdict (money × time, plus
 ### Verified
 
 - `npm run test:coverage` (2026-10-21): 2,078 tests pass — core 1,392 (172 files), server 172 (18 files), web 514 (98
-  files). Coverage: core 99.92% lines / 95.77% branches; server 99.7% lines / 94.02% branches; web 98.45% lines /
-  87.74% branches.
+  files). Coverage: core 99.92% lines / 95.77% branches; server 99.7% lines / 94.02% branches; web 98.46% lines /
+  87.87% branches.
 - `npx playwright test`: 46 of 46 pass (11 journeys, 4 persona checks and 8 axe scans on each of desktop and a 390×844
   phone) against the production build with the offline planner.
 - `npm run type-check`, `npm run lint` (zero warnings), `npm run dup-check` (0 clones) and `npm audit` (0

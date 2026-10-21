@@ -2,7 +2,8 @@
  * Tests for the Ask prompt (GenAI job 5).
  *
  * Responsibility: today, the plan facts, earlier turns and the question are each fenced;
- * the rules ground answers in the facts, list the closed patch operations with their limits
+ * the rules ground answers in the facts (and the question's and patch's own numbers), point
+ * a proposed change to the Apply button, list the closed patch operations with their limits
  * and the refusal reasons. Boundary: plans come from the real engine.
  */
 import { describe, expect, it } from 'vitest';
@@ -73,6 +74,8 @@ describe('buildAskPrompt', () => {
     expect(systemInstruction).toContain(`${MAX_GUESTS}`);
     expect(systemInstruction).toContain(`at most ${MAX_PATCH_OPS} operations`);
     expect(systemInstruction).toContain('Answer only from the numbered plan facts');
+    expect(systemInstruction).toContain('the facts, the question or your patch');
+    expect(systemInstruction).toContain('ask the user to press Apply');
     expect(systemInstruction).toContain('Write every sentence in Tamil.');
   });
 });

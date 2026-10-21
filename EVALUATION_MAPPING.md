@@ -85,7 +85,7 @@ Where each evaluation area is delivered, with a path for every claim.
   [`packages/core/src/__tests__`](packages/core/src/__tests__), [`apps/server/src/__tests__`](apps/server/src/__tests__),
   [`apps/web/src/__tests__`](apps/web/src/__tests__)
 - Coverage gates on core (95/95/95/90), server (85/85/85/75) and web (95/93/95/83); measured core 99.92% lines, server
-  99.7% lines, web 98.45% lines → [`packages/core/vitest.config.ts`](packages/core/vitest.config.ts),
+  99.7% lines, web 98.46% lines → [`packages/core/vitest.config.ts`](packages/core/vitest.config.ts),
   [`apps/server/vitest.config.ts`](apps/server/vitest.config.ts), [`apps/web/vitest.config.ts`](apps/web/vitest.config.ts)
 - Fixtures derived from the engine; a 60-brief battery and a GenAI eval battery →
   [`fixtures/eval-battery.ts`](packages/core/src/__tests__/fixtures/eval-battery.ts)

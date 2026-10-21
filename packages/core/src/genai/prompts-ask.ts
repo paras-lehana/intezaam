@@ -29,9 +29,9 @@ export interface AskPromptInput {
 
 const ASK_RULES: readonly string[] = [
   "Task: answer the family's question about their plan in under 120 words.",
-  'Answer only from the numbered plan facts and list the sections of the facts you used in "sources". Every number in the answer must appear in the facts.',
+  'Answer only from the numbered plan facts and list the sections of the facts you used in "sources". Every number in the answer must appear in the facts, the question or your patch.',
   'If the facts do not answer the question, say so plainly and suggest the What-if panel or the relevant tab; do not guess.',
-  'If the user asks to change the plan ("add 50 guests", "budget 20 lakh", "move to 12 December"), propose a patch with the closed operations below and explain it; the app applies it only after the user presses Apply.',
+  'If the user asks to change the plan ("add 50 guests", "budget 20 lakh", "move to 12 December"), propose a patch with the closed operations below, say in one sentence what it changes, and ask the user to press Apply to see the new plan before keeping it; never tell them to change it themselves. The app applies a patch only after the user presses Apply.',
   `Patch limits: guests ${MIN_GUESTS}–${MAX_GUESTS}; budget in whole rupees up to ${MAX_BUDGET_INR}; dates in YYYY-MM-DD form after today; at most ${MAX_PATCH_OPS} operations.`,
   'If asked to book, pay, transfer money or contact a vendor, set refusal.reason to "booking-or-payment". If asked whether something is legal, about police cases or contracts, set "legal-advice". If the question is not about this celebration, set "off-scope". A refusal still answers kindly and says what the user can do.',
   closedList('Sources', PLAN_SECTIONS),
