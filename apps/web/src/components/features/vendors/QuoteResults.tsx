@@ -55,7 +55,7 @@ export function QuoteResults({ result, names, language }: QuoteResultsProps): Re
               <th scope="col" className="num">
                 Per guest
               </th>
-              <th scope="col">Against your budget line</th>
+              <th scope="col">Against your budget</th>
               <th scope="col">Notes</th>
             </tr>
           </thead>
@@ -82,6 +82,10 @@ export function QuoteResults({ result, names, language }: QuoteResultsProps): Re
           </tbody>
         </table>
       </TableScroll>
+      <p className="quote-results__note">
+        Per-plate quotes are priced for at least the plates they guarantee, and compared with your
+        food line&rsquo;s share for that many plates; other quotes with the whole line.
+      </p>
       {result.differences.length === 0 ? null : (
         <>
           <h4>Differences</h4>

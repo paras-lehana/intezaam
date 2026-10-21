@@ -10,7 +10,7 @@
 import { describe, expect, it } from 'vitest';
 import { gstRateForCategory } from '../domain/gst.js';
 import { VENDOR_PROFILES } from '../domain/vendors.js';
-import { normaliseQuotes } from '../genai/quote-normalise.js';
+import { minimumPlates, normaliseQuotes } from '../genai/quote-normalise.js';
 import { compareQuotesOffline } from '../offline/quotes.js';
 import type { QuoteModelOutput } from '../schemas/model-outputs.js';
 import { planned } from './fixtures/genai-plans.js';
@@ -18,11 +18,13 @@ import { planned } from './fixtures/genai-plans.js';
 const PERCENT = 100;
 const PLATE_INR = 1_200;
 const PACKAGE_INR = 300_000;
+/** Above the Jaipur sample's expected guests, so the minimum decides what is billed. */
+const MIN_PLATES = 250;
 
 const QUOTES = [
   {
     id: 'shree-caterers',
-    text: 'Veg thali ₹1,200 per plate + GST\nAdvance 60% at booking\nMinimum guarantee 250 plates\nValid till 30 Nov 2026',
+    text: `Veg thali ₹1,200 per plate + GST\nAdvance 60% at booking\nMinimum guarantee ${String(MIN_PLATES)} plates\nValid till 30 Nov 2026`,
   },
   {
     id: 'b',
@@ -37,18 +39,29 @@ describe('normaliseQuotes', () => {
   const gst = gstRateForCategory(VENDOR_PROFILES.caterer.category) ?? 0;
   const expected = plan.headcount.expected;
 
-  it('totals a per-plate quote for the expected guests and adds GST when it is extra', () => {
-    const total = Math.round(PLATE_INR * expected * (1 + gst / PERCENT));
+  it("bills a per-plate quote for its minimum above the expected guests, adds GST, and compares it with the food line's share for those plates", () => {
+    const plates = Math.max(expected, MIN_PLATES);
+    expect(plates).toBe(MIN_PLATES);
+    const total = Math.round(PLATE_INR * plates * (1 + gst / PERCENT));
     const line = plan.budget.lines.find(
       (budgetLine) => budgetLine.category === VENDOR_PROFILES.caterer.category,
     );
+    const share = Math.round((line?.amountInr ?? 0) * Math.min(1, plates / plan.costCheck.plates));
     expect(result.normalised[0]).toMatchObject({
       quoteId: 'shree-caterers',
       totalInr: total,
       perGuestInr: Math.round(total / expected),
       gstAdded: true,
-      vsBudgetLineInr: total - (line?.amountInr ?? 0),
+      vsBudgetLineInr: total - share,
     });
+  });
+
+  it('reads the minimum a quote states, in the usual phrasings', () => {
+    expect(minimumPlates('minimum guarantee: 280 plates')).toBe(280);
+    expect(minimumPlates('minimum 250 plates, live counter extra')).toBe(250);
+    expect(minimumPlates('min 300 pax')).toBe(300);
+    expect(minimumPlates('250 plates minimum')).toBe(250);
+    expect(minimumPlates('veg thali 950 per plate')).toBeUndefined();
   });
 
   it('takes a package at its amount without adding GST twice', () => {
@@ -64,7 +77,7 @@ describe('normaliseQuotes', () => {
     expect(first?.flags).toEqual(
       expect.arrayContaining([
         'Advance above half the total: ask for a milestone schedule.',
-        'Minimum guarantee: you pay for that many plates even if fewer guests come.',
+        `Minimum guarantee of ${String(MIN_PLATES)} plates: you pay for ${String(MIN_PLATES)} although about ${String(expected)} guests are expected.`,
         'No cancellation or refund terms: ask for them in writing.',
       ]),
     );

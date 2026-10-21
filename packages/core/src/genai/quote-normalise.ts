@@ -39,6 +39,20 @@ const PERCENT_DIVISOR = 100;
 const MINIMUM_GUARANTEE =
   /minimum|min\.?\s*(?:guarantee|plates|pax)|guaranteed? (?:plates|pax|count)/u;
 const ROYALTY = /royalty/u;
+/** "minimum guarantee: 280 plates", "minimum 250 plates", "min 300 pax", "250 plates minimum". */
+const MINIMUM_PLATES =
+  /(?:minimum|min)(?:\s+guarantee)?(?:\s+of)?\s*:?\s*(\d{2,5})|(\d{2,5})\s*(?:plates|pax|covers)\s+minimum/u;
+
+/**
+ * The minimum number of plates a quote bills, when it states one (code reads it from the text).
+ * @example
+ * minimumPlates('minimum guarantee: 280 plates'); // 280
+ */
+export function minimumPlates(foldedText: string): number | undefined {
+  const match = MINIMUM_PLATES.exec(foldedText);
+  const digits = match?.[1] ?? match?.[2];
+  return digits === undefined ? undefined : Number(digits);
+}
 
 function moneyValue(amountText: string): number | undefined {
   if (PERCENT.test(amountText)) return undefined;
@@ -52,12 +66,18 @@ function functionDays(plan: Plan): number {
 }
 
 /** The total before GST for the quote's price basis; undefined for an hourly rate. */
-function baseTotal(quote: ParsedQuote, values: readonly number[], plan: Plan): number | undefined {
+function baseTotal(
+  quote: ParsedQuote,
+  values: readonly number[],
+  plan: Plan,
+  plates: number,
+): number | undefined {
   const [first] = values;
   if (first === undefined) return undefined;
   const largest = Math.max(...values);
   const BASIS_TOTALS: Readonly<Record<ParsedQuote['priceBasis'], () => number | undefined>> = {
-    'per-plate': () => first * plan.headcount.expected,
+    // A minimum guarantee bills at least that many plates, however few guests come.
+    'per-plate': () => first * plates,
     'per-day': () => largest * functionDays(plan),
     'per-hour': () => undefined,
     package: () => largest,
@@ -66,7 +86,23 @@ function baseTotal(quote: ParsedQuote, values: readonly number[], plan: Plan): n
   return BASIS_TOTALS[quote.priceBasis]();
 }
 
-function flagsFor(quote: ParsedQuote, text: string, gstRate: number | null): string[] {
+function minimumFlag(folded: string, minimum: number | undefined, expected: number): string[] {
+  if (minimum !== undefined && minimum > expected) {
+    return [
+      `Minimum guarantee of ${String(minimum)} plates: you pay for ${String(minimum)} although about ${String(expected)} guests are expected.`,
+    ];
+  }
+  return MINIMUM_GUARANTEE.test(folded)
+    ? ['Minimum guarantee: you pay for that many plates even if fewer guests come.']
+    : [];
+}
+
+function flagsFor(
+  quote: ParsedQuote,
+  text: string,
+  gstRate: number | null,
+  expected: number,
+): string[] {
   const folded = foldForMatch(text);
   const advance = ADVANCE_PERCENT.exec(quote.advanceText ?? '');
   return [
@@ -80,15 +116,24 @@ function flagsFor(quote: ParsedQuote, text: string, gstRate: number | null): str
     ...(advance !== null && Number(advance[1]) > HIGH_ADVANCE_PCT
       ? ['Advance above half the total: ask for a milestone schedule.']
       : []),
-    ...(MINIMUM_GUARANTEE.test(folded)
-      ? ['Minimum guarantee: you pay for that many plates even if fewer guests come.']
-      : []),
+    ...minimumFlag(folded, minimumPlates(folded), expected),
     ...(ROYALTY.test(folded) ? ['Venue royalty applies to outside caterers.'] : []),
     ...(quote.gst === 'not-stated' && gstRate !== null
       ? [`GST not stated: the usual ${gstRate}% was added; confirm with the vendor.`]
       : []),
     ...(gstRate === null ? ['GST not estimated for this category: ask the vendor.'] : []),
   ];
+}
+
+/**
+ * What the budget sets aside for this quote: a per-plate quote covers one meal, so it is compared
+ * with the food line's share for that many plates (the plan serves `costCheck.plates` in all);
+ * any other quote with the whole line.
+ */
+function budgetFor(lineInr: number, quote: ParsedQuote, plates: number, plan: Plan): number {
+  const planned = plan.costCheck.plates;
+  if (quote.priceBasis !== 'per-plate' || planned === 0) return lineInr;
+  return Math.round(lineInr * Math.min(1, plates / planned));
 }
 
 function normalise(
@@ -103,7 +148,9 @@ function normalise(
     const value = moneyValue(amount.amountText);
     return value === undefined ? [] : [value];
   });
-  const base = baseTotal(quote, values, plan);
+  const expected = plan.headcount.expected;
+  const plates = Math.max(expected, minimumPlates(foldForMatch(text)) ?? 0);
+  const base = baseTotal(quote, values, plan, plates);
   const addGst = quote.gst !== 'included' && gstRate !== null;
   const total =
     base === undefined
@@ -111,7 +158,7 @@ function normalise(
       : Math.round(addGst ? base * (1 + gstRate / PERCENT_DIVISOR) : base);
   const usable = total !== undefined && total <= MAX_AMOUNT_INR ? total : undefined;
   const line = plan.budget.lines.find((budgetLine) => budgetLine.category === budgetCategory);
-  const expected = plan.headcount.expected;
+  const budget = line === undefined ? undefined : budgetFor(line.amountInr, quote, plates, plan);
   return {
     quoteId: quote.quoteId,
     ...(usable === undefined ? {} : { totalInr: usable }),
@@ -119,10 +166,8 @@ function normalise(
       ? {}
       : { perGuestInr: Math.round(usable / expected) }),
     gstAdded: addGst && usable !== undefined,
-    ...(usable === undefined || line === undefined
-      ? {}
-      : { vsBudgetLineInr: usable - line.amountInr }),
-    flags: flagsFor(quote, text, gstRate),
+    ...(usable === undefined || budget === undefined ? {} : { vsBudgetLineInr: usable - budget }),
+    flags: flagsFor(quote, text, gstRate, expected),
   };
 }
 
