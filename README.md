@@ -251,7 +251,7 @@ To switch on Gemini, copy [`.env.example`](.env.example) to `apps/server/.env` a
 and a Gemini API key from a project with no billing account; every variable is documented there. `npm run verify` runs
 type-check, lint, tests with coverage gates and the build; `npm run e2e` runs the Playwright journeys and axe scans.
 
-**Latest local run (2026-10-21):** 2,074 unit, integration and component tests pass (core 1,390 · server 172 · web 512)
+**Latest local run (2026-10-21):** 2,075 unit, integration and component tests pass (core 1,391 · server 172 · web 512)
 plus 46 Playwright tests. Details in [TESTING.md](TESTING.md).
 
 ## For evaluators

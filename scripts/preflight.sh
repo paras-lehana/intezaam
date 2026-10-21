@@ -38,6 +38,11 @@ if LC_ALL=C.UTF-8 git grep -nP '\x{00C3}[\x{0080}-\x{00BF}]|\x{00E2}\x{20AC}|\x{
   fail "mojibake found; re-save the file as UTF-8"
 fi
 
+echo "--> control characters in sources (a mangled escape, e.g. a backspace where \\b was meant)"
+if git grep -nP '[\x00-\x08\x0B\x0C\x0E-\x1F]' -- "${SRC[@]}" ; then
+  fail "a control character was found; rewrite the escape sequence"
+fi
+
 echo "--> commit trailers (credit only the tools actually used)"
 if git log --format=%B 2>/dev/null | grep -qi 'co-authored-by' ; then
   fail "a co-author trailer is present in the history"

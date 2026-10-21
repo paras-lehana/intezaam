@@ -10,7 +10,7 @@
 import { describe, expect, it } from 'vitest';
 import { gstRateForCategory } from '../domain/gst.js';
 import { VENDOR_PROFILES } from '../domain/vendors.js';
-import { minimumPlates, normaliseQuotes } from '../genai/quote-normalise.js';
+import { minimumPlates, normaliseQuotes, readableQuoteIds } from '../genai/quote-normalise.js';
 import { compareQuotesOffline } from '../offline/quotes.js';
 import type { QuoteModelOutput } from '../schemas/model-outputs.js';
 import { planned } from './fixtures/genai-plans.js';
@@ -54,6 +54,16 @@ describe('normaliseQuotes', () => {
       gstAdded: true,
       vsBudgetLineInr: total - share,
     });
+  });
+
+  it("reads the reply's positional quote ids as the labels the page shows", () => {
+    expect(
+      readableQuoteIds('Quote quote-1 states GST is extra, while quote quote-2 includes it.'),
+    ).toBe('Quote 1 states GST is extra, while Quote 2 includes it.');
+    expect(readableQuoteIds('quote-3 asks for a 50% advance')).toBe(
+      'Quote 3 asks for a 50% advance',
+    );
+    expect(readableQuoteIds('Quote 1 is per plate')).toBe('Quote 1 is per plate');
   });
 
   it('reads the minimum a quote states, in the usual phrasings', () => {

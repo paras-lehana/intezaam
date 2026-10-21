@@ -16,12 +16,12 @@ components with plans produced by the core engine itself.
 
 ## Latest local run (2026-10-21)
 
-`npm run test:coverage` passed **2,074 tests in 288 files**, and `npx playwright test` passed **46 of 46** (23 per
+`npm run test:coverage` passed **2,075 tests in 288 files**, and `npx playwright test` passed **46 of 46** (23 per
 device: 11 journeys, 4 persona checks and 8 axe scans) against the production build with the offline planner.
 
 | Workspace       | Test files | Tests | Statements | Branches | Functions | Lines  | Thresholds (lines / statements / functions / branches) |
 | --------------- | ---------- | ----- | ---------- | -------- | --------- | ------ | ------------------------------------------------------ |
-| `packages/core` | 172        | 1,390 | 99.74%     | 95.77%   | 99.91%    | 99.92% | 95 / 95 / 95 / 90                                      |
+| `packages/core` | 172        | 1,391 | 99.74%     | 95.77%   | 99.91%    | 99.92% | 95 / 95 / 95 / 90                                      |
 | `apps/server`   | 18         | 172   | 98.65%     | 94.02%   | 100%      | 99.7%  | 85 / 85 / 85 / 75                                      |
 | `apps/web`      | 98         | 512   | 96.58%     | 87.74%   | 98.31%    | 98.45% | 95 / 93 / 95 / 83                                      |
 

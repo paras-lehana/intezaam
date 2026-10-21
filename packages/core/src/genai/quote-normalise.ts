@@ -171,6 +171,18 @@ function normalise(
   };
 }
 
+/** The reply's positional ids ("Quote quote-1 asks…", "quote-2 states…"), as the page labels them. */
+const POSITIONAL_ID = /\b(?:quote\s+)?quote-(\d)\b/giu;
+
+/**
+ * Reads the positional quote ids in the reply's sentences as the labels the page shows.
+ * @example
+ * readableQuoteIds('Quote quote-1 asks for a 50% advance'); // 'Quote 1 asks for a 50% advance'
+ */
+export function readableQuoteIds(text: string): string {
+  return text.replace(POSITIONAL_ID, 'Quote $1');
+}
+
 /**
  * Validates and normalises a quote reply (model or offline) against the pasted quotes.
  * @example
@@ -198,12 +210,12 @@ export function normaliseQuotes(
   return {
     quotes: parsed.map((entry) => entry.quote),
     normalised: parsed.map((entry) => normalise(entry.quote, entry.source.text, category, plan)),
-    differences: reply.differences.filter(neutral),
+    differences: reply.differences.filter(neutral).map(readableQuoteIds),
     questions: reply.questions.flatMap((question) => {
       const source = resolve(question.quoteId);
       return source === undefined || !neutral(question.text)
         ? []
-        : [{ quoteId: source.id, text: question.text }];
+        : [{ quoteId: source.id, text: readableQuoteIds(question.text) }];
     }),
   };
 }
