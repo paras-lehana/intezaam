@@ -1,0 +1,95 @@
+/**
+ * The plan workspace: heading block, the two tools and their drawers, the empty state and
+ * the brief review in the details pane.
+ *
+ * Responsibility: the frame every tab sits in. Boundary: the tab bar itself is tabs.css and
+ * the split layout is split.css; the drawers' contents style themselves.
+ */
+.plan-page__intro .page-hero {
+  padding-block: var(--space-5) 0;
+}
+
+.workspace__header {
+  margin-bottom: var(--space-4);
+}
+
+.workspace__title {
+  margin-bottom: var(--space-1);
+  font-size: var(--text-2xl);
+}
+
+.workspace__title:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 4px;
+}
+
+.workspace__headline {
+  margin-bottom: var(--space-3);
+  color: var(--color-gold-text);
+  font-weight: 650;
+}
+
+.workspace__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+}
+
+.workspace__meta .estimate-note {
+  margin: 0;
+}
+
+.workspace-tools__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.workspace-tools__button[aria-expanded='true'] {
+  border-width: 2px;
+  background: var(--color-surface-selected);
+  font-weight: 750;
+}
+
+.workspace-drawer {
+  border-color: var(--color-border);
+}
+
+.workspace-empty h2 {
+  font-size: var(--text-xl);
+}
+
+.brief-review {
+  margin-bottom: var(--space-4);
+}
+
+.brief-review > * + * {
+  margin-top: var(--space-3);
+}
+
+.brief-review__title {
+  font-size: var(--text-lg);
+}
+
+.brief-review__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.brief-review__chip-label {
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.brief-review__missing {
+  padding-left: var(--space-5);
+}
+
+.brief-review__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}

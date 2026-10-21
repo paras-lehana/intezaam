@@ -1,0 +1,150 @@
+/**
+ * Money tab: budget bars, the controls, the cost check, levers and the spend tracker.
+ *
+ * Responsibility: layout and the bar visual. Bars scale with SVG attributes (no inline
+ * styles); statuses carry words and shapes, colour is only a second signal. Boundary: the
+ * shared table and badge styles are in common.css.
+ */
+.budget-bars {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+}
+
+.budget-bar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.budget-bar__value {
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+}
+
+.budget-bar__track {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 8px;
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-alt);
+}
+
+.budget-bar__fill {
+  fill: var(--color-gold);
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: budget-bar-fill var(--duration-slow) var(--ease-out) both;
+}
+
+@keyframes budget-bar-fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.budget-table__priority {
+  margin-left: var(--space-2);
+  color: var(--color-gold-text);
+}
+
+.money-controls {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.money-controls__legend {
+  margin-bottom: var(--space-2);
+  font-weight: 650;
+}
+
+.money-controls .chip-option[aria-pressed='true'] {
+  border-width: 2px;
+  background: var(--color-chip-selected);
+  font-weight: 700;
+}
+
+.cost-check {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.cost-check dt {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.cost-check dd {
+  margin: 0;
+  font-weight: 650;
+}
+
+.cost-check__status {
+  font-weight: 700;
+}
+
+.cost-check__status--short {
+  color: var(--color-danger);
+}
+
+.cost-check__status--covered {
+  color: var(--color-success);
+}
+
+.cost-check__notes,
+.payments__checklist {
+  padding-left: var(--space-5);
+  color: var(--color-text-muted);
+}
+
+.lever-list {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.lever {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-field);
+}
+
+.lever > * {
+  margin: 0 0 var(--space-2);
+}
+
+.lever__title {
+  font-size: var(--text-base);
+}
+
+.lever__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* The field's shape is the shared text input (forms.css). */
+.spend-input {
+  min-width: 7rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.spend-status {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.spend-status--near {
+  color: var(--color-rose-text);
+}
+
+.spend-status--over {
+  color: var(--color-danger);
+}
+
+.spend-status--clear {
+  color: var(--color-success);
+}

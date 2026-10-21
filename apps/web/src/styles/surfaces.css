@@ -1,0 +1,86 @@
+/**
+ * Shared surfaces: raised cards, flat panels, preformatted text blocks, callouts, notices and
+ * edge-cards — the boxes every area composes by class instead of repeating the recipe.
+ *
+ * Responsibility: one recipe per surface, from tokens only. Boundary: no layout inside the
+ * box (areas set their own grid and gaps); modifiers that recolour a surface live with the
+ * area that needs them.
+ */
+/* The one raised-surface recipe, shared by section cards and feature tiles. */
+.card,
+.feature-tile {
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.card {
+  margin-bottom: var(--space-5);
+  padding: var(--space-5);
+}
+
+@media (min-width: 48rem) {
+  .card {
+    padding: var(--space-6);
+  }
+}
+
+/* A soft, flat panel on cream (the brief box, loop steps, ideas, the volunteer roster);
+   panel-flat is the same panel on white (an answer, a plan diff). */
+.panel-soft,
+.panel-flat {
+  padding: var(--space-4);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-card);
+  background: var(--color-bg-alt);
+}
+
+.panel-flat {
+  background: var(--color-surface);
+}
+
+/* Preformatted text the family reads or copies (a drafted message, the WhatsApp summary). */
+.text-block {
+  margin: 0;
+  padding: var(--space-4);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-field);
+  background: var(--color-bg-alt);
+  font-family: var(--font-sans);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+/* A status line with a gold left edge (a headcount warning, a space check, an access preview). */
+.callout {
+  margin: 0;
+  padding: var(--space-3) var(--space-4);
+  border-left: 4px solid var(--color-gold);
+  border-radius: var(--radius-field);
+  background: var(--color-bg-alt);
+}
+
+/* A flat panel with a gold left edge: notices, permissions and the risk radar's cards. */
+.notice,
+.edge-card {
+  border: 1px solid var(--color-rule);
+  border-left: 4px solid var(--color-gold);
+  border-radius: var(--radius-card);
+  background: var(--color-bg-alt);
+}
+
+.notice {
+  margin-bottom: var(--space-5);
+  padding: var(--space-4) var(--space-5);
+}
+
+.notice--error {
+  border-left-color: var(--color-danger);
+  background: var(--color-danger-soft);
+  color: var(--color-danger);
+}
+
+.notice p:last-child {
+  margin: 0;
+}

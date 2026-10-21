@@ -1,0 +1,102 @@
+/**
+ * Safety tab: the permissions checklist, crowd checks, the risk radar and the access plan.
+ *
+ * Responsibility: list layouts from tokens only; blockers and high risks get a thicker
+ * edge AND their words and shape (SeverityLabel), never colour alone. Boundary: cards and
+ * headings come from the shared panel sections (common.css).
+ */
+.permissions,
+.risks,
+.access-items {
+  display: grid;
+  gap: var(--space-3);
+}
+
+/* Permission and radar cards are edge-cards (surfaces.css); scoped to the radar so the
+   Overview's compact risk list keeps its own look. */
+.permission,
+.risks .risk {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+}
+
+.permission--blocker,
+.risks .risk--blocker,
+.risks .risk--high {
+  border-left-color: var(--color-danger);
+  border-left-width: 6px;
+}
+
+.permission__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--touch-target);
+}
+
+.permission__title {
+  flex: 1 1 12rem;
+  color: var(--color-ink);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.permission__facts {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+}
+
+.permission__facts dt {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.permission__facts dd {
+  margin: 0;
+}
+
+.permission__note,
+.risks .risk p,
+.access-items p {
+  margin: 0;
+}
+
+.risks .risk__title,
+.access-items h4 {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: var(--text-base);
+}
+
+.safety-checks {
+  display: grid;
+  gap: var(--space-1);
+  margin: 0;
+}
+
+.access-needs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+}
+
+.access-needs legend {
+  margin-bottom: var(--space-2);
+  color: var(--color-ink);
+  font-weight: 650;
+}
+
+/* The preview is a callout (surfaces.css). */
+.access-preview > * {
+  margin: 0 0 var(--space-2);
+}
+
+@media print {
+  .access-needs,
+  .access-preview {
+    display: none;
+  }
+}

@@ -1,0 +1,150 @@
+/**
+ * The feature bento: seven groups of ledger tiles, each tile linking to where it lives.
+ *
+ * Responsibility: a scannable grid — group head on the left on wide screens, tiles in an
+ * auto-fitting grid; one column on phones. Each tile's title link is stretched over the
+ * card so the whole tile is clickable, while the accessible name stays the title.
+ * Boundary: copy and structure come from components/home.
+ */
+.bento__groups {
+  display: grid;
+  gap: var(--space-7);
+}
+
+.feature-group {
+  display: grid;
+  gap: var(--space-4);
+}
+
+@media (min-width: 64rem) {
+  .feature-group {
+    grid-template-columns: 16rem 1fr;
+    gap: var(--space-6);
+    align-items: start;
+  }
+}
+
+.feature-group__head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-1) var(--space-3);
+  align-items: center;
+}
+
+.feature-group__icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--color-rule);
+  border-radius: 50%;
+  background: var(--color-bg-alt);
+  color: var(--color-gold-text);
+}
+
+.feature-group__title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+}
+
+.feature-group__line {
+  grid-column: 1 / -1;
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.feature-group__tiles {
+  display: grid;
+  gap: var(--space-3);
+}
+
+@media (min-width: 40rem) {
+  .feature-group__tiles {
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  }
+}
+
+/* Phones: each group is a swipe row with the next tile peeking in, so seven short rows replace
+   one 42-tile column. Every tile link stays in the tab order and scrolls into view on focus. */
+@media (max-width: 39.99rem) {
+  .feature-group__tiles {
+    grid-auto-flow: column;
+    grid-auto-columns: 84%;
+    margin-inline: calc(var(--space-4) * -1);
+    padding: var(--space-1) var(--space-4) var(--space-3);
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: var(--space-4);
+    scroll-snap-type: x mandatory;
+  }
+
+  .feature-tile {
+    scroll-snap-align: start;
+  }
+}
+
+.feature-tile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4);
+}
+
+/* The first tile of a group spans two columns where there is room: one tile leads. */
+@media (min-width: 64rem) {
+  .feature-tile:first-child {
+    grid-column: span 2;
+  }
+}
+
+.feature-tile__title {
+  margin-bottom: var(--space-1);
+  font-size: var(--text-lg);
+}
+
+/* The title link itself meets the 44 px target; its ::after stretches the hit area to the tile. */
+.feature-tile__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-target);
+  color: var(--color-ink);
+  text-decoration: none;
+}
+
+.feature-tile__link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-card);
+}
+
+.feature-tile__link:hover,
+.feature-tile__link:focus-visible {
+  text-decoration: underline;
+  text-decoration-color: var(--color-gold);
+}
+
+.feature-tile__link:focus-visible {
+  outline: none;
+}
+
+.feature-tile__link:focus-visible::after {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.feature-tile__body {
+  flex: 1;
+  color: var(--color-text);
+  font-size: var(--text-sm);
+}
+
+.feature-tile__where {
+  margin: 0;
+  color: var(--color-gold-text);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}

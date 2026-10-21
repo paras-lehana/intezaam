@@ -1,0 +1,212 @@
+/**
+ * Shared workspace pieces: panel headings and sections, "Why this?" disclosures, source
+ * links, confidence and assumption badges, provenance, the estimates note, severity labels
+ * and rupee amounts.
+ *
+ * Responsibility: one look for the trust layer across every tab. Boundary: tokens only
+ * (tokens.css); every state also has a word or a shape, never colour alone. Loaded once
+ * with the workspace, so lazily loaded panels can rely on it.
+ */
+.panel-header {
+  margin-bottom: var(--space-4);
+}
+
+.panel-header__title {
+  margin-bottom: var(--space-1);
+  font-size: var(--text-xl);
+}
+
+.panel-header__lede,
+.panel-section__lede {
+  color: var(--color-text-muted);
+}
+
+.panel-section__title {
+  margin-bottom: var(--space-2);
+  font-size: var(--text-lg);
+}
+
+.panel-section > * + * {
+  margin-top: var(--space-3);
+}
+
+/* "Why this?": a small text button that still meets the 44 px target. */
+.trace__toggle {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-target);
+  padding: 0 var(--space-2);
+  border: 0;
+  background: transparent;
+  color: var(--color-link);
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 650;
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.trace__toggle[aria-expanded='true'] {
+  text-decoration-style: solid;
+}
+
+.trace__panel {
+  margin-top: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-left: 3px solid var(--color-gold);
+  border-radius: var(--radius-field);
+  background: var(--color-bg-alt);
+  font-size: var(--text-sm);
+}
+
+.trace__items {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.trace-item > * {
+  margin: 0 0 var(--space-2);
+}
+
+.trace-item__title {
+  color: var(--color-ink);
+  font-weight: 700;
+}
+
+.trace-item__rule {
+  padding: 0 var(--space-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-variant-numeric: tabular-nums;
+}
+
+.trace-item__inputs {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.trace-item__input {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.trace-item__input dt {
+  color: var(--color-text-muted);
+}
+
+.trace-item__input dt::after {
+  content: ':';
+}
+
+.trace-item__input dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.source-links {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.source-links__title {
+  color: var(--color-text-muted);
+}
+
+.confidence {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--space-2);
+  border: 1px solid currentcolor;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.badge--assumption {
+  color: var(--color-rose-text);
+}
+
+/* The badge's shape is the chip (primitives.css); it reads quieter than a filter chip. */
+.provenance {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.provenance--gemini {
+  border-color: var(--color-border);
+  color: var(--color-gold-text);
+}
+
+.estimate-note {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.severity {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  font-weight: 750;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.severity--blocker,
+.severity--high {
+  color: var(--color-danger);
+}
+
+.severity--medium {
+  color: var(--color-rose-text);
+}
+
+.severity--info {
+  color: var(--color-info);
+}
+
+.money {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* Tables scroll inside their card on phones instead of widening the page. */
+.table-scroll {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.data-table caption {
+  padding-bottom: var(--space-2);
+  color: var(--color-text-muted);
+  text-align: left;
+}
+
+.data-table th,
+.data-table td {
+  padding: var(--space-2);
+  border-bottom: 1px solid var(--color-rule);
+  text-align: left;
+  vertical-align: top;
+}
+
+.data-table .num {
+  text-align: right;
+}

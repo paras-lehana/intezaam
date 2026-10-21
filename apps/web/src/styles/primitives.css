@@ -1,0 +1,206 @@
+/**
+ * Shared primitives: containers, the ruled ledger page, gold hairlines with ✦ ends,
+ * eyebrows, chips, the loading fallback and the motion policy. Surfaces (cards, panels,
+ * notices, callouts) are surfaces.css.
+ *
+ * Responsibility: the small vocabulary every area composes. Boundary: no page layout.
+ * Motion policy: every element's resting state is its final state, so `animation: none`
+ * (reduced motion or the pause toggle) never hides content. No glass, no backdrop-filter.
+ */
+.container {
+  width: 100%;
+  max-width: var(--content-width);
+  margin-inline: auto;
+  padding-inline: var(--space-4);
+}
+
+@media (min-width: 64rem) {
+  .container {
+    padding-inline: var(--space-5);
+  }
+}
+
+.plain-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Children stacked with a small gap: the inside of most cards and panels. */
+.stack {
+  display: grid;
+  gap: var(--space-2);
+}
+
+/* A small uppercase label in gold ink (who runs a stage, a service's status). */
+.kicker {
+  margin-bottom: var(--space-2);
+  color: var(--color-gold-text);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* A bahi-khata page: faint gold ruling every 2 rem and a rose margin line on the left. */
+.ledger {
+  background-color: var(--color-surface);
+  background-image:
+    linear-gradient(
+      90deg,
+      transparent 1.25rem,
+      var(--color-margin-rule) 1.25rem,
+      transparent calc(1.25rem + 1px)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--ruling-gap) - 1px),
+      var(--color-ruling) calc(var(--ruling-gap) - 1px),
+      var(--color-ruling) var(--ruling-gap)
+    );
+}
+
+/* Gold hairline with diamond ends: ✦ ——— ✦ (decorative, hidden from assistive tech). */
+.hairline {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-block: var(--space-5);
+  color: var(--color-gold);
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.hairline::before,
+.hairline::after {
+  content: '✦';
+}
+
+.hairline__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-gold) 12%,
+    var(--color-gold) 88%,
+    transparent
+  );
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-3);
+  color: var(--color-gold-text);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.lede {
+  max-width: var(--reading-width);
+  color: var(--color-text-muted);
+  font-size: var(--text-lg);
+}
+
+.muted {
+  color: var(--color-text-muted);
+}
+
+.section-head {
+  max-width: var(--reading-width);
+  margin-bottom: var(--space-6);
+}
+
+.section {
+  padding-block: var(--space-8);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-pill);
+  background: var(--color-bg-alt);
+  color: var(--color-text);
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+.icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.loading-fallback {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: 30vh;
+  justify-content: center;
+  color: var(--color-text-muted);
+}
+
+.loading-fallback__spinner {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--color-rule);
+  border-top-color: var(--color-gold-text);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Hover lift: pointer devices only, and only when motion is welcome. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .lift {
+    transition:
+      transform var(--duration-base) var(--ease-out),
+      box-shadow var(--duration-base) var(--ease-out),
+      border-color var(--duration-base) var(--ease-out);
+  }
+
+  .lift:hover {
+    transform: translateY(-3px);
+    border-color: var(--color-border);
+    box-shadow: var(--shadow-raised);
+  }
+}
+
+/* Motion policy: reduced motion stops every animation; content is already in its final state. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* WCAG 2.2.2: the header's pause control stops the stamp, the bars and the spinner. */
+:root[data-motion='paused'] *,
+:root[data-motion='paused'] *::before,
+:root[data-motion='paused'] *::after {
+  animation: none !important;
+}

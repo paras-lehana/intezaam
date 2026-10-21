@@ -1,0 +1,31 @@
+/**
+ * Vitest configuration for the web SPA.
+ *
+ * Responsibility: run component tests in jsdom with jest-dom matchers. Boundary: reuses
+ * the Vite config so tests transform JSX exactly the way the production build does.
+ */
+import { defineConfig, mergeConfig } from 'vitest/config';
+import viteConfig from './vite.config.ts';
+
+/** The one stylesheet a test reads (tokens-contrast.test.ts). */
+const TOKEN_SHEET = /styles[\\/]tokens\.css/;
+
+export default mergeConfig(
+  viteConfig,
+  defineConfig({
+    test: {
+      environment: 'jsdom',
+      setupFiles: ['./src/__tests__/setup.ts'],
+      include: ['src/**/__tests__/**/*.test.{ts,tsx}'],
+      // Efficiency: stylesheets are not processed in tests, except the token sheet, which the
+      // contrast test reads as text (`?raw`) to measure every colour pair.
+      css: { include: [TOKEN_SHEET] },
+      coverage: {
+        provider: 'v8',
+        include: ['src/**/*.{ts,tsx}'],
+        exclude: ['src/**/__tests__/**', 'src/main.tsx'],
+        reporter: ['text-summary', 'json-summary'],
+      },
+    },
+  }),
+);

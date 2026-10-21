@@ -1,0 +1,27 @@
+/**
+ * Share tab: the WhatsApp text, the export buttons, the link field and save/restore.
+ *
+ * Responsibility: wrapping button rows (44 px targets from buttons.css) and a readable,
+ * wrapping message preview, from tokens only. Boundary: cards and headings come from the
+ * shared panel sections (common.css); print hides the controls (print.css hides buttons).
+ */
+/* The preview is a text-block (surfaces.css), capped so the buttons stay in view. */
+.share-text {
+  max-height: 18rem;
+  overflow: auto;
+  color: var(--color-text);
+  font-size: var(--text-sm);
+}
+
+.share-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+@media print {
+  .share-text {
+    max-height: none;
+    overflow: visible;
+  }
+}

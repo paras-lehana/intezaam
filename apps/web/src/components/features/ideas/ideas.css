@@ -1,0 +1,125 @@
+/**
+ * Ideas tab: idea cards, themes, the style quiz, hashtags and the message studio.
+ *
+ * Responsibility: a responsive card grid and compact forms from tokens only; cost bands
+ * show a glyph and words, never colour alone. Boundary: cards and headings come from the
+ * shared panel sections (common.css).
+ */
+.ideas-grid {
+  display: grid;
+  gap: var(--space-3);
+}
+
+@media (min-width: 48rem) {
+  .ideas-grid {
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+  }
+}
+
+/* The card is a panel-soft stack (surfaces.css, primitives.css), top-aligned in its row. */
+.idea {
+  align-content: start;
+}
+
+.idea > * {
+  margin: 0;
+}
+
+.idea__category {
+  color: var(--color-gold-text);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.idea__title {
+  color: var(--color-ink);
+  font-size: var(--text-base);
+}
+
+.idea__tags,
+.ideas-themes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.idea__band--saves {
+  border-color: var(--color-success);
+}
+
+.idea__band--splurge {
+  border-color: var(--color-rose-text);
+}
+
+.idea__why-label {
+  font-weight: 700;
+}
+
+.idea a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-target);
+}
+
+.quiz {
+  display: grid;
+  gap: var(--space-3);
+}
+
+@media (min-width: 48rem) {
+  .quiz {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.quiz__apply,
+.studio,
+.hashtag-fields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+
+.quiz__apply p {
+  flex-basis: 100%;
+  margin: 0;
+}
+
+.studio .field,
+.hashtag-fields .field {
+  margin: 0;
+}
+
+.draft {
+  display: grid;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+}
+
+.draft p {
+  margin: 0;
+}
+
+/* The draft is a text-block (surfaces.css); Hindi and Marathi switch to Devanagari. */
+.draft__body:lang(hi),
+.draft__body:lang(mr) {
+  font-family: var(--font-deva);
+  line-height: var(--leading-deva);
+}
+
+.draft__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+@media print {
+  .quiz,
+  .studio,
+  .hashtag-fields {
+    display: none;
+  }
+}

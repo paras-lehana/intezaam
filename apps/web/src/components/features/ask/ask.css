@@ -1,0 +1,79 @@
+/**
+ * Ask Intezaam: the conversation, refusals, citations, proposals and the question box.
+ *
+ * Responsibility: a readable thread from tokens only; a refusal carries a ⚠ and words, not
+ * just a colour. Boundary: the tool container and the shared diff live elsewhere
+ * (workspace, what-if.css).
+ */
+.ask-thread {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.ask-turn {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.ask-turn__question {
+  justify-self: end;
+  max-width: 90%;
+  margin: 0;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-card);
+  background: var(--color-chip-selected);
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.ask-turn__answer > p {
+  margin: 0;
+}
+
+.ask-turn__refusal {
+  padding: var(--space-2) var(--space-3);
+  border-left: 4px solid var(--color-danger);
+  border-radius: var(--radius-field);
+  background: var(--color-danger-soft);
+  color: var(--color-text);
+}
+
+.ask-turn__sources a {
+  font-weight: 600;
+}
+
+.ask-proposal {
+  display: grid;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-rule);
+}
+
+.ask-proposal p {
+  margin: 0;
+}
+
+.ask-form {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.ask-form .field {
+  margin: 0;
+}
+
+.ask-form .button {
+  justify-self: start;
+}
+
+.ask-examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.ask-examples__chip {
+  min-height: var(--touch-target);
+  font: inherit;
+  cursor: pointer;
+}

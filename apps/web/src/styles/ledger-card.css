@@ -1,0 +1,155 @@
+/**
+ * The hero's ledger page and the page's one motion moment.
+ *
+ * Responsibility: a ruled ivory page (espresso in the dark theme) with the starting split
+ * as bars, the two verdict questions, and the "Code-checked" stamp. Motion: the bars fill
+ * once and the stamp lands once; every resting state is the final state, so reduced motion
+ * or the pause toggle simply shows the finished page. Bars scale with transform only.
+ * Boundary: the hero around the page is in home.css; the data comes from VerdictPreview.
+ */
+.ledger-card {
+  position: relative;
+  margin: 0;
+  padding: var(--space-5) var(--space-5) var(--space-5) var(--space-7);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-card);
+  background-color: var(--page-bg);
+  color: var(--page-ink);
+  box-shadow: var(--shadow-modal);
+}
+
+.ledger-card__kicker {
+  margin-bottom: var(--space-1);
+  color: var(--page-muted);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ledger-card__title {
+  margin-bottom: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  line-height: var(--leading-tight);
+}
+
+.ledger-card__meta {
+  color: var(--page-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.ledger-card__label {
+  margin: var(--space-4) 0 var(--space-2);
+  font-weight: 650;
+}
+
+.ledger-card__bars {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.ledger-bar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px var(--space-3);
+  font-size: var(--text-sm);
+}
+
+.ledger-bar__value {
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+}
+
+.ledger-bar__track {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--page-track);
+}
+
+.ledger-bar__fill {
+  fill: var(--page-bar);
+  transform-box: fill-box;
+  transform-origin: left center;
+  animation: bar-fill var(--duration-slow) var(--ease-out) both;
+}
+
+.ledger-bar:nth-child(2) .ledger-bar__fill {
+  animation-delay: 80ms;
+}
+
+.ledger-bar:nth-child(3) .ledger-bar__fill {
+  animation-delay: 160ms;
+}
+
+.ledger-bar:nth-child(4) .ledger-bar__fill {
+  animation-delay: 240ms;
+}
+
+.ledger-bar:nth-child(5) .ledger-bar__fill {
+  animation-delay: 320ms;
+}
+
+@keyframes bar-fill {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+.ledger-card__axes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+  margin: var(--space-4) 0 var(--space-3);
+}
+
+.ledger-card__axes dt {
+  font-weight: 700;
+}
+
+.ledger-card__axes dd {
+  margin: 0;
+  color: var(--page-muted);
+  font-size: var(--text-sm);
+}
+
+.ledger-card__caption {
+  color: var(--page-muted);
+  font-size: var(--text-xs);
+}
+
+/* The verdict as a stamp: double rule, rose ink, tilted — it lands once, after the bars.
+   It stays in the flow (right-aligned), so it can never cover the page's text. */
+.stamp {
+  display: grid;
+  justify-items: center;
+  width: fit-content;
+  margin: var(--space-2) var(--space-2) var(--space-4) auto;
+  padding: var(--space-2) var(--space-3);
+  border: 3px double var(--page-stamp);
+  border-radius: var(--radius-field);
+  color: var(--page-stamp);
+  transform: rotate(-6deg);
+  animation: stamp-land 600ms var(--ease-stamp) 600ms both;
+}
+
+.stamp__main {
+  font-size: var(--text-sm);
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.stamp__sub {
+  font-size: var(--text-xs);
+}
+
+@keyframes stamp-land {
+  from {
+    opacity: 0;
+    transform: rotate(-16deg) scale(1.8);
+  }
+}

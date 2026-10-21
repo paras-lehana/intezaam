@@ -1,0 +1,59 @@
+/**
+ * Print: a clean paper copy of the plan and the checklist.
+ *
+ * Responsibility: hide the chrome (header, footer, switches, buttons, the form on the
+ * plan page) and flatten cards, so Ctrl + P gives the plan on paper; tokens.css switches
+ * the ink to black on white. Boundary: workspace panels may add `.print-hide` to anything
+ * else that should not print.
+ */
+@media print {
+  .skip-link,
+  .site-header,
+  .site-footer,
+  .split-switch,
+  .action-bar,
+  .plan-split__pane--details,
+  .hero__actions,
+  .button,
+  .icon-button,
+  .print-hide {
+    display: none !important;
+  }
+
+  .plan-split[data-view] .plan-split__pane--plan {
+    display: block !important;
+  }
+
+  .plan-split {
+    display: block;
+    padding: 0;
+  }
+
+  .hero {
+    background: none;
+  }
+
+  .hero::before,
+  .hero::after {
+    display: none;
+  }
+
+  .card,
+  .feature-tile,
+  .ledger-card,
+  .loop__step,
+  .pipeline__stage {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+
+  .ledger {
+    background-image: none;
+  }
+
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.8em;
+    word-break: break-all;
+  }
+}

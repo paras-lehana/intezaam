@@ -1,0 +1,121 @@
+/**
+ * People tab: headcount and food tables, the space check, the guest list, chanda, the ledger
+ * and the volunteer roster.
+ *
+ * Responsibility: ledger-style tables and compact forms from tokens only (both themes and
+ * print follow tokens.css); status lines carry words and icons, never colour alone.
+ * Boundary: cards and headings come from the shared panel sections (common.css).
+ */
+.people h4 {
+  margin: var(--space-2) 0 0;
+  color: var(--color-ink);
+  font-size: var(--text-base);
+}
+
+.people-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.people-table caption {
+  padding-bottom: var(--space-2);
+  color: var(--color-text-muted);
+  text-align: left;
+}
+
+.people-table th,
+.people-table td {
+  padding: var(--space-2) var(--space-1);
+  border-bottom: 1px solid var(--color-ruling);
+  text-align: left;
+  vertical-align: middle;
+}
+
+.people-table td:last-child {
+  text-align: right;
+}
+
+.people-table input,
+.people-table select {
+  min-width: 7rem;
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+/* Warnings and statuses are callouts (surfaces.css); a shortfall turns the edge red. */
+.people-status--over,
+.people-status--gap {
+  border-left-color: var(--color-danger);
+  background: var(--color-danger-soft);
+}
+
+.people-status--ok,
+.people-status--funded,
+.people-status--surplus {
+  border-left-color: var(--color-success);
+  background: var(--color-success-soft);
+}
+
+.people-chips,
+.people-functions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.people-actions,
+.guest-form,
+.ledger-add {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+
+.guest-form .field,
+.ledger-add .field {
+  margin: 0;
+}
+
+.guest-form__name {
+  flex: 1 1 14rem;
+}
+
+.chanda {
+  display: grid;
+  gap: var(--space-4);
+}
+
+@media (min-width: 48rem) {
+  .chanda {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+.roster {
+  display: grid;
+  gap: var(--space-3);
+}
+
+@media (min-width: 40rem) {
+  .roster {
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  }
+}
+
+.roster__item h4,
+.roster__item p,
+.roster__item .field {
+  margin: 0;
+}
+
+@media print {
+  .guest-form,
+  .guest-import,
+  .ledger-add {
+    display: none;
+  }
+}

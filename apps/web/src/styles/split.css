@@ -1,0 +1,157 @@
+/**
+ * The plan page's split: form and workspace side by side on wide screens; one pane at a
+ * time with a "Details | Plan" switch and a sticky "Update plan" bar on phones.
+ *
+ * Responsibility: the tool-dashboard layout (two independently scrolling panes at
+ * ≥ 64 rem; a segmented control and a thumb-zone action bar below), and keeping a focused
+ * control clear of the pinned switch and bar (WCAG 2.4.11, see "Focus not obscured").
+ * Boundary: both panes stay mounted; only CSS decides which one a phone shows.
+ */
+.plan-split {
+  display: grid;
+  gap: var(--space-4);
+  width: 100%;
+  max-width: var(--content-width);
+  margin-inline: auto;
+  padding: var(--space-4);
+}
+
+.split-switch {
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-2));
+  z-index: 10;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2px;
+  padding: var(--space-1);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.split-switch__option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--color-text-muted);
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+/* Pressed = espresso fill with ivory text (15.8:1) and a heavier weight. */
+.split-switch__option[aria-pressed='true'] {
+  background: var(--cover-bg);
+  color: var(--on-cover);
+  font-weight: 750;
+}
+
+.split-switch__badge {
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-pill);
+  background: var(--cta-start);
+  color: var(--cta-ink);
+  font-size: var(--text-xs);
+  font-weight: 700;
+}
+
+.plan-split[data-view='details'] .plan-split__pane--plan,
+.plan-split[data-view='plan'] .plan-split__pane--details {
+  display: none;
+}
+
+/* On phones the bar carries the submit, so the form's own button would be a duplicate. */
+.plan-split .planner-form__submit {
+  display: none;
+}
+
+.action-bar {
+  position: fixed;
+  inset: auto 0 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--action-bar-height);
+  padding: var(--space-3) var(--space-4) calc(var(--space-3) + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--cover-line);
+  background: var(--cover-bg);
+  color: var(--on-cover);
+}
+
+.action-bar :focus-visible {
+  outline-color: var(--cover-focus);
+}
+
+.action-bar__status {
+  flex: 1;
+  margin: 0;
+  color: var(--on-cover-dim);
+  font-size: var(--text-sm);
+}
+
+.action-bar__button {
+  margin-left: auto;
+}
+
+/*
+ * Focus not obscured (WCAG 2.4.11, technique C43). Below 64 rem three bands are pinned:
+ * the header (base.css pads the page for it), the switch under it and the action bar at
+ * the bottom. Scroll padding and margins make the browser scroll a tabbed-to control
+ * clear of them even when it is already on screen behind one.
+ */
+@media (width < 64rem) {
+  /* The page ends one bar lower, so the footer's last link can rise above the bar too. */
+  body:has(.plan-split) {
+    padding-bottom: calc(var(--action-bar-height) + env(safe-area-inset-bottom));
+  }
+
+  html:has(.plan-split) {
+    scroll-padding-bottom: calc(var(--action-bar-height) + env(safe-area-inset-bottom) + var(--space-3));
+  }
+
+  /* The switch sticks only over the panes, so only their content steps below it; as a
+     margin on that content, not page padding, focusing the switch itself never scrolls.
+     Efficiency: a plain descendant match, recomputed only when the panes' DOM changes. */
+  .plan-split__pane * {
+    scroll-margin-top: calc(var(--split-switch-height) + var(--space-2));
+  }
+}
+
+/* Wide screens: two panes, each scrolling on its own under the sticky header. */
+@media (min-width: 64rem) {
+  .plan-split {
+    grid-template-columns: minmax(22rem, 2fr) minmax(0, 3fr);
+    align-items: start;
+    gap: var(--space-6);
+    padding: var(--space-5);
+  }
+
+  .split-switch,
+  .action-bar {
+    display: none;
+  }
+
+  .plan-split[data-view] .plan-split__pane {
+    display: block;
+  }
+
+  .plan-split__pane--details {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-4));
+    max-height: calc(100dvh - var(--header-height) - var(--space-6));
+    overflow-y: auto;
+    padding-right: var(--space-2);
+    overscroll-behavior: contain;
+  }
+
+  .plan-split .planner-form__submit {
+    display: inline-flex;
+  }
+}

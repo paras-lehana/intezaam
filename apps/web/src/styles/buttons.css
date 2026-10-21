@@ -1,0 +1,108 @@
+/**
+ * Buttons: the gold call to action, secondary and ghost variants, and the variant for the
+ * espresso cover.
+ *
+ * Responsibility: every button meets the 44 px target, keeps its text contrast in hover
+ * states (light themes darken, never lighten, the text's background) and shows a busy
+ * state without being disabled. Boundary: icon buttons in the header live in layout.css.
+ */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target);
+  padding: var(--space-2) var(--space-5);
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  font: inherit;
+  font-weight: 650;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-base) var(--ease-out),
+    background-color var(--duration-fast) ease,
+    border-color var(--duration-fast) ease;
+}
+
+.button:active {
+  transform: translateY(1px);
+}
+
+.button--cta {
+  background: var(--cta-bg);
+  color: var(--cta-ink);
+  box-shadow: var(--cta-glow);
+}
+
+.button--cta:hover {
+  background: var(--cta-bg-hover);
+}
+
+/* On the cover the CTA's focus ring must read against espresso, not ivory. */
+.hero .button:focus-visible,
+.site-header .button:focus-visible {
+  outline-color: var(--cover-focus);
+}
+
+.button--secondary {
+  border-color: var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-ink);
+}
+
+.button--secondary:hover {
+  background: var(--color-surface-selected);
+}
+
+.button--ghost {
+  border-color: var(--color-border);
+  background: transparent;
+  color: var(--color-ink);
+}
+
+.button--ghost:hover {
+  background: var(--color-bg-alt);
+}
+
+.button--on-cover {
+  border-color: var(--cover-line);
+  background: transparent;
+  color: var(--on-cover);
+}
+
+.button--on-cover:hover {
+  border-color: var(--on-cover-gold);
+  color: var(--on-cover-gold);
+}
+
+.button--large {
+  min-height: 3.25rem;
+  padding-inline: var(--space-6);
+  font-size: var(--text-lg);
+}
+
+.button--block {
+  width: 100%;
+}
+
+.button[aria-disabled='true'] {
+  opacity: 0.72;
+  cursor: progress;
+}
+
+.copy-control {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.copy-control__status {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}

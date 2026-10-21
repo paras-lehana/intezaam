@@ -1,0 +1,153 @@
+/**
+ * Overview tab: the stamped verdict page, the narrative, readiness, risks and key numbers.
+ *
+ * Responsibility: layout for the first tab a plan opens on. Boundary: the ledger page,
+ * stamp and their one motion moment come from ledger-card.css; this file only places them.
+ * Severity reads from words and shapes; colour is a second signal.
+ */
+.panel > * + * {
+  margin-top: var(--space-4);
+}
+
+.verdict-card {
+  margin-bottom: var(--space-5);
+  box-shadow: var(--shadow-card);
+}
+
+.verdict-card__stamp {
+  float: right;
+  margin: 0 0 var(--space-3) var(--space-3);
+}
+
+.verdict-card__axes {
+  display: grid;
+  gap: var(--space-3);
+  margin: var(--space-4) 0;
+}
+
+.verdict-card__axis dt {
+  font-weight: 650;
+}
+
+.verdict-card__axis dd {
+  margin: 0;
+  color: var(--page-muted);
+}
+
+.verdict-card__estimate {
+  clear: both;
+  margin: 0;
+  font-weight: 600;
+}
+
+.narrative__headline {
+  margin-bottom: var(--space-2);
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  line-height: var(--leading-snug);
+}
+
+.narrative__reasons {
+  display: grid;
+  gap: var(--space-2);
+  padding-left: var(--space-5);
+}
+
+.narrative__steps-title {
+  margin: var(--space-4) 0 var(--space-2);
+}
+
+.next-actions {
+  display: grid;
+  gap: var(--space-2);
+  padding-left: var(--space-5);
+}
+
+.risk-list {
+  display: grid;
+  gap: var(--space-4);
+}
+
+/* Scoped to the Overview's list: the Safety tab's radar styles its own cards. */
+.risk-list .risk {
+  padding-left: var(--space-3);
+  border-left: 3px solid var(--color-rule);
+}
+
+.risk-list .risk--blocker,
+.risk-list .risk--high {
+  border-left-color: var(--color-danger);
+}
+
+.risk-list .risk > * {
+  margin: 0 0 var(--space-1);
+}
+
+.risk-list .risk__title {
+  font-size: var(--text-base);
+}
+
+.readiness__score {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+.readiness__number {
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 600;
+  line-height: 1;
+}
+
+.readiness__meter {
+  width: 100%;
+  height: 0.75rem;
+}
+
+.readiness__factors {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.readiness__factor {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.readiness__points {
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.key-numbers {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.key-numbers__item {
+  padding: var(--space-3);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-field);
+}
+
+.key-numbers__item dt {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.key-numbers__item dd {
+  margin: 0;
+}
+
+.key-numbers__value {
+  color: var(--color-ink);
+  font-size: var(--text-lg);
+  font-weight: 700;
+}

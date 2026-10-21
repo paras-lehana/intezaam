@@ -1,0 +1,48 @@
+{
+  "name": "@intezaam/core",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pure, deterministic planning engine for Indian celebrations: domain tables with sources, budget allocation, verdict and levers, back-planned timeline, vendor checklists, headcount, permissions, risks, run sheet, exports, prompt contracts and offline fallbacks. No I/O, no clock, no network.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./schemas": {
+      "types": "./dist/schemas/index.d.ts",
+      "default": "./dist/schemas/index.js"
+    },
+    "./domain": {
+      "types": "./dist/domain/index.d.ts",
+      "default": "./dist/domain/index.js"
+    },
+    "./engine": {
+      "types": "./dist/engine/index.d.ts",
+      "default": "./dist/engine/index.js"
+    },
+    "./export": {
+      "types": "./dist/export/index.d.ts",
+      "default": "./dist/export/index.js"
+    },
+    "./integrations": {
+      "types": "./dist/integrations/index.d.ts",
+      "default": "./dist/integrations/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "type-check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit"
+  },
+  "dependencies": {
+    "zod": "^4.6.5"
+  }
+}

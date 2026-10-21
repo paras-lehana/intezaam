@@ -1,0 +1,232 @@
+/**
+ * Form controls: fields, inputs, checks, choice chips, multi-select chips, errors and the
+ * validation glow.
+ *
+ * Responsibility: every control meets the 44 px target, shows a visible focus ring and
+ * keeps a 3:1 boundary — inputs are bordered with #A87A2C (3.6:1 on ivory; sand is
+ * decorative only). Selected chips are shown by fill, weight AND a tick, never colour
+ * alone. Boundary: the planner form's layout lives in planner-form.css.
+ */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-bottom: var(--space-4);
+  border-radius: var(--radius-field);
+}
+
+.field label,
+.field__label-text,
+.group__legend,
+.choice-group__legend {
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  font-weight: 650;
+}
+
+.field__hint {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.field__counter {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.field__error {
+  margin: 0;
+  color: var(--color-danger);
+  font-size: var(--text-sm);
+  font-weight: 650;
+}
+
+.field__error::before {
+  content: '⚠ ';
+}
+
+.field--note {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* Scroll + glow + focus: the field validation sends the reader to keeps a static danger ring
+   while it has attention (3 s), so reduced-motion readers see it too; the pulse is extra. */
+.field--attention {
+  box-shadow:
+    0 0 0 4px var(--color-danger-soft),
+    0 0 0 6px var(--color-danger);
+  animation: attention-glow var(--duration-glow) ease-out;
+}
+
+@keyframes attention-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 4px var(--color-danger-soft),
+      0 0 0 6px var(--color-danger);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 8px var(--color-danger-soft),
+      0 0 0 10px var(--color-danger);
+  }
+}
+
+textarea,
+select,
+input[type='text'],
+input[type='date'],
+input[type='time'] {
+  width: 100%;
+  min-height: var(--touch-target);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-field);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+}
+
+textarea {
+  resize: vertical;
+  line-height: 1.55;
+}
+
+::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1;
+}
+
+textarea:focus-visible,
+select:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 1px;
+}
+
+textarea[aria-invalid='true'],
+select[aria-invalid='true'],
+input[aria-invalid='true'] {
+  border-color: var(--color-danger);
+  border-width: 2px;
+}
+
+/* A CSS-drawn chevron in currentColor so it follows the theme. */
+select {
+  appearance: none;
+  padding-right: var(--space-7);
+  background-image:
+    linear-gradient(45deg, transparent 50%, currentcolor 50%),
+    linear-gradient(135deg, currentcolor 50%, transparent 50%);
+  background-position:
+    calc(100% - 22px) 52%,
+    calc(100% - 16px) 52%;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex-shrink: 0;
+  margin: 0;
+  accent-color: var(--color-gold-text);
+}
+
+fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+legend {
+  padding: 0;
+}
+
+.check {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--touch-target);
+  cursor: pointer;
+}
+
+.group {
+  display: grid;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+  border-radius: var(--radius-field);
+}
+
+.group__legend {
+  margin-bottom: var(--space-2);
+}
+
+.choice-group {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.choice-group__options,
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+/* Radio and checkbox chips: the real input stays visible as the selection mark. */
+.choice,
+.chip-option,
+.preset {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--touch-target);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font-size: var(--text-sm);
+  font-weight: 550;
+  cursor: pointer;
+}
+
+.choice:has(input:checked),
+.chip-option:has(input:checked) {
+  border-width: 2px;
+  background: var(--color-chip-selected);
+  font-weight: 700;
+}
+
+.choice:has(input:focus-visible),
+.chip-option:has(input:focus-visible) {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.chip-option:has(input[aria-disabled='true']) {
+  border-style: dashed;
+  color: var(--color-text-muted);
+  cursor: not-allowed;
+}
+
+.choice-group--cards .choice {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  border-radius: var(--radius-card);
+}
+
+.choice__hint {
+  grid-column: 2;
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  font-weight: 400;
+}

@@ -1,0 +1,249 @@
+/**
+ * App shell: the espresso header (the ledger's cover), main column and footer.
+ *
+ * Responsibility: the chrome every page shares. The header is solid espresso in both
+ * themes — no glass, no backdrop-filter — with a gold hairline under it. Boundary: page
+ * content styles live in home, bento, planner-form, split and about CSS.
+ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--cover-bg);
+  border-bottom: 1px solid var(--cover-line);
+  color: var(--on-cover);
+}
+
+.site-header :focus-visible {
+  outline-color: var(--cover-focus);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  max-width: var(--content-width);
+  min-height: var(--header-height);
+  margin: 0 auto;
+  padding-inline: var(--space-3);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--touch-target);
+  margin-right: auto;
+  color: var(--on-cover);
+  text-decoration: none;
+}
+
+.brand__mark {
+  flex-shrink: 0;
+  width: 2rem;
+  height: 2rem;
+}
+
+.brand__tile {
+  fill: var(--cover-bg-2);
+  stroke: var(--color-gold);
+  stroke-width: 1.5;
+}
+
+.brand__ledger {
+  fill: none;
+  stroke: var(--color-gold);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+.brand__tick {
+  fill: none;
+  stroke: var(--on-cover-gold);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.brand__sparkle {
+  fill: var(--on-cover-gold);
+}
+
+.brand__text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.brand__name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.brand__name em {
+  color: var(--on-cover-gold);
+  font-style: italic;
+}
+
+.brand__tagline {
+  color: var(--on-cover-dim);
+  font-size: var(--text-xs);
+}
+
+.site-nav ul {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.site-nav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-target);
+  padding: 0 var(--space-2);
+  color: var(--on-cover-dim);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-nav a:hover {
+  color: var(--on-cover);
+}
+
+/* The current page: gold text AND an underline bar, never colour alone. */
+.site-nav a[aria-current='page'] {
+  color: var(--on-cover-gold);
+}
+
+.site-nav a[aria-current='page']::after {
+  content: '';
+  position: absolute;
+  left: var(--space-2);
+  right: var(--space-2);
+  bottom: 8px;
+  height: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--on-cover-gold);
+}
+
+.site-header__actions {
+  display: flex;
+  gap: var(--space-1);
+}
+
+.icon-button {
+  display: inline-grid;
+  place-items: center;
+  width: var(--touch-target);
+  height: var(--touch-target);
+  padding: 0;
+  border: 1px solid var(--cover-line);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--on-cover);
+  cursor: pointer;
+}
+
+.icon-button:hover {
+  border-color: var(--on-cover-gold);
+  color: var(--on-cover-gold);
+}
+
+.icon-button[aria-pressed='true'] {
+  background: var(--cover-raised);
+}
+
+.icon-button svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Phones: the wordmark becomes screen-reader text (the mark stays) so nav fits one row at 390 px. */
+@media (max-width: 39.99rem) {
+  .brand__text {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .site-nav a {
+    padding: 0 var(--space-2);
+  }
+}
+
+@media (min-width: 64rem) {
+  .site-header__inner {
+    gap: var(--space-4);
+    padding-inline: var(--space-5);
+  }
+}
+
+.site-main {
+  flex: 1;
+  width: 100%;
+  padding-bottom: var(--space-8);
+}
+
+.page-hero {
+  max-width: var(--reading-width);
+  padding-top: var(--space-7);
+}
+
+.site-footer {
+  border-top: 1px solid var(--cover-line);
+  background: var(--cover-bg);
+  color: var(--on-cover-dim);
+  font-size: var(--text-sm);
+}
+
+.site-footer :focus-visible {
+  outline-color: var(--cover-focus);
+}
+
+.site-footer__inner {
+  display: grid;
+  gap: var(--space-5);
+  padding-block: var(--space-7) var(--space-6);
+}
+
+@media (min-width: 48rem) {
+  .site-footer__inner {
+    grid-template-columns: 1.4fr 1fr 1fr;
+  }
+}
+
+.site-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--on-cover);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+}
+
+.site-footer__title {
+  margin-bottom: var(--space-2);
+  color: var(--on-cover-gold);
+  font-weight: 700;
+}
+
+.site-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--touch-target);
+  color: var(--on-cover);
+}

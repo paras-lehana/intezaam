@@ -1,0 +1,187 @@
+/**
+ * The planner form's layout: the brief box, samples, the five essentials, budget presets
+ * and the "More details" disclosure.
+ *
+ * Responsibility: one readable column that works at 390 px, with the essentials on a
+ * ruled ledger card and pairs of short fields side by side where there is room.
+ * Boundary: control styles live in forms.css; the split with the workspace in split.css.
+ */
+.planner-form {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.planner-form__title {
+  margin: 0;
+}
+
+.brief .field {
+  margin-bottom: var(--space-2);
+}
+
+.brief__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.live-region {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.samples__label {
+  margin-bottom: var(--space-2);
+  font-weight: 650;
+}
+
+.samples__list {
+  display: grid;
+  gap: var(--space-2);
+}
+
+@media (min-width: 40rem) {
+  .samples__list {
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+  }
+}
+
+.sample {
+  display: grid;
+  gap: var(--space-1);
+  width: 100%;
+  min-height: var(--touch-target);
+  padding: var(--space-3);
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+  color: var(--color-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sample:hover {
+  border-style: solid;
+  background: var(--color-surface-selected);
+}
+
+.sample__label {
+  font-weight: 700;
+}
+
+.sample__description {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+/* The five questions sit on a ledger card with the rose margin rule. */
+.essentials {
+  padding: var(--space-5) var(--space-4) var(--space-3) var(--space-6);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  background-color: var(--color-surface);
+  background-image: linear-gradient(
+    90deg,
+    transparent 1rem,
+    var(--color-margin-rule) 1rem,
+    transparent calc(1rem + 1px)
+  );
+}
+
+.essentials__legend {
+  float: left;
+  width: 100%;
+  margin-bottom: var(--space-4);
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+}
+
+.essentials__legend + * {
+  clear: both;
+}
+
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+/* Budget presets share the chip shape (forms.css); as buttons they inherit the page font. */
+.preset {
+  justify-content: center;
+  min-width: var(--touch-target);
+  font-family: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+.preset[aria-pressed='true'] {
+  border-width: 2px;
+  background: var(--color-chip-selected);
+  font-weight: 700;
+}
+
+.more-details {
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+}
+
+.more-details__summary {
+  display: grid;
+  gap: var(--space-1);
+  min-height: var(--touch-target);
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-ink);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.more-details__hint {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  font-weight: 400;
+}
+
+.more-details__body {
+  padding: var(--space-2) var(--space-4) var(--space-4);
+  border-top: 1px solid var(--color-rule);
+}
+
+@media (min-width: 40rem) {
+  .group--pair {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-4);
+  }
+
+  .group--grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--space-4);
+  }
+
+  .group--pair > legend,
+  .group--grid > legend,
+  .group--grid > .field__hint,
+  .group--grid > .field__error,
+  .group__wide {
+    grid-column: 1 / -1;
+  }
+}
+
+.planner-form__summary:empty {
+  display: none;
+}
+
+.planner-form__errors {
+  color: var(--color-danger);
+  font-weight: 650;
+}
+
+.planner-form__submit {
+  justify-self: start;
+}

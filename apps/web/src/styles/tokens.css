@@ -1,0 +1,206 @@
+/**
+ * Design tokens — "the family ledger" (bahi-khata): espresso cover, ivory ruled pages,
+ * gold hairlines, the verdict as a stamp.
+ *
+ * Responsibility: the single source of every colour, type, spacing, radius, shadow and
+ * motion constant for both themes. Light (ivory pages) is the default on :root and
+ * `[data-theme='dark']` switches the pages to espresso; the cover (header, hero, footer)
+ * stays espresso in both themes, so it has its own `--cover-*` tokens. Boundary:
+ * components reference tokens only. Every text/background pair below is measured with
+ * the WCAG 2.x formula on every test run (src/__tests__/styles/tokens-contrast.test.ts):
+ * text ≥ 4.5:1 (the house target is 6:1, met by all but dark danger on a selected chip,
+ * 5.80:1), input borders and focus rings ≥ 3:1. Gold #C9943C is decoration only on ivory
+ * (2.54:1), and the hero's split bars are aria-hidden with their values printed as text.
+ */
+:root {
+  color-scheme: light;
+
+  /* Ivory pages (old --ivory / --cream) and white cards. */
+  --color-bg: #faf8f3;
+  --color-bg-alt: #f4efe4;
+  --color-surface: #ffffff;
+  /* Selected fills (addendum 9): active tab and a ticked multi-select chip. */
+  --color-surface-selected: #f7f2e8;
+  --color-chip-selected: #f4ecdd;
+  --color-danger-soft: #fbe9e6;
+  --color-success-soft: #e7f2ea;
+
+  /* Ink: headings, body, muted (darkened from #7A6A54, which was 4.56:1 on cream). */
+  --color-ink: #160f04;
+  --color-text: #3a2210;
+  --color-text-muted: #665540;
+  --color-gold-text: #74501a;
+  --color-rose-text: #8e3f30;
+  --color-success: #1f5e3a;
+  --color-info: #1a4a7a;
+  --color-danger: #9b1c13;
+  --color-link: #74501a;
+
+  /* Lines: gold hairlines and ledger ruling are decorative; inputs need the 3:1 border. */
+  --color-rule: rgb(201 148 60 / 30%);
+  --color-ruling: rgb(201 148 60 / 14%);
+  --color-margin-rule: rgb(184 92 74 / 35%);
+  --color-border: #a87a2c;
+  --color-focus: #a87a2c;
+  --color-gold: #c9943c;
+  --color-rose: #b85c4a;
+  --color-sand: #e6d9c0;
+
+  /* Primary action: the gold gradient with espresso ink (11.4:1 light end, 6.9:1 dark end). */
+  --cta-start: #e8b85a;
+  --cta-end: #c9943c;
+  --cta-hover-start: #f0c56c;
+  --cta-hover-end: #d4a048;
+  --cta-ink: #1a1208;
+  --cta-bg: linear-gradient(135deg, var(--cta-start), var(--cta-end));
+  --cta-bg-hover: linear-gradient(135deg, var(--cta-hover-start), var(--cta-hover-end));
+  --cta-glow: 0 10px 30px -12px rgb(201 148 60 / 55%);
+
+  /* The espresso cover: header, hero and footer, identical in both themes. */
+  --cover-bg: #160f04;
+  --cover-bg-2: #2c1a08;
+  --cover-card: #221a0a;
+  --cover-raised: #3a2810;
+  --on-cover: #f3e9d8;
+  /* 72% alpha (addendum 9 floor is 60%); measured blended over the cover. */
+  --on-cover-dim: rgb(243 233 216 / 72%);
+  --on-cover-gold: #e8b85a;
+  --cover-line: rgb(201 148 60 / 28%);
+  --cover-focus: #e8b85a;
+  --glow-gold: rgb(201 148 60 / 13%);
+  --glow-rose: rgb(184 92 74 / 7%);
+
+  /* The ledger page in the hero: ivory paper, espresso ink, a rose stamp. */
+  --page-bg: #faf8f3;
+  --page-ink: #160f04;
+  --page-muted: #665540;
+  --page-stamp: #8e3f30;
+  --page-bar: #c9943c;
+  --page-track: #f4efe4;
+
+  --shadow-card: 0 1px 2px rgb(22 15 4 / 6%), 0 16px 40px -24px rgb(116 80 26 / 40%);
+  --shadow-raised: 0 2px 4px rgb(22 15 4 / 8%), 0 24px 48px -24px rgb(116 80 26 / 45%);
+  --shadow-modal: 0 24px 80px rgb(22 15 4 / 30%);
+
+  /* Cormorant Garamond for display, Outfit for reading, Noto Sans Devanagari for Hindi. */
+  --font-display:
+    'Cormorant Garamond Variable', 'Cormorant Garamond', 'Iowan Old Style', Georgia, serif;
+  --font-sans:
+    'Outfit Variable', 'Outfit', 'Noto Sans Devanagari Variable', system-ui, -apple-system,
+    'Segoe UI', Roboto, 'Nirmala UI', sans-serif;
+  --font-deva: 'Noto Sans Devanagari Variable', 'Nirmala UI', 'Noto Sans Devanagari', sans-serif;
+  --text-xs: 0.875rem;
+  --text-sm: 0.9375rem;
+  --text-base: 1rem;
+  --text-lg: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --text-xl: clamp(1.3rem, 1.15rem + 0.6vw, 1.6rem);
+  --text-2xl: clamp(1.75rem, 1.4rem + 1.4vw, 2.5rem);
+  --text-3xl: clamp(2.125rem, 1.5rem + 2.6vw, 3.5rem);
+  --text-hero: clamp(2.75rem, 1.4rem + 5.4vw, 5.5rem);
+  --leading-tight: 1.05;
+  --leading-snug: 1.3;
+  --leading-body: 1.6;
+  --leading-deva: 1.75;
+
+  /* 8 px grid with 4 px half-steps. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  /* Radii from the old sheet: card 14, modal 20, field 9, pill. */
+  --radius-field: 9px;
+  --radius-card: 14px;
+  --radius-modal: 20px;
+  --radius-pill: 999px;
+
+  /* WCAG 2.5.5: primary targets are at least 44 × 44 CSS pixels. */
+  --touch-target: 44px;
+  --header-height: 4rem;
+  --action-bar-height: 4.5rem;
+  /* Sticky bands, sized from their parts so focus scrolling can clear them (WCAG 2.4.11):
+     the phone's "Details | Plan" switch is one row of 44 px options inside a 4 px padding
+     and a 1 px border (split.css); the workspace tab bar wraps its eight tabs to at most
+     two rows (2 px apart) beside the form at 64 rem and up (tabs.css). */
+  --split-switch-height: calc(var(--touch-target) + 2 * var(--space-1) + 2px);
+  --tab-bar-height: calc(2 * var(--touch-target) + 2px + 2 * var(--space-1) + 2px);
+  --content-width: 76rem;
+  --reading-width: 44rem;
+  /* Ledger ruling: one line every 2 rem, the rhythm of a bahi-khata page. */
+  --ruling-gap: 2rem;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-stamp: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 700ms;
+  --duration-glow: 3s;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* Espresso pages (the old landing scheme). */
+  --color-bg: #160f04;
+  --color-bg-alt: #1c1407;
+  --color-surface: #221a0a;
+  --color-surface-selected: #2c1a08;
+  --color-chip-selected: #3a2810;
+  --color-danger-soft: #3b1712;
+  --color-success-soft: #12301f;
+
+  --color-ink: #fbf3e2;
+  --color-text: #f3e9d8;
+  --color-text-muted: #bfae92;
+  --color-gold-text: #e8b85a;
+  --color-rose-text: #e9a28e;
+  --color-success: #6fc69a;
+  --color-info: #8db8e8;
+  --color-danger: #f08a7e;
+  --color-link: #e8b85a;
+
+  --color-rule: rgb(201 148 60 / 30%);
+  --color-ruling: rgb(201 148 60 / 10%);
+  --color-margin-rule: rgb(212 132 111 / 30%);
+  --color-border: #c9943c;
+  --color-focus: #e8b85a;
+
+  /* In the dark the cover sits one step deeper than the pages, so the hero still reads as a cover. */
+  --cover-bg: #0c0800;
+  --cover-card: #1c1407;
+
+  --page-bg: #221a0a;
+  --page-ink: #f3e9d8;
+  --page-muted: #bfae92;
+  --page-stamp: #e9a28e;
+  --page-bar: #e8b85a;
+  --page-track: #3a2810;
+
+  --shadow-card: 0 1px 0 rgb(255 255 255 / 4%) inset, 0 16px 40px -24px rgb(0 0 0 / 70%);
+  --shadow-raised: 0 1px 0 rgb(255 255 255 / 6%) inset, 0 24px 48px -24px rgb(0 0 0 / 80%);
+}
+
+/* Print: black ink on white paper; the cover flattens to paper too (see print.css). */
+@media print {
+  :root,
+  :root[data-theme] {
+    color-scheme: light;
+    --color-bg: #ffffff;
+    --color-surface: #ffffff;
+    --color-ink: #000000;
+    --color-text: #000000;
+    --color-text-muted: #333333;
+    --color-link: #000000;
+    --color-border: #777777;
+    --cover-bg: #ffffff;
+    --cover-bg-2: #ffffff;
+    --on-cover: #000000;
+    --on-cover-dim: #333333;
+    --on-cover-gold: #000000;
+  }
+}
