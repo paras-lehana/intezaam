@@ -18,6 +18,8 @@ Fixes found in the full browser test of the live site.
   model answer still invents a number next to a valid change, the reply says to press Apply instead.
 - **Ask box:** Enter sends the question and Shift+Enter keeps a new line (an IME composition is left alone).
 - **Provenance badge:** an answer served from the server's cache says "saved answer" instead of "0 s".
+- **Share link:** carries only the page address and the plan fragment; a query on the current page (a tracking tag
+  such as `fbclid` or `utm_source`) is no longer passed on to the family.
 - **Narration:** the model may return up to eight palette words; code keeps the first three, so a longer palette no
   longer fails the schema and falls back offline.
 - **Pre-publish checks:** reject control characters in sources (a mangled `\b` escape), and check casts on code lines only.

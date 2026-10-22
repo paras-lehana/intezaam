@@ -40,9 +40,9 @@ describe('csvExport and icsExport', () => {
 });
 
 describe('shareLink', () => {
-  it('carries the whole context in the fragment and drops any old fragment', () => {
+  it('carries the whole context in the fragment and drops any old fragment and query', () => {
     const { context } = samplePanel('society-ganesh');
-    const link = shareLink(context, `${PAGE_URL}#people`);
+    const link = shareLink(context, `${PAGE_URL}?utm_source=whatsapp&fbclid=abc#people`);
     const [base, fragment = ''] = link.split('#');
     expect(base).toBe(PAGE_URL);
     expect(fragment.startsWith(PLAN_FRAGMENT_PREFIX)).toBe(true);

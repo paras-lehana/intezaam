@@ -60,12 +60,13 @@ export function icsExport(plan: Plan): ExportFile {
 
 /**
  * A link that opens this plan: the whole context in the fragment, which never reaches a server.
+ * The page's own query (a tracking tag such as `?fbclid=` or `utm_`) is not passed on.
  * @example
- * shareLink(context, 'https://intezaam.lehana.in/plan'); // 'https://intezaam.lehana.in/plan#plan=v1.…'
+ * shareLink(context, 'https://intezaam.lehana.in/plan?utm_source=x'); // 'https://intezaam.lehana.in/plan#plan=v1.…'
  */
 export function shareLink(context: EventContext, pageUrl: string): string {
-  const base = pageUrl.split('#', 1)[0] ?? pageUrl;
-  return `${base}#${PLAN_FRAGMENT_PREFIX}${encodeContextForUrl(context)}`;
+  const page = new URL(pageUrl);
+  return `${page.origin}${page.pathname}#${PLAN_FRAGMENT_PREFIX}${encodeContextForUrl(context)}`;
 }
 
 /**
