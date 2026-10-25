@@ -4,6 +4,26 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [0.1.2] — 2026-10-26
+
+Code-quality pass; behaviour unchanged.
+
+### Changed
+
+- **Optional fields:** `pickDefined` and `withoutUndefined` (`packages/core/src/objects.ts`) copy optional fields under
+  `exactOptionalPropertyTypes` with one typed, cast-free call. They replace 53 repeated
+  `...(x === undefined ? {} : { x })` spreads in the brief reader, the form fill, and the engine, Gemini-check and
+  server modules that built responses field by field.
+- **Nesting:** prerequisite ordering in the timeline and priority reading in the brief reader each move their innermost
+  loop into a named function, so no block nests more than three levels.
+
+### Verified
+
+- `npm run test:coverage` (2026-10-26): 2,085 tests pass — core 1,399 (173 files), server 172 (18 files), web 514 (98
+  files). Coverage: core 99.92% lines / 95.74% branches; server 99.7% lines / 93.96% branches; web 98.46% lines /
+  87.65% branches.
+- `npx playwright test` (local, desktop and 390×844): 46 of 46 pass.
+
 ## [0.1.1] — 2026-10-21
 
 Fixes found in the full browser test of the live site.

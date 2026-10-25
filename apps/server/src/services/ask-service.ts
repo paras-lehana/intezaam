@@ -23,6 +23,7 @@ import {
   checkAskReply,
   ok,
   summarisePlanFacts,
+  withoutUndefined,
 } from '@intezaam/core';
 import { createProvenanceTracker } from './provenance.js';
 import {
@@ -47,8 +48,7 @@ function toBody(reply: AskModelOutput): Omit<AskResponse, 'provenance'> {
   return {
     answer: reply.answer,
     sources: reply.sources,
-    ...(reply.patch === undefined ? {} : { patch: reply.patch }),
-    ...(reply.refusal === undefined ? {} : { refusal: reply.refusal }),
+    ...withoutUndefined({ patch: reply.patch, refusal: reply.refusal }),
   };
 }
 

@@ -187,6 +187,11 @@ export interface PriorityReading {
   readonly cutSpans: readonly { readonly start: number; readonly end: number }[];
 }
 
+/** Appends each category not listed yet, keeping the order they were first mentioned in. */
+function addUnique(list: RankableCategory[], categories: readonly RankableCategory[]): void {
+  for (const category of categories) if (!list.includes(category)) list.push(category);
+}
+
 /**
  * Top priorities ("food and decor are most important") and one cut ("kam decor").
  * @example
@@ -207,9 +212,7 @@ export function readPriorities(tokens: readonly Token[]): PriorityReading {
       cut = firstCategory;
       cutSpans.push(span);
     } else if (findPhrases(clause.tokens, PRIORITY).length > 0) {
-      for (const category of [firstCategory, ...others]) {
-        if (!priorities.includes(category)) priorities.push(category);
-      }
+      addUnique(priorities, [firstCategory, ...others]);
       prioritySpans.push(span);
     }
   }

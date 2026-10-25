@@ -23,6 +23,7 @@ import {
 } from '../domain/seasons.js';
 import { type SourceId, SOURCES } from '../domain/sources.js';
 import { rangeText } from '../domain/units.js';
+import { withoutUndefined } from '../objects.js';
 import type { DateNote } from '../schemas/plan-time.js';
 import { OFF_PEAK_SAVING_LABEL } from './catering.js';
 import { festivalNotes, type NoteSpec, rainNotes } from './date-hazards.js';
@@ -46,8 +47,7 @@ function note(spec: NoteSpec, ctx: ClassifiedContext, trace: TraceLog): DateNote
       ['note', spec.kind],
     ],
     effect: spec.text,
-    ...(spec.sourceIds === undefined ? {} : { sourceIds: spec.sourceIds }),
-    ...(spec.confidence === undefined ? {} : { confidence: spec.confidence }),
+    ...withoutUndefined({ sourceIds: spec.sourceIds, confidence: spec.confidence }),
   });
   return {
     kind: spec.kind,

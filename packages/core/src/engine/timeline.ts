@@ -11,6 +11,7 @@
 import { daysBetweenIso } from '../domain/calendar.js';
 import type { RuleId } from '../domain/rule-ids.js';
 import { buildGoogleCalendarUrl } from '../integrations/google-links.js';
+import { withoutUndefined } from '../objects.js';
 import type { DateNote, PlanTask, PlanTimeline } from '../schemas/plan-time.js';
 import { selectTemplates } from './task-conditions.js';
 import {
@@ -72,8 +73,7 @@ function toTask(
     leadDays: taskLead(slot, ctx.dateIso),
     status,
     core: template.core,
-    ...(template.vendorType === undefined ? {} : { vendorType: template.vendorType }),
-    ...(functionKind === undefined ? {} : { functionKind }),
+    ...withoutUndefined({ vendorType: template.vendorType, functionKind }),
     dependsOn: template.dependsOn.filter((id) => planned.has(id)),
     traceIds: present([...ids.base, statusId, ruleId]),
   };

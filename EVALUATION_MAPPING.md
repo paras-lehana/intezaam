@@ -81,7 +81,7 @@ Where each evaluation area is delivered, with a path for every claim.
 
 ## 5. Testing
 
-- Core unit tests (1,392), server integration tests (172) and web component tests (514), all passing on 2026-10-21 →
+- Core unit tests (1,399), server integration tests (172) and web component tests (514), all passing on 2026-10-26 →
   [`packages/core/src/__tests__`](packages/core/src/__tests__), [`apps/server/src/__tests__`](apps/server/src/__tests__),
   [`apps/web/src/__tests__`](apps/web/src/__tests__)
 - Coverage gates on core (95/95/95/90), server (85/85/85/75) and web (95/93/95/83); measured core 99.92% lines, server

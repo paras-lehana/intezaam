@@ -1,6 +1,6 @@
 {
   "name": "@intezaam/core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "description": "Pure, deterministic planning engine for Indian celebrations: domain tables with sources, budget allocation, verdict and levers, back-planned timeline, vendor checklists, headcount, permissions, risks, run sheet, exports, prompt contracts and offline fallbacks. No I/O, no clock, no network.",
   "type": "module",

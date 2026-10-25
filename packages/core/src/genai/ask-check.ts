@@ -8,6 +8,7 @@
  * rule-based answer (the Apply prompt when a change survives); sources are deduplicated.
  * Boundary: pure; the patch is applied only after the user presses Apply.
  */
+import { withoutUndefined } from '../objects.js';
 import { askOffline, PATCH_ANSWER, REFUSAL_ANSWERS } from '../offline/ask.js';
 import type { EventContext } from '../schemas/context.js';
 import type { PlanFact } from '../schemas/diff.js';
@@ -76,8 +77,7 @@ export function checkAskReply(reply: AskModelOutput, input: AskCheckInput): AskC
     reply: {
       answer,
       sources: [...new Set(reply.sources)],
-      ...(patch === undefined ? {} : { patch }),
-      ...(reply.refusal === undefined ? {} : { refusal: reply.refusal }),
+      ...withoutUndefined({ patch, refusal: reply.refusal }),
     },
     corrected,
   };

@@ -7,6 +7,7 @@
  * offers. Boundary: pure comparison; both plans come from buildPlan.
  */
 import { BUDGET_CATEGORIES } from '../domain/budget-categories.js';
+import { withoutUndefined } from '../objects.js';
 import type { PlanDiff } from '../schemas/diff.js';
 import type { Plan } from '../schemas/plan.js';
 import type { Risk } from '../schemas/plan-safety.js';
@@ -121,10 +122,7 @@ export function diffPlans(before: Plan, after: Plan): PlanDiff {
     time,
     ...(hasFunding
       ? {
-          funding: {
-            ...(fundingBefore === undefined ? {} : { before: fundingBefore }),
-            ...(fundingAfter === undefined ? {} : { after: fundingAfter }),
-          },
+          funding: withoutUndefined({ before: fundingBefore, after: fundingAfter }),
         }
       : {}),
     totalDeltaInr: after.budget.totalInr - before.budget.totalInr,

@@ -1,6 +1,6 @@
 # Intezaam (इंतज़ाम) — every arrangement for your celebration, in one plan
 
-> **Version 0.1.1** · **Live:** https://intezaam.lehana.in · **Health:** https://intezaam.lehana.in/api/health ·
+> **Version 0.1.2** · **Live:** https://intezaam.lehana.in · **Health:** https://intezaam.lehana.in/api/health ·
 > Runs on your machine with zero keys: `npm install && npm run build && npm start`
 
 **Intezaam ("arrangements") plans Indian weddings, birthdays and community events from your own details.** Describe the
@@ -17,7 +17,7 @@ rupee, date and count, and every number the model writes is checked against them
 
 ```bash
 curl -s https://intezaam.lehana.in/api/health
-# {"status":"ok","version":"0.1.1","ai":{"configured":true,"models":["gemini-3.5-flash-lite","gemini-3.1-flash-lite"]}}
+# {"status":"ok","version":"0.1.2","ai":{"configured":true,"models":["gemini-3.5-flash-lite","gemini-3.1-flash-lite"]}}
 ```
 
 The live site has Gemini switched on. To run Intezaam yourself with no keys:
@@ -26,7 +26,7 @@ The live site has Gemini switched on. To run Intezaam yourself with no keys:
 npm install && npm run build && npm start     # the app and the API on http://localhost:8080
 # then, in a second terminal:
 curl -s http://localhost:8080/api/health
-# {"status":"ok","version":"0.1.1","ai":{"configured":false,"models":[]}}
+# {"status":"ok","version":"0.1.2","ai":{"configured":false,"models":[]}}
 ```
 
 Once the gateway and Gemini settings in `apps/server/.env` are filled in (see [Quick start](#quick-start)), `configured`
@@ -251,7 +251,7 @@ To switch on Gemini, copy [`.env.example`](.env.example) to `apps/server/.env` a
 and a Gemini API key from a project with no billing account; every variable is documented there. `npm run verify` runs
 type-check, lint, tests with coverage gates and the build; `npm run e2e` runs the Playwright journeys and axe scans.
 
-**Latest local run (2026-10-21):** 2,078 unit, integration and component tests pass (core 1,392 · server 172 · web 514)
+**Latest local run (2026-10-26):** 2,085 unit, integration and component tests pass (core 1,399 · server 172 · web 514)
 plus 46 Playwright tests. Details in [TESTING.md](TESTING.md).
 
 ## For evaluators

@@ -14,16 +14,16 @@ components with plans produced by the core engine itself.
 | End-to-end         | Playwright (desktop Chrome + 390×844 phone)          | [`e2e/journey.spec.ts`](e2e/journey.spec.ts), [`e2e/personas.spec.ts`](e2e/personas.spec.ts) | A typed Hinglish brief read into the form and planned with a two-axis verdict; "Why this?" shows a rule and its source; the outdoor DJ after 10 pm flagged on Safety; samples fill without planning; the society utsav's per-household contribution and permissions; an empty submission's accessible error; the refusal to book or pay; the `.ics` download; the Google services list; the web manifest and icons; each persona's key decision, and no unneeded flags for a control party                                                                                                                                                                                                                               | `npm run e2e`         |
 | Accessibility      | Playwright + axe-core (WCAG 2.0, 2.1, 2.2 A/AA tags) | [`e2e/a11y.spec.ts`](e2e/a11y.spec.ts)                                                       | No serious or critical violations on `/`, `/plan` and `/about` and on every plan workspace tab, in light and dark themes, on desktop and phone                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | `npm run a11y`        |
 
-## Latest local run (2026-10-21)
+## Latest local run (2026-10-26)
 
-`npm run test:coverage` passed **2,078 tests in 288 files**, and `npx playwright test` passed **46 of 46** (23 per
+`npm run test:coverage` passed **2,085 tests in 289 files**, and `npx playwright test` passed **46 of 46** (23 per
 device: 11 journeys, 4 persona checks and 8 axe scans) against the production build with the offline planner.
 
 | Workspace       | Test files | Tests | Statements | Branches | Functions | Lines  | Thresholds (lines / statements / functions / branches) |
 | --------------- | ---------- | ----- | ---------- | -------- | --------- | ------ | ------------------------------------------------------ |
-| `packages/core` | 172        | 1,392 | 99.74%     | 95.77%   | 99.91%    | 99.92% | 95 / 95 / 95 / 90                                      |
-| `apps/server`   | 18         | 172   | 98.65%     | 94.02%   | 100%      | 99.7%  | 85 / 85 / 85 / 75                                      |
-| `apps/web`      | 98         | 514   | 96.60%     | 87.87%   | 98.32%    | 98.46% | 95 / 93 / 95 / 83                                      |
+| `packages/core` | 173        | 1,399 | 99.72%     | 95.74%   | 99.91%    | 99.92% | 95 / 95 / 95 / 90                                      |
+| `apps/server`   | 18         | 172   | 98.65%     | 93.96%   | 100%      | 99.7%  | 85 / 85 / 85 / 75                                      |
+| `apps/web`      | 98         | 514   | 96.60%     | 87.65%   | 98.32%    | 98.46% | 95 / 93 / 95 / 83                                      |
 
 The README, [EVALUATION_MAPPING.md](EVALUATION_MAPPING.md) and [CHANGELOG.md](CHANGELOG.md) repeat these figures, and
 [`docs-test-counts.test.ts`](packages/core/src/__tests__/docs-test-counts.test.ts) fails when any of them differs from

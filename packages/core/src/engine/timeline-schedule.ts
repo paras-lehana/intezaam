@@ -94,21 +94,26 @@ function datedSlots(
 export function keepPrerequisitesFirst(slots: Slot[]): number {
   const byId = new Map(slots.map((slot) => [slot.template.id, slot] as const));
   const moved = new Set<string>();
+  // Repeat until nothing moves: a task that moved can push its own dependants later.
   for (let pass = 0; pass < slots.length; pass += 1) {
-    let changed = false;
-    for (const slot of slots) {
-      for (const dependency of slot.template.dependsOn) {
-        const before = byId.get(dependency)?.due;
-        if (slot.due !== null && before !== undefined && before !== null && slot.due < before) {
-          slot.due = before;
-          moved.add(slot.template.id);
-          changed = true;
-        }
-      }
-    }
-    if (!changed) break;
+    const changed = slots.filter((slot) => followPrerequisites(slot, byId));
+    for (const slot of changed) moved.add(slot.template.id);
+    if (changed.length === 0) break;
   }
   return moved.size;
+}
+
+/** Moves a slot to the latest due date among its prerequisites; true when it moved. */
+function followPrerequisites(slot: Slot, byId: ReadonlyMap<string, Slot>): boolean {
+  let moved = false;
+  for (const dependency of slot.template.dependsOn) {
+    const before = byId.get(dependency)?.due;
+    if (slot.due !== null && before !== undefined && before !== null && slot.due < before) {
+      slot.due = before;
+      moved = true;
+    }
+  }
+  return moved;
 }
 
 /**

@@ -13,6 +13,7 @@ import type { RankableCategory } from '../../domain/budget-categories.js';
 import type { CommunityOccasion } from '../../domain/community-occasions.js';
 import type { IdeaCategory } from '../../domain/ideas.js';
 import type { IdeaConstraints } from '../../genai/idea-constraints.js';
+import { withoutUndefined } from '../../objects.js';
 import type { EventContext } from '../../schemas/context.js';
 import type { Plan } from '../../schemas/plan.js';
 import { buildPhraseIndex, findPhrases, tokenise } from '../tokens.js';
@@ -65,10 +66,7 @@ export function occasionNamed(title: string): CommunityOccasion | undefined {
  */
 export function ideaScopeFor(plan: Plan, context: EventContext): IdeaScope {
   const occasion = occasionNamed(context.title ?? plan.title);
-  return {
-    ...(occasion === undefined ? {} : { occasion }),
-    ...(context.cut === undefined ? {} : { cut: context.cut }),
-  };
+  return withoutUndefined({ occasion, cut: context.cut });
 }
 
 /**

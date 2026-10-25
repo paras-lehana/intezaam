@@ -7,7 +7,7 @@
  * wipes what the reader already typed. Boundary: pure; the reader confirms in BriefReview
  * and the form fills itself from the result.
  */
-import { formatInr } from '@intezaam/core';
+import { formatInr, pickDefined } from '@intezaam/core';
 import {
   ACCESS_NEED_LABELS,
   type AccessNeed,
@@ -30,6 +30,26 @@ export interface BriefChip {
   readonly label: string;
   readonly value: string;
 }
+
+/** Draft fields with the same name and shape in the form's context, copied as read. */
+const SAME_SHAPE_FIELDS = [
+  'family',
+  'kind',
+  'tradition',
+  'anandKaraj',
+  'city',
+  'guests',
+  'budgetInr',
+  'dateIso',
+  'dateFlexible',
+  'functions',
+  'venueSetting',
+  'alcohol',
+  'priorities',
+  'cut',
+  'styleTags',
+  'language',
+] as const satisfies readonly (keyof BriefDraft & keyof EventContext)[];
 
 export const BRIEF_FIELD_LABELS: Readonly<Record<BriefField, string>> = {
   family: 'Celebration',
@@ -177,22 +197,7 @@ export function draftToFill(draft: BriefDraft): Partial<EventContext> {
   const base = EMPTY_FORM_STATE.diet;
   const { diet, accessibility } = draft;
   return {
-    ...(draft.family === undefined ? {} : { family: draft.family }),
-    ...(draft.kind === undefined ? {} : { kind: draft.kind }),
-    ...(draft.tradition === undefined ? {} : { tradition: draft.tradition }),
-    ...(draft.anandKaraj === undefined ? {} : { anandKaraj: draft.anandKaraj }),
-    ...(draft.city === undefined ? {} : { city: draft.city }),
-    ...(draft.guests === undefined ? {} : { guests: draft.guests }),
-    ...(draft.budgetInr === undefined ? {} : { budgetInr: draft.budgetInr }),
-    ...(draft.dateIso === undefined ? {} : { dateIso: draft.dateIso }),
-    ...(draft.dateFlexible === undefined ? {} : { dateFlexible: draft.dateFlexible }),
-    ...(draft.functions === undefined ? {} : { functions: draft.functions }),
-    ...(draft.venueSetting === undefined ? {} : { venueSetting: draft.venueSetting }),
-    ...(draft.alcohol === undefined ? {} : { alcohol: draft.alcohol }),
-    ...(draft.priorities === undefined ? {} : { priorities: draft.priorities }),
-    ...(draft.cut === undefined ? {} : { cut: draft.cut }),
-    ...(draft.styleTags === undefined ? {} : { styleTags: draft.styleTags }),
-    ...(draft.language === undefined ? {} : { language: draft.language }),
+    ...pickDefined(draft, SAME_SHAPE_FIELDS),
     ...(accessibility === undefined ? {} : { accessibility: accessRecord(accessibility) }),
     ...communityFill(draft),
     ...(diet === undefined

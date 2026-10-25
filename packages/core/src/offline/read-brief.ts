@@ -8,6 +8,7 @@
  * core fields still missing, and the "understood" line. The server runs this output
  * through the same evidence guard as a model reply. Boundary: pure.
  */
+import { withoutUndefined } from '../objects.js';
 import {
   BRIEF_FIELDS,
   type BriefDraft,
@@ -74,25 +75,25 @@ function isCommunity(fields: BriefFieldReadings): boolean {
 function sharedFields(fields: BriefFieldReadings): SharedFields {
   const date = fields.date?.value;
   return {
-    ...(fields.family === undefined ? {} : { family: fields.family.value }),
-    ...(fields.kind === undefined ? {} : { kind: fields.kind.value }),
-    ...(fields.tradition === undefined ? {} : { tradition: fields.tradition.value }),
-    ...(fields.anandKaraj === undefined ? {} : { anandKaraj: fields.anandKaraj.value }),
-    ...(fields.city === undefined ? {} : { city: fields.city.value }),
-    ...(date?.dateIso === undefined ? {} : { dateIso: date.dateIso }),
-    ...(date?.month === undefined ? {} : { month: date.month }),
-    ...(date === undefined ? {} : { dateFlexible: date.flexible }),
-    ...(fields.functions === undefined ? {} : { functions: fields.functions.value }),
-    ...(fields.venueSetting === undefined ? {} : { venueSetting: fields.venueSetting.value }),
-    ...(fields.diet === undefined ? {} : { diet: fields.diet.value }),
-    ...(fields.alcohol === undefined ? {} : { alcohol: fields.alcohol.value }),
-    ...(fields.accessibility === undefined ? {} : { accessibility: fields.accessibility.value }),
-    ...(fields.priorities === undefined ? {} : { priorities: fields.priorities.value }),
-    ...(fields.cut === undefined ? {} : { cut: fields.cut.value }),
-    ...(fields.styleTags === undefined ? {} : { styleTags: fields.styleTags.value }),
-    ...(fields.premises === undefined || !isCommunity(fields)
-      ? {}
-      : { premises: fields.premises.value }),
+    ...withoutUndefined({
+      family: fields.family?.value,
+      kind: fields.kind?.value,
+      tradition: fields.tradition?.value,
+      anandKaraj: fields.anandKaraj?.value,
+      city: fields.city?.value,
+      dateIso: date?.dateIso,
+      month: date?.month,
+      dateFlexible: date?.flexible,
+      functions: fields.functions?.value,
+      venueSetting: fields.venueSetting?.value,
+      diet: fields.diet?.value,
+      alcohol: fields.alcohol?.value,
+      accessibility: fields.accessibility?.value,
+      priorities: fields.priorities?.value,
+      cut: fields.cut?.value,
+      styleTags: fields.styleTags?.value,
+      premises: isCommunity(fields) ? fields.premises?.value : undefined,
+    }),
     language: fields.language,
     ...(fields.hinglish ? { hinglish: true } : {}),
   };
@@ -118,19 +119,16 @@ export function readBriefOffline(text: string, todayIso: string): BriefModelOutp
   const filled = new Set(BRIEF_FIELDS.filter((field) => fields[field] !== undefined));
   const draft: BriefDraft = {
     ...shared,
-    ...(fields.guests === undefined ? {} : { guests: fields.guests.value }),
-    ...(fields.budget === undefined ? {} : { budgetInr: fields.budget.value }),
-    ...(fields.households === undefined || !community
-      ? {}
-      : { households: fields.households.value }),
-    ...(fields.days === undefined || !community ? {} : { days: fields.days.value }),
+    ...withoutUndefined({
+      guests: fields.guests?.value,
+      budgetInr: fields.budget?.value,
+      households: community ? fields.households?.value : undefined,
+      days: community ? fields.days?.value : undefined,
+    }),
   };
   return {
     ...shared,
-    ...(guestsText === undefined ? {} : { guestsText }),
-    ...(budgetText === undefined ? {} : { budgetText }),
-    ...(householdsText === undefined ? {} : { householdsText }),
-    ...(daysText === undefined ? {} : { daysText }),
+    ...withoutUndefined({ guestsText, budgetText, householdsText, daysText }),
     evidence: evidenceOf(parsed, fields),
     missing: CORE_BRIEF_FIELDS.filter((field) => !filled.has(field)),
     understood: describeBrief(draft),

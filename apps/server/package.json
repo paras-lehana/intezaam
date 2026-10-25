@@ -1,6 +1,6 @@
 {
   "name": "@intezaam/server",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": true,
   "description": "One container: the JSON API (planning engine + free Gemini via the llm-service gateway, with offline fallbacks) and the static web build on the same origin.",
   "type": "module",
@@ -14,7 +14,7 @@
     "type-check": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit"
   },
   "dependencies": {
-    "@intezaam/core": "0.1.1",
+    "@intezaam/core": "0.1.2",
     "compression": "^1.8.2",
     "express": "^5.2.1",
     "helmet": "^8.3.0",

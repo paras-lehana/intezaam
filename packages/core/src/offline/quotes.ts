@@ -11,6 +11,7 @@
 import { VENDOR_PLAYBOOK } from '../domain/vendor-playbook.js';
 import type { VendorType } from '../domain/vendors.js';
 import { clipText } from '../format.js';
+import { withoutUndefined } from '../objects.js';
 import { MAX_LABEL_CHARS, MAX_LINE_CHARS } from '../schemas/limits.js';
 import type { ParsedQuote, QuoteModelOutput } from '../schemas/model-outputs.js';
 import { foldForMatch } from '../security/normalise.js';
@@ -125,9 +126,7 @@ export function readQuoteOffline(quote: QuoteText): ParsedQuote {
     amounts: lines.flatMap(amountsIn).slice(0, MAX_AMOUNTS),
     inclusions: inclusions.slice(0, MAX_ITEMS).map((line) => clipText(line, MAX_LINE_CHARS)),
     exclusions: exclusions.slice(0, MAX_ITEMS).map((line) => clipText(line, MAX_LINE_CHARS)),
-    ...(advanceText === undefined ? {} : { advanceText }),
-    ...(cancellationText === undefined ? {} : { cancellationText }),
-    ...(validityText === undefined ? {} : { validityText }),
+    ...withoutUndefined({ advanceText, cancellationText, validityText }),
     gst: gstMention(lines),
   };
 }

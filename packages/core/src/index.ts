@@ -9,6 +9,7 @@
 export * from './result.js';
 export * from './errors.js';
 export * from './format.js';
+export * from './objects.js';
 export * from './domain/index.js';
 export * from './schemas/index.js';
 export * from './engine/index.js';
