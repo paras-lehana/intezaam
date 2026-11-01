@@ -53,6 +53,21 @@ export default tseslint.config(
       'prefer-const': 'error',
       'no-var': 'error',
       curly: ['error', 'multi-line'],
+      // House rules (CONTRIBUTING.md), enforced rather than only stated: files stay under 250
+      // lines, blocks nest at most three deep and callbacks four, functions take at most five
+      // parameters (more travel as one typed object).
+      'max-lines': ['error', { max: 250 }],
+      'max-depth': ['error', 3],
+      'max-nested-callbacks': ['error', 4],
+      'max-params': ['error', 5],
+    },
+  },
+  {
+    // Components stay under 150 lines: one component per file, split before it grows.
+    files: ['apps/web/src/**/*.tsx'],
+    ignores: ['apps/web/src/__tests__/**'],
+    rules: {
+      'max-lines': ['error', { max: 150 }],
     },
   },
   {
