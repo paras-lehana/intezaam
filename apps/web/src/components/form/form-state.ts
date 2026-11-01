@@ -21,6 +21,7 @@ import type {
   Tradition,
   VenueSetting,
 } from '@intezaam/core/domain';
+import { pickDefined } from '@intezaam/core';
 import { DEFAULT_LANGUAGE } from '@intezaam/core/domain';
 import type { DietChoice, EventContext } from '@intezaam/core/schemas';
 
@@ -152,6 +153,27 @@ function anandKarajChoice(
   return value ? 'yes' : 'no';
 }
 
+/** Context fields with the same name and shape in the form, copied as they are. */
+const SAME_SHAPE_FIELDS = [
+  'family',
+  'kind',
+  'dateIso',
+  'dateFlexible',
+  'city',
+  'tradition',
+  'functions',
+  'venueSetting',
+  'diet',
+  'alcohol',
+  'priorities',
+  'cut',
+  'styleTags',
+  'helpLevel',
+  'language',
+  'destination',
+  'sound',
+] as const satisfies readonly (keyof EventContext & keyof PlannerFormState)[];
+
 function percentText(share: number | undefined, fallback: string): string {
   return share === undefined
     ? fallback
@@ -174,30 +196,15 @@ export function fillState(
   const community = ctx.community;
   return {
     ...from,
-    family: ctx.family ?? from.family,
-    kind: ctx.kind ?? from.kind,
-    dateIso: ctx.dateIso ?? from.dateIso,
-    dateFlexible: ctx.dateFlexible ?? from.dateFlexible,
-    city: ctx.city ?? from.city,
+    // Fields the context carries in the form's own shape overwrite only when present.
+    ...pickDefined(ctx, SAME_SHAPE_FIELDS),
     guests: text(ctx.guests, from.guests),
     budget: text(ctx.budgetInr, from.budget),
     estimateBudget: ctx.budgetInr === undefined ? complete || from.estimateBudget : false,
-    tradition: ctx.tradition ?? from.tradition,
     anandKaraj: anandKarajChoice(ctx.anandKaraj, from.anandKaraj),
-    functions: ctx.functions ?? from.functions,
-    venueSetting: ctx.venueSetting ?? from.venueSetting,
     areaSqft: text(ctx.areaSqft, from.areaSqft),
-    diet: ctx.diet ?? from.diet,
-    alcohol: ctx.alcohol ?? from.alcohol,
-    priorities: ctx.priorities ?? from.priorities,
-    cut: ctx.cut ?? from.cut,
-    styleTags: ctx.styleTags ?? from.styleTags,
     accessibility: { ...from.accessibility, ...ctx.accessibility },
-    helpLevel: ctx.helpLevel ?? from.helpLevel,
-    language: ctx.language ?? from.language,
     outstationPct: percentText(ctx.outstationShare, from.outstationPct),
-    destination: ctx.destination ?? from.destination,
-    sound: ctx.sound ?? from.sound,
     birthday: {
       age: text(ctx.birthday?.age, from.birthday.age),
       kidsCount: text(ctx.birthday?.kidsCount, from.birthday.kidsCount),

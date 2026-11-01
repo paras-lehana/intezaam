@@ -71,28 +71,33 @@ function isCommunity(fields: BriefFieldReadings): boolean {
   return fields.family?.value === 'community';
 }
 
+/** A reading's value, or undefined when the brief did not mention the field. */
+function valueOf<V>(reading: { readonly value: V } | undefined): V | undefined {
+  return reading?.value;
+}
+
 /** Every non-numeric field: the part the model output and the draft share. */
 function sharedFields(fields: BriefFieldReadings): SharedFields {
   const date = fields.date?.value;
   return {
     ...withoutUndefined({
-      family: fields.family?.value,
-      kind: fields.kind?.value,
-      tradition: fields.tradition?.value,
-      anandKaraj: fields.anandKaraj?.value,
-      city: fields.city?.value,
+      family: valueOf(fields.family),
+      kind: valueOf(fields.kind),
+      tradition: valueOf(fields.tradition),
+      anandKaraj: valueOf(fields.anandKaraj),
+      city: valueOf(fields.city),
       dateIso: date?.dateIso,
       month: date?.month,
       dateFlexible: date?.flexible,
-      functions: fields.functions?.value,
-      venueSetting: fields.venueSetting?.value,
-      diet: fields.diet?.value,
-      alcohol: fields.alcohol?.value,
-      accessibility: fields.accessibility?.value,
-      priorities: fields.priorities?.value,
-      cut: fields.cut?.value,
-      styleTags: fields.styleTags?.value,
-      premises: isCommunity(fields) ? fields.premises?.value : undefined,
+      functions: valueOf(fields.functions),
+      venueSetting: valueOf(fields.venueSetting),
+      diet: valueOf(fields.diet),
+      alcohol: valueOf(fields.alcohol),
+      accessibility: valueOf(fields.accessibility),
+      priorities: valueOf(fields.priorities),
+      cut: valueOf(fields.cut),
+      styleTags: valueOf(fields.styleTags),
+      premises: isCommunity(fields) ? valueOf(fields.premises) : undefined,
     }),
     language: fields.language,
     ...(fields.hinglish ? { hinglish: true } : {}),

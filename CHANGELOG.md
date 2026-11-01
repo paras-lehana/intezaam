@@ -4,6 +4,15 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+
+- **Lint gates:** the house rules are ESLint errors now: at most 250 lines per file and 150 per component, nesting depth
+  3, callback depth 4, five parameters and complexity 20 per function. The codebase meets all of them.
+- **Form fill:** `fillState` copies the context fields that match the form with `pickDefined` (complexity 33 to under 20),
+  and the brief reader reads each value through one `valueOf` helper. Behaviour unchanged.
+
 ## [0.1.2] — 2026-10-26
 
 Code-quality pass; behaviour unchanged.
